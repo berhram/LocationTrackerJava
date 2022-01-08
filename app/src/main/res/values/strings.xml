@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tracker for sleepwalkers</string>
+    <string name="login_button">Sign In</string>
+    <string name="register_button">Sign Up</string>
+    <string name="login_title">Username or e-mail</string>
+    <string name="password_title">Password</string>
+</resources>

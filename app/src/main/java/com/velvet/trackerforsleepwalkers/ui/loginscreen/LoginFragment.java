@@ -16,6 +16,10 @@ public class LoginFragment extends Fragment {
     private LoginFragmentBinding binding;
     private LoginViewModel viewModel;
 
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

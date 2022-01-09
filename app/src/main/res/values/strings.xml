@@ -5,4 +5,7 @@
     <string name="login_title">Username or e-mail</string>
     <string name="password_title">Password</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="map_menu_item">Map</string>
+    <string name="map_time_menu_item">History</string>
+    <string name="settings_menu_item">Settings</string>
 </resources>

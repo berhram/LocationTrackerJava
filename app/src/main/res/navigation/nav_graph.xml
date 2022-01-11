@@ -12,6 +12,19 @@
         <action
             android:id="@+id/login_screen_to_map_screen"
             app:destination="@id/map_screen"/>
+        <action
+            android:id="@+id/login_screen_to_passord_recovery_screen"
+            app:destination="@id/password_recovery_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/password_recovery_screen"
+        android:name="com.velvet.trackerforsleepwalkers.ui.passwordrecovery.PasswordRecoveryFragment"
+        android:label="@string/password_recovery_screen_label"
+        tools:layout="@layout/password_recovery_fragment">
+        <action
+            android:id="@+id/password_recovery_screen_to_login_screen"
+            app:destination="@id/login_screen"/>
     </fragment>
 
     <fragment
@@ -42,7 +55,7 @@
 
     <fragment
         android:id="@+id/settings_screen"
-        android:name="com.velvet.trackerforsleepwalkers.ui.mapscreen.MapFragment"
+        android:name="com.velvet.trackerforsleepwalkers.ui.settingsscreen.SettingsFragment"
         android:label="@string/settings_screen_label"
         tools:layout="@layout/settings_fragment">
         <action

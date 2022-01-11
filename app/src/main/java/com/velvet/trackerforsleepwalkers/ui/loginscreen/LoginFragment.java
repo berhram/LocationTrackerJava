@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavHostController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +50,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        NavHostFragment.findNavController(this).navigate(R.id.login_screen_to_map_screen);
+        NavDirections action = LoginFragmentDirections.loginScreenToMapScreen();
+        NavHostFragment.findNavController(this).navigate(action);
+        /*
         if (v.getId() == R.id.sign_in_button) {
             viewModel.login(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
         } else if (v.getId() == R.id.sign_up_button) {
@@ -58,5 +60,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         } else {
             //TODO forgot password
         }
+
+         */
     }
 }

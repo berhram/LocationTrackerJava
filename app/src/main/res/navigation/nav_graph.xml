@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login_screen">
+    <fragment
+        android:id="@+id/login_screen"
+        android:name="com.velvet.trackerforsleepwalkers.ui.loginscreen.LoginFragment"
+        android:label="@string/login_screen_label"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/login_screen_to_map_screen"
+            app:destination="@id/map_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/map_screen"
+        android:name="com.velvet.trackerforsleepwalkers.ui.mapscreen.MapFragment"
+        android:label="@string/map_screen_label"
+        tools:layout="@layout/map_fragment">
+        <action
+            android:id="@+id/map_screen_to_history_screen"
+            app:destination="@+id/history_screen"/>
+        <action
+            android:id="@+id/map_screen_to_settings_screen"
+            app:destination="@+id/settings_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/history_screen"
+        android:name="com.velvet.trackerforsleepwalkers.ui.historyscreen.HistoryFragment"
+        android:label="@string/history_screen_label"
+        tools:layout="@layout/history_fragment">
+        <action
+            android:id="@+id/history_screen_to_settings_screen"
+            app:destination="@+id/settings_screen"/>
+        <action
+            android:id="@+id/history_screen_to_map_screen"
+            app:destination="@+id/map_screen"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings_screen"
+        android:name="com.velvet.trackerforsleepwalkers.ui.mapscreen.MapFragment"
+        android:label="@string/settings_screen_label"
+        tools:layout="@layout/settings_fragment">
+        <action
+            android:id="@+id/settings_screen_to_history_screen"
+            app:destination="@+id/history_screen"/>
+        <action
+            android:id="@+id/settings_screen_to_map_screen"
+            app:destination="@+id/map_screen"/>
+    </fragment>
+</navigation>

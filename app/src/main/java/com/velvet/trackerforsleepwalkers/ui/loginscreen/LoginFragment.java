@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavHostController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.trackerforsleepwalkers.R;
@@ -27,14 +29,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-             skipLoginScreen();
-        }
-    }
-
-    private void skipLoginScreen() {
-        //TODO skip this screen if user exists
     }
 
     @Nullable
@@ -47,7 +41,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getLoginInput().observe(getViewLifecycleOwner(), binding.loginInput::setText);
+        viewModel.getLoginInput().observe(getViewLifecycleOwner(), binding.emailInput::setText);
         viewModel.getPasswordInput().observe(getViewLifecycleOwner(), binding.passwordInput::setText);
         binding.signInButton.setOnClickListener(this);
         binding.signUpButton.setOnClickListener(this);
@@ -56,12 +50,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        NavHostFragment.findNavController(this).navigate(R.id.login_screen_to_map_screen);
         if (v.getId() == R.id.sign_in_button) {
-
+            viewModel.login(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
         } else if (v.getId() == R.id.sign_up_button) {
-
+            viewModel.register(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
         } else {
-
+            //TODO forgot password
         }
     }
 }

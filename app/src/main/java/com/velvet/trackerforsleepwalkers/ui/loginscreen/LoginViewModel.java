@@ -2,6 +2,9 @@ package com.velvet.trackerforsleepwalkers.ui.loginscreen;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,7 +17,7 @@ import java.util.concurrent.Executor;
 public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> loginInput = new MutableLiveData<>();
     private final MutableLiveData<String> passwordInput = new MutableLiveData<>();
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
 
     public MutableLiveData<String> getLoginInput() {
         return loginInput;
@@ -24,11 +27,14 @@ public class LoginViewModel extends ViewModel {
         return passwordInput;
     }
 
-    public void register(String login, String password) {
+    public void register(String email, String password) {
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password);
 
     }
 
-    public void login(String login, String password) {
-
+    public void login(String email, String password) {
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(email, password);
     }
 }

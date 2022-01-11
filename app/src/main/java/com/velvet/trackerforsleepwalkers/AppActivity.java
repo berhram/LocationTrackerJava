@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 
 import com.velvet.trackerforsleepwalkers.ui.loginscreen.LoginFragment;
+import com.velvet.trackerforsleepwalkers.ui.mapscreen.MapFragment;
 
 public class AppActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class AppActivity extends AppCompatActivity {
                     .add(R.id.fragmentContainerView, LoginFragment.newInstance(), null)
                     .commit();
         }
+        //TODO check if user is sign in already
     }
 
 

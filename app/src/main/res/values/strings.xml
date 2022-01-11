@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">Tracker for sleepwalkers</string>
-    <string name="login_button">Sign In</string>
+    <string name="email_button">Sign In</string>
     <string name="register_button">Sign Up</string>
-    <string name="login_title">Username or e-mail</string>
+    <string name="email_title">Username or e-mail</string>
     <string name="password_title">Password</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="map_menu_item">Map</string>
     <string name="map_time_menu_item">History</string>
     <string name="settings_menu_item">Settings</string>
+    <string name="login_screen_label">Login screen</string>
+    <string name="map_screen_label">Map screen</string>
+    <string name="settings_screen_label">Settings screen</string>
+    <string name="history_screen_label">Settings screen</string>
 </resources>

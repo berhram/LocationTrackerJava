@@ -5,16 +5,16 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/login_title"
+        android:id="@+id/email_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/login_input_layout"
+        app:layout_constraintBottom_toTopOf="@id/email_input_layout"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
         app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        android:text="@string/login_title" />
+        android:text="@string/email_title" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_input_layout"
+        android:id="@+id/email_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/password_input_layout"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="@id/top_height_limiter">
 
         <EditText
-            android:id="@+id/login_input"
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="@id/middle_height_limiter"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
         app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        app:layout_constraintTop_toBottomOf="@id/login_input_layout">
+        app:layout_constraintTop_toBottomOf="@id/email_input_layout">
 
         <EditText
             android:id="@+id/password_input"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="@id/start_width_limiter"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
         app:layout_constraintBottom_toTopOf="@id/sign_up_button"
-        android:text="@string/login_button"/>
+        android:text="@string/email_button"/>
 
     <Button
         android:id="@+id/sign_up_button"

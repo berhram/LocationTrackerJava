@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.trackerforsleepwalkers.databinding.PasswordRecoveryFragmentBinding;
 import com.velvet.trackerforsleepwalkers.databinding.SettingsFragmentBinding;
 
 public class PasswordRecoveryFragment extends Fragment {

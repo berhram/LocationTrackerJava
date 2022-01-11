@@ -62,6 +62,5 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         } else {
             NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginScreenToMapScreen());
         }
-
     }
 }

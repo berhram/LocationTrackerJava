@@ -25,7 +25,6 @@ public class AppActivity extends AppCompatActivity {
                     .add(R.id.fragmentContainerView, LoginFragment.newInstance(), null)
                     .commit();
         }
-        //TODO check if user is sign in already
     }
 
 

@@ -13,10 +13,14 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
+import com.velvet.trackerforsleepwalkers.mvi.MviView;
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
+public class LoginFragment extends Fragment implements View.OnClickListener, MviView {
     private FragmentLoginBinding binding;
-    private LoginViewModel viewModel;
+    private LoginViewModel mViewModel;
+    private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -25,7 +29,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        mViewModel.setup();
     }
 
     @Nullable
@@ -38,12 +43,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.setup();
-        viewModel.getLoginInput().observe(getViewLifecycleOwner(), binding.emailInput::setText);
-        viewModel.getPasswordInput().observe(getViewLifecycleOwner(), binding.passwordInput::setText);
-        viewModel.getInfoText().observe(getViewLifecycleOwner(), binding.infoText::setText);
-        viewModel.getAuthenticationState().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (viewModel.getAuthenticationState().getValue()) {
+        mDisposables.add(mViewModel.states().);
+        mViewModel.getLoginInput().observe(getViewLifecycleOwner(), binding.emailInput::setText);
+        mViewModel.getPasswordInput().observe(getViewLifecycleOwner(), binding.passwordInput::setText);
+        mViewModel.getInfoText().observe(getViewLifecycleOwner(), binding.infoText::setText);
+        mViewModel.getAuthenticationState().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (mViewModel.getAuthenticationState().getValue()) {
                 NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginScreenToMapScreen());
             }
         });
@@ -55,9 +60,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.sign_in_button) {
-            viewModel.login(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
+            mViewModel.login(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
         } else if (v.getId() == R.id.sign_up_button) {
-            viewModel.register(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
+            mViewModel.register(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
             binding.infoText.setText(R.string.success_registration);
         } else {
             NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginScreenToMapScreen());

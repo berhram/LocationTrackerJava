@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.settingsscreen;
+package com.velvet.trackerforsleepwalkers.ui.settings;
 
 import androidx.lifecycle.ViewModel;
 

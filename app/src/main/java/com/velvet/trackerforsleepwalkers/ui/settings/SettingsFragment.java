@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.historyscreen;
+package com.velvet.trackerforsleepwalkers.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,26 +10,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.trackerforsleepwalkers.databinding.HistoryFragmentBinding;
+import com.velvet.trackerforsleepwalkers.databinding.FragmentSettingsBinding;
 
-public class HistoryFragment extends Fragment {
-    private HistoryFragmentBinding binding;
-    private HistoryViewModel viewModel;
+public class SettingsFragment extends Fragment {
+    private FragmentSettingsBinding binding;
+    private SettingsViewModel viewModel;
 
-    public static HistoryFragment newInstance() {
-        return new HistoryFragment();
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = HistoryFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.historyscreen;
+package com.velvet.trackerforsleepwalkers.ui.history;
 
 import androidx.lifecycle.ViewModel;
 

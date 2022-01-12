@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.mapscreen;
+package com.velvet.trackerforsleepwalkers.ui.map;
 
 import androidx.lifecycle.ViewModel;
 

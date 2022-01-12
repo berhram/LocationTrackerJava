@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.settingsscreen;
+package com.velvet.trackerforsleepwalkers.ui.map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,31 +14,36 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.velvet.trackerforsleepwalkers.databinding.SettingsFragmentBinding;
+import com.velvet.trackerforsleepwalkers.databinding.FragmentMapBinding;
 
-public class SettingsFragment extends Fragment {
-    private SettingsFragmentBinding binding;
-    private SettingsViewModel viewModel;
+public class MapFragment extends Fragment implements OnMapReadyCallback {
+    private FragmentMapBinding binding;
+    private MapViewModel viewModel;
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
+    public static MapFragment newInstance() {
+        return new MapFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MapViewModel.class);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = SettingsFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }

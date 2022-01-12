@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.loginscreen.LoginFragment">
+    tools:context=".ui.login.LoginFragment">
 
     <TextView
         android:id="@+id/info_text"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/start_width_limiter"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
-        app:layout_constraintBottom_toTopOf="@id/top_height_limiter"/>
+        app:layout_constraintBottom_toTopOf="@id/top_height_limiter" />
 
     <TextView
         android:id="@+id/email_title"

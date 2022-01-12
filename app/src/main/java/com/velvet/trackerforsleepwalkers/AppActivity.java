@@ -1,19 +1,18 @@
 package com.velvet.trackerforsleepwalkers;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-    
 import android.os.Bundle;
 
-import com.velvet.trackerforsleepwalkers.ui.loginscreen.LoginFragment;
-import com.velvet.trackerforsleepwalkers.ui.mapscreen.MapFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
+import com.velvet.trackerforsleepwalkers.ui.login.LoginFragment;
 
 public class AppActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
 
     public AppActivity() {
-        super(R.layout.app_activity);
+        super(R.layout.activity_main);
     }
 
     @Override
@@ -26,6 +25,4 @@ public class AppActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
-
 }

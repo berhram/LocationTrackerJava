@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.loginscreen;
+package com.velvet.trackerforsleepwalkers.ui.login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.velvet.trackerforsleepwalkers.R;
-import com.velvet.trackerforsleepwalkers.databinding.LoginFragmentBinding;
+import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
-    private LoginFragmentBinding binding;
+    private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
 
     public static LoginFragment newInstance() {
@@ -31,7 +31,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = LoginFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

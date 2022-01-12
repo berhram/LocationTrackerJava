@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.loginscreen;
+package com.velvet.trackerforsleepwalkers.ui.login;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

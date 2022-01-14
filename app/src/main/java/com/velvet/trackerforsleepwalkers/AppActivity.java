@@ -5,8 +5,6 @@ import androidx.fragment.app.FragmentManager;
     
 import android.os.Bundle;
 
-import com.velvet.trackerforsleepwalkers.ui.login.LoginFragment;
-
 public class AppActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;

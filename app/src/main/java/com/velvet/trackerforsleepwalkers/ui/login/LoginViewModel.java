@@ -1,15 +1,19 @@
 package com.velvet.trackerforsleepwalkers.ui.login;
 
-import androidx.lifecycle.MutableLiveData;
+import static com.velvet.trackerforsleepwalkers.utils.LceStatus.FAILURE;
+import static com.velvet.trackerforsleepwalkers.utils.LceStatus.IN_FLIGHT;
+import static com.velvet.trackerforsleepwalkers.utils.LceStatus.SUCCESS;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.trackerforsleepwalkers.R;
+import com.velvet.trackerforsleepwalkers.mvi.MviIntent;
 import com.velvet.trackerforsleepwalkers.mvi.MviViewModel;
 
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableTransformer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.BiFunction;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LoginViewModel extends ViewModel implements MviViewModel<LoginIntent, LoginViewState> {
@@ -20,16 +24,10 @@ public class LoginViewModel extends ViewModel implements MviViewModel<LoginInten
     @NonNull
     private CompositeDisposable mDisposables = new CompositeDisposable();
     @NonNull
-    private LoginActionProcessorHolder mLoginProcessorHolder;
+    private LoginActionProcessorHolder mLoginActionProcessorHolder;
 
-    private final MutableLiveData<String> loginInput = new MutableLiveData<>();
-    private final MutableLiveData<String> passwordInput = new MutableLiveData<>();
-    private final MutableLiveData<Integer> infoText = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> authenticationState = new MutableLiveData<>();
-    private FirebaseAuth mAuth;
-
-    public LoginViewModel(@NonNull LoginActionProcessorHolder processorHolder) {
-        mLoginProcessorHolder = processorHolder;
+    public LoginViewModel(LoginActionProcessorHolder mLoginActionProcessorHolder) {
+        this.mLoginActionProcessorHolder = mLoginActionProcessorHolder;
         mIntentsSubject = PublishSubject.create();
         mStatesObservable = compose();
     }
@@ -44,71 +42,84 @@ public class LoginViewModel extends ViewModel implements MviViewModel<LoginInten
         return mStatesObservable;
     }
 
-    private Observable<LoginViewState> compose() {
-        return mIntentsSubject
-                .compose()
-                .map(this::a)
-                .compose(mLoginProcessorHolder.actionProcessor)
-                // Cache each state and pass it to the reducer to create a new state from
-                // the previous cached one and the latest Result emitted from the action processor.
-                // The Scan operator is used here for the caching.
-                .scan(TaskDetailViewState.idle(), reducer)
-                // When a reducer just emits previousState, there's no reason to call render. In fact,
-                // redrawing the UI in cases like this can cause jank (e.g. messing up snackbar animations
-                // by showing the same snackbar twice in rapid succession).
-                .distinctUntilChanged()
-                // Emit the last one event of the stream on subscription
-                // Useful when a View rebinds to the ViewModel after rotation.
-                .replay(1)
-                // Create the stream on creation without waiting for anyone to subscribe
-                // This allows the stream to stay alive even when the UI disconnects and
-                // match the stream's lifecycle to the ViewModel's one.
-                .autoConnect(0);
+    private ObservableTransformer<LoginIntent, LoginIntent> intentFilter =
+            intents -> intents.publish(shared ->
+                    Observable.merge(
+                            shared.ofType(LoginIntent.InitialIntent.class).take(1),
+                            shared.filter(intent -> !(intent instanceof LoginIntent.InitialIntent))
+                    )
+            );
 
-    public MutableLiveData<String> getLoginInput() {
-        return loginInput;
+    @Override
+    protected void onCleared() {
+        mDisposables.dispose();
     }
 
-    public MutableLiveData<String> getPasswordInput() {
-        return passwordInput;
-    }
-
-    public MutableLiveData<Boolean> getAuthenticationState() {
-        return authenticationState;
-    }
-
-    public MutableLiveData<Integer> getInfoText() {
-        return infoText;
-    }
-
-    public void setup() {
-        if (mAuth.getCurrentUser() != null) {
-            getAuthenticationState().setValue(true);
-        } else {
-            getAuthenticationState().setValue(false);
+    private LoginAction actionFromIntent(MviIntent intent) {
+        if (intent instanceof LoginIntent.InitialIntent) {
+            return LoginAction.InitialAction.create();
         }
+        if (intent instanceof LoginIntent.SignInIntent) {
+            LoginIntent.SignInIntent signInIntent = (LoginIntent.SignInIntent) intent;
+            return LoginAction.SignInAction.create(signInIntent.email(), signInIntent.password());
+        }
+        if (intent instanceof LoginIntent.SignUpIntent) {
+            LoginIntent.SignUpIntent signUpIntent = (LoginIntent.SignUpIntent) intent;
+            return LoginAction.SignUpAction.create(signUpIntent.email(), signUpIntent.password());
+        }
+        if (intent instanceof LoginIntent.ForgotPasswordIntent) {
+            return LoginAction.ForgotPasswordAction.create();
+        }
+        // Fail for unhandled intents
+        throw new IllegalArgumentException("do not know how to treat this intent " + intent);
     }
 
-    public void register(String email, String password) {
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                infoText.setValue(R.string.success_registration);
-            } else {
-                infoText.setValue(R.string.invalid_email_or_password);
-            }
-        });
-
+    private Observable<LoginViewState> compose() {
+        return mIntentsSubject.compose(intentFilter)
+                .map(this::actionFromIntent)
+                .compose(mLoginActionProcessorHolder.actionProcessor)
+                .scan();
     }
 
-    public void login(String email, String password) {
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                authenticationState.setValue(true);
-            } else {
-                infoText.setValue(R.string.invalid_email_or_password);
-            }
-        });
-    }
+    private static BiFunction<LoginViewState, LoginResult, LoginViewState> reducer =
+            (previousState, result) -> {
+                LoginViewState.Builder stateBuilder = previousState.buildWith();
+                if (result instanceof LoginResult) {
+                    LoginResult.SignIn signInResult = (LoginResult.SignIn) result;
+                    switch (signInResult.status()) {
+                        case SUCCESS:
+                            stateBuilder.infoText(signInResult.infoText());
+                            stateBuilder.isPasswordForgotten(signInResult.isPasswordForgotten());
+                            stateBuilder.isSignInSuccess(signInResult.isSignInSuccess());
+                            return stateBuilder.build();
+                        case FAILURE:
+                            return stateBuilder.error(signInResult.error()).build();
+                        case IN_FLIGHT:
+                            return stateBuilder.build();
+                    }
+                }
+                if (result instanceof LoginResult) {
+                    LoginResult.SignUp signUpResult = (LoginResult.SignUp) result;
+                    switch (signUpResult.status()) {
+                        case SUCCESS:
+                            stateBuilder.infoText(signUpResult.infoText());
+                            stateBuilder.isPasswordForgotten(signUpResult.isPasswordForgotten());
+                            stateBuilder.isSignInSuccess(signUpResult.isSignInSuccess());
+                            return stateBuilder.build();
+                        case FAILURE:
+                            return stateBuilder.error(signUpResult.error()).build();
+                        case IN_FLIGHT:
+                            return stateBuilder.build();
+                    }
+                }
+                if (result instanceof LoginResult) {
+                    LoginResult.ForgotPassword forgotPasswordResult = (LoginResult.ForgotPassword) result;
+                    stateBuilder.isPasswordForgotten(forgotPasswordResult.isPasswordForgotten());
+                    stateBuilder.isSignInSuccess(forgotPasswordResult.isSignInSuccess());
+                    return stateBuilder.build();
+                }
+                // Fail for unhandled results
+                throw new IllegalStateException("Mishandled result? Should not happen―as always: " + result);
+            };
+
 }

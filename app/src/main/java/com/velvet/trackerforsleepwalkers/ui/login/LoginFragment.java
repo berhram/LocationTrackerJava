@@ -11,16 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.jakewharton.rxbinding4.view.RxView;
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
 import com.velvet.trackerforsleepwalkers.mvi.MviView;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-public class LoginFragment extends Fragment implements View.OnClickListener, MviView {
+public class LoginFragment extends Fragment implements MviView<LoginIntent, LoginViewState> {
+    private final CompositeDisposable disposable = new CompositeDisposable();
+    private LoginViewModel viewModel;
     private FragmentLoginBinding binding;
-    private LoginViewModel mViewModel;
-    private final CompositeDisposable mDisposables = new CompositeDisposable();
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -29,8 +31,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Mvi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        mViewModel.setup();
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        //mViewModel.setup();
     }
 
     @Nullable
@@ -43,29 +45,60 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Mvi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDisposables.add(mViewModel.states().);
-        mViewModel.getLoginInput().observe(getViewLifecycleOwner(), binding.emailInput::setText);
-        mViewModel.getPasswordInput().observe(getViewLifecycleOwner(), binding.passwordInput::setText);
-        mViewModel.getInfoText().observe(getViewLifecycleOwner(), binding.infoText::setText);
-        mViewModel.getAuthenticationState().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (mViewModel.getAuthenticationState().getValue()) {
-                NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginScreenToMapScreen());
-            }
-        });
-        binding.signInButton.setOnClickListener(this);
-        binding.signUpButton.setOnClickListener(this);
-        binding.forgotPasswordButton.setOnClickListener(this);
+        bind();
+    }
+
+    private void bind() {
+        disposable.add(viewModel.states().subscribe(this::render));
+        viewModel.processIntents(intents());
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.sign_in_button) {
-            mViewModel.login(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
-        } else if (v.getId() == R.id.sign_up_button) {
-            mViewModel.register(binding.emailInput.getText().toString(), binding.passwordInput.getText().toString());
-            binding.infoText.setText(R.string.success_registration);
-        } else {
+    public Observable<LoginIntent> intents() {
+        return Observable.merge(initialIntent(), signInIntent(), signUpIntent(), forgotPasswordIntent());
+    }
+
+    private Observable<LoginIntent.InitialIntent> initialIntent() {
+        return Observable.just(LoginIntent.InitialIntent.create());
+    }
+
+    private Observable<LoginIntent.SignInIntent> signInIntent() {
+        return RxView.clicks(binding.signInButton).map(ignored ->
+                LoginIntent.SignInIntent.create(
+                        binding.emailInput.getText().toString(),
+                        binding.passwordInput.getText().toString()));
+    }
+
+    private Observable<LoginIntent.SignUpIntent> signUpIntent() {
+        return RxView.clicks(binding.signUpButton).map(ignored ->
+                LoginIntent.SignUpIntent.create(
+                        binding.emailInput.getText().toString(),
+                        binding.passwordInput.getText().toString()));
+    }
+
+    private Observable<LoginIntent.ForgotPasswordIntent> forgotPasswordIntent() {
+        return RxView.clicks(binding.signInButton).map(ignored ->
+                LoginIntent.ForgotPasswordIntent.create());
+    }
+
+    @Override
+    public void render(LoginViewState state) {
+        if (state.isSignInSuccess()) {
             NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginScreenToMapScreen());
+            return;
         }
+        if (state.isPasswordForgotten()) {
+            NavHostFragment.findNavController(this).navigate(LoginFragmentDirections.loginScreenToPassordRecoveryScreen());
+            return;
+        }
+        //if sign in failure or user just register or email/password is incorrect -> show infotext
+        binding.infoText.setText(state.infoText());
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }

@@ -25,16 +25,15 @@ public class AuthRepository implements AuthNetwork {
         this.mAuth = mAuth;
     }
 
-    public Single<Boolean> checkIfUserLoggedIn() {
+    public boolean checkIfUserLoggedIn() {
         if (mAuth.getCurrentUser() == null) {
-            return Single.just(false);
+            return false;
         } else {
-            return Single.just(true);
+            return true;
         }
     }
 
-    public Single<Integer> register(String email, String password) {
-        mAuth = FirebaseAuth.getInstance();
+    public int register(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 setInfoText(R.string.success_registration);
@@ -42,11 +41,10 @@ public class AuthRepository implements AuthNetwork {
                 setInfoText(R.string.invalid_email_or_password);
             }
         });
-        return Single.just(infoText);
+        return infoText;
     }
 
-    public Single<Boolean> login(String email, String password) {
-        mAuth = FirebaseAuth.getInstance();
+    public boolean login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 setIsLoginSuccessful(true);
@@ -54,6 +52,6 @@ public class AuthRepository implements AuthNetwork {
                 setIsLoginSuccessful(false);
             }
         });
-        return Single.just(isLoginSuccesful);
+        return isLoginSuccesful;
     }
 }

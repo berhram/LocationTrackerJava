@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.trackerforsleepwalkers;
 
 import androidx.annotation.NonNull;
 
@@ -15,7 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class LoginModule {
+public class AppModule {
     @Provides
     @Singleton
     @NonNull

@@ -13,16 +13,21 @@ import io.reactivex.rxjava3.core.ObservableTransformer;
 public class LoginActionProcessorHolder {
     @NonNull
     @Inject
-    private AuthRepository mAuthRepository;
+    AuthRepository mAuthRepository;
+
     @NonNull
     @Inject
-    private BaseSchedulerProvider mSchedulerProvider;
+    BaseSchedulerProvider mSchedulerProvider;
 
     public LoginActionProcessorHolder() {
-        App.getInstance().getLoginComponent().inject(this);
+        App.getInstance().getAppComponent().inject(this);
     }
 
-    private ObservableTransformer<LoginAction.InitialAction, LoginAction.InitialAction> initialActionProcessor =
-            action -> action.flatMap(initialAction -> )
-            .to
+    private ObservableTransformer<LoginAction.InitialAction, LoginResult.Initial> initialActionProcessor =
+            action -> action.map(initialAction -> mAuthRepository.checkIfUserLoggedIn())
+            .map(LoginResult.Initial::success)
+            .onErrorReturn(LoginResult.Initial::failure)
+            .subscribeOn(mSchedulerProvider.io())
+            .observeOn(mSchedulerProvider.ui())
+            .startWith(LoginResult.Initial.inFlight());
 }

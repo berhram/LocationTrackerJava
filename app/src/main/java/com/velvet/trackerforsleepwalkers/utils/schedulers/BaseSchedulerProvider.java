@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.utils;
+package com.velvet.trackerforsleepwalkers.utils.schedulers;
 
 import androidx.annotation.NonNull;
 

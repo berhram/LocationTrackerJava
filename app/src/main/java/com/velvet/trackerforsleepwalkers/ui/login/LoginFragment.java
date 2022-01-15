@@ -65,15 +65,15 @@ public class LoginFragment extends Fragment implements MviView<LoginIntent, Logi
     private Observable<LoginIntent.SignInIntent> signInIntent() {
         return RxView.clicks(binding.signInButton).map(ignored ->
                 LoginIntent.SignInIntent.create(
-                        binding.emailInput.getText().toString(),
-                        binding.passwordInput.getText().toString()));
+                        binding.emailInput.getText().toString().trim(),
+                        binding.passwordInput.getText().toString().trim()));
     }
 
     private Observable<LoginIntent.SignUpIntent> signUpIntent() {
         return RxView.clicks(binding.signUpButton).map(ignored ->
                 LoginIntent.SignUpIntent.create(
-                        binding.emailInput.getText().toString(),
-                        binding.passwordInput.getText().toString()));
+                        binding.emailInput.getText().toString().trim(),
+                        binding.passwordInput.getText().toString().trim()));
     }
 
     private Observable<LoginIntent.ForgotPasswordIntent> forgotPasswordIntent() {

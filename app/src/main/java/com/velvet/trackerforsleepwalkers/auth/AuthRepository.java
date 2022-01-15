@@ -5,9 +5,7 @@ import com.velvet.trackerforsleepwalkers.R;
 
 import io.reactivex.rxjava3.core.Single;
 
-public class AuthRepository {
-    private AuthRepository INSTANCE = null;
-
+public class AuthRepository implements AuthNetwork {
     private FirebaseAuth mAuth;
 
     private boolean isLoginSuccesful;
@@ -22,12 +20,6 @@ public class AuthRepository {
         this.infoText = infoText;
     }
 
-    public AuthRepository getINSTANCE(FirebaseAuth mAuth) {
-        if (INSTANCE == null) {
-            INSTANCE = new AuthRepository(mAuth);
-        }
-        return INSTANCE;
-    }
 
     public AuthRepository(FirebaseAuth mAuth) {
         this.mAuth = mAuth;

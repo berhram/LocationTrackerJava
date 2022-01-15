@@ -25,6 +25,7 @@ public class AuthRepository implements AuthNetwork {
         this.mAuth = mAuth;
     }
 
+    @Override
     public boolean checkIfUserLoggedIn() {
         if (mAuth.getCurrentUser() == null) {
             return false;
@@ -33,6 +34,7 @@ public class AuthRepository implements AuthNetwork {
         }
     }
 
+    @Override
     public int register(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -44,6 +46,7 @@ public class AuthRepository implements AuthNetwork {
         return infoText;
     }
 
+    @Override
     public boolean login(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

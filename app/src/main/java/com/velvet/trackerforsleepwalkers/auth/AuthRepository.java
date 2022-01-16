@@ -1,12 +1,16 @@
 package com.velvet.trackerforsleepwalkers.auth;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.velvet.trackerforsleepwalkers.App;
 import com.velvet.trackerforsleepwalkers.R;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
 public class AuthRepository implements AuthNetwork {
-    private FirebaseAuth mAuth;
+    @Inject
+    FirebaseAuth mAuth;
 
     private boolean isLoginSuccesful;
 
@@ -23,6 +27,10 @@ public class AuthRepository implements AuthNetwork {
 
     public AuthRepository(FirebaseAuth mAuth) {
         this.mAuth = mAuth;
+    }
+
+    public AuthRepository() {
+        App.getInstance().getComponent().inject(this);
     }
 
     @Override

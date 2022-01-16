@@ -6,7 +6,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
 import com.velvet.trackerforsleepwalkers.auth.AuthRepository;
 import com.velvet.trackerforsleepwalkers.utils.schedulers.BaseSchedulerProvider;
-import com.velvet.trackerforsleepwalkers.utils.schedulers.ImmediateSchedulerProvider;
 import com.velvet.trackerforsleepwalkers.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Singleton;
@@ -15,12 +14,18 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class AppModule {
+public class LoginModule {
+    private final FirebaseAuth mFirebaseAuth;
+
+    public LoginModule(FirebaseAuth mFirebaseAuth) {
+        this.mFirebaseAuth = mFirebaseAuth;
+    }
+
     @Provides
     @Singleton
     @NonNull
     AuthNetwork providesAuthRepository() {
-        return new AuthRepository(FirebaseAuth.getInstance());
+        return new AuthRepository(mFirebaseAuth);
     }
 
     @Provides
@@ -29,13 +34,4 @@ public class AppModule {
     BaseSchedulerProvider providesSchedulerProvider() {
         return new SchedulerProvider();
     }
-/*
-    @Provides
-    @Singleton
-    @NonNull
-    BaseSchedulerProvider providesImmediateSchedulerProvider() {
-        return new ImmediateSchedulerProvider();
-    }
-
- */
 }

@@ -1,9 +1,7 @@
 package com.velvet.trackerforsleepwalkers.ui.login;
 
-import androidx.annotation.NonNull;
-
 import com.velvet.trackerforsleepwalkers.App;
-import com.velvet.trackerforsleepwalkers.auth.AuthRepository;
+import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
 import com.velvet.trackerforsleepwalkers.utils.schedulers.BaseSchedulerProvider;
 
 import javax.inject.Inject;
@@ -11,16 +9,13 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.ObservableTransformer;
 
 public class LoginActionProcessorHolder {
-    @NonNull
     @Inject
-    AuthRepository mAuthRepository;
-
-    @NonNull
+    AuthNetwork mAuthRepository;
     @Inject
     BaseSchedulerProvider mSchedulerProvider;
 
     public LoginActionProcessorHolder() {
-        App.getInstance().getAppComponent().inject(this);
+        App.getInstance().getComponent().inject(this);
     }
 
     private ObservableTransformer<LoginAction.InitialAction, LoginResult.Initial> initialActionProcessor =

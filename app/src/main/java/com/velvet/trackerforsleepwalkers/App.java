@@ -2,21 +2,23 @@ package com.velvet.trackerforsleepwalkers;
 
 import android.app.Application;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class App extends Application {
 
     private static App instance;
 
-    private AppComponent loginComponent;
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-        loginComponent = DaggerAppComponent.builder().loginModule(new AppModule()).build();
+        appComponent = DaggerAppComponent.builder().loginModule(new LoginModule(FirebaseAuth.getInstance())).build();
     }
 
-    public AppComponent getLoginComponent() {
-        return loginComponent;
+    public AppComponent getComponent() {
+        return appComponent;
     }
 
     public static App getInstance() {

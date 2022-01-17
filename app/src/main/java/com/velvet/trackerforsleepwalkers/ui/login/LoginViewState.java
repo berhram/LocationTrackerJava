@@ -6,38 +6,30 @@ import androidx.annotation.Nullable;
 import com.google.auto.value.AutoValue;
 import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
 
-@AutoValue
-abstract class LoginViewState implements MviViewState {
-    abstract boolean isPasswordForgotten();
+public class LoginViewState extends MviViewState<LoginContract.View> {
+    private static final int ACTION_CHECK = 1;
+    private static final int ACTION_SIGN_IN = 2;
+    private static final int ACTION_SIGN_UP  = 3;
+    private static final int ACTION_FORGOT_PASSWORD  = 4;
 
-    abstract boolean isSignInSuccess();
+    private final int action;
 
-    abstract String infoText();
-
-    public abstract Builder buildWith();
-
-    @Nullable
-    abstract Throwable error();
-
-    static LoginViewState idle() {
-        return new AutoValue_LoginViewState.Builder()
-                .isPasswordForgotten(false)
-                .isSignInSuccess(false)
-                .error(null)
-                .infoText("")
-                .build();
+    public LoginViewState(int action) {
+        this.action = action;
     }
 
-    @AutoValue.Builder
-    static abstract class Builder {
-        abstract Builder isPasswordForgotten(boolean isPasswordForgotten);
+    @Override
+    public void visit(LoginContract.View screen) {
+        if (action == ACTION_CHECK ) {
 
-        abstract Builder isSignInSuccess(boolean isSignInSuccess);
+        } else if (action == ACTION_SIGN_IN) {
 
-        abstract Builder infoText(String infoText);
 
-        abstract Builder error(@NonNull Throwable error);
+        } else if (action == ACTION_SIGN_UP) {
 
-        abstract LoginViewState build();
+
+        } else {
+
+        }
     }
 }

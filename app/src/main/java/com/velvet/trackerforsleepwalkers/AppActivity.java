@@ -1,31 +1,39 @@
 package com.velvet.trackerforsleepwalkers;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-    
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+
 import android.os.Bundle;
 
-public class AppActivity extends AppCompatActivity {
+import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
+import com.velvet.trackerforsleepwalkers.ui.login.LoginFragmentDirections;
 
-    private FragmentManager fragmentManager;
+public class AppActivity extends AppCompatActivity implements LoginContract.Host {
 
-    public AppActivity() {
-        super(R.layout.activity_main);
-    }
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        fragmentManager = getSupportFragmentManager();
-        if (savedInstanceState == null) {
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragmentContainerView, LoginFragment.newInstance(), null)
-                    .commit();
-        }
-
-         */
+        setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        navController = Navigation.findNavController(this, R.id.fragmentContainerView);
+    }
 
+    @Override
+    public void proceedToNextScreen() {
+        navController.navigate(LoginFragmentDirections.loginScreenToMapScreen());
+    }
+
+    @Override
+    public void proceedToPasswordRecovery() {
+        navController.navigate(LoginFragmentDirections.loginScreenToPassordRecoveryScreen());
+    }
 }

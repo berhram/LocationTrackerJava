@@ -3,14 +3,12 @@ package com.velvet.trackerforsleepwalkers.auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.trackerforsleepwalkers.App;
 import com.velvet.trackerforsleepwalkers.R;
+import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Single;
-
 public class AuthRepository implements AuthNetwork {
-    @Inject
-    FirebaseAuth mAuth;
+    FirebaseAuth firebaseAuth;
 
     private boolean isLoginSuccesful;
 
@@ -24,9 +22,9 @@ public class AuthRepository implements AuthNetwork {
         this.infoText = infoText;
     }
 
-
-    public AuthRepository(FirebaseAuth mAuth) {
-        this.mAuth = mAuth;
+    @Inject
+    public AuthRepository(FirebaseAuth firebaseAuth) {
+        this.firebaseAuth = firebaseAuth;
     }
 
     public AuthRepository() {
@@ -35,7 +33,7 @@ public class AuthRepository implements AuthNetwork {
 
     @Override
     public boolean checkIfUserLoggedIn() {
-        if (mAuth.getCurrentUser() == null) {
+        if (firebaseAuth.getCurrentUser() == null) {
             return false;
         } else {
             return true;
@@ -44,7 +42,7 @@ public class AuthRepository implements AuthNetwork {
 
     @Override
     public int register(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 setInfoText(R.string.success_registration);
             } else {
@@ -56,7 +54,7 @@ public class AuthRepository implements AuthNetwork {
 
     @Override
     public boolean login(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 setIsLoginSuccessful(true);
             } else {

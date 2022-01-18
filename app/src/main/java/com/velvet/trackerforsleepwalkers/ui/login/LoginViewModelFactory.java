@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.trackerforsleepwalkers.AppComponent;
 
+import io.reactivex.rxjava3.subjects.PublishSubject;
+
 public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final AppComponent appComponent;
 

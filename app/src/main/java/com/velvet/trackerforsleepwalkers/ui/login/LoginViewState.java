@@ -1,9 +1,5 @@
 package com.velvet.trackerforsleepwalkers.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.auto.value.AutoValue;
 import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
 
 public class LoginViewState extends MviViewState<LoginContract.View> {
@@ -16,6 +12,22 @@ public class LoginViewState extends MviViewState<LoginContract.View> {
 
     public LoginViewState(int action) {
         this.action = action;
+    }
+
+    static public LoginViewState createCheckState() {
+        return new LoginViewState(ACTION_CHECK);
+    }
+
+    static public LoginViewState createSignInState() {
+        return new LoginViewState(ACTION_SIGN_IN);
+    }
+
+    static public LoginViewState createSignUpState() {
+        return new LoginViewState(ACTION_SIGN_UP);
+    }
+
+    static public LoginViewState createForgotPasswordState() {
+        return new LoginViewState(ACTION_FORGOT_PASSWORD);
     }
 
     @Override

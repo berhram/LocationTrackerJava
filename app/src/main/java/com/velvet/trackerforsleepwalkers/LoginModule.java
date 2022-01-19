@@ -11,15 +11,15 @@ import dagger.Provides;
 
 @Module
 public class LoginModule {
-    private final FirebaseAuth firebaseAuth;
-
-    public LoginModule(FirebaseAuth firebaseAuth) {
-        this.firebaseAuth = firebaseAuth;
+    @Provides
+    @Singleton
+    FirebaseAuth providesFirebaseAuth() {
+        return FirebaseAuth.getInstance();
     }
 
     @Provides
     @Singleton
-    AuthNetwork providesAuthRepository() {
-        return new AuthRepository(firebaseAuth);
+    AuthRepository providesAuthRepository() {
+        return new AuthRepository();
     }
 }

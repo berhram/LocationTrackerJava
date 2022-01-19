@@ -7,6 +7,7 @@ import com.velvet.trackerforsleepwalkers.R;
 import javax.inject.Inject;
 
 public class AuthRepository implements AuthNetwork {
+    @Inject
     FirebaseAuth firebaseAuth;
 
     private boolean isLoginSuccessful;
@@ -19,11 +20,6 @@ public class AuthRepository implements AuthNetwork {
 
     private void setInfoText(Integer infoText) {
         this.infoText = infoText;
-    }
-
-    @Inject
-    public AuthRepository(FirebaseAuth firebaseAuth) {
-        this.firebaseAuth = firebaseAuth;
     }
 
     public AuthRepository() {

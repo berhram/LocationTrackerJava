@@ -14,7 +14,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        appComponent = DaggerAppComponent.builder().loginModule(new LoginModule(FirebaseAuth.getInstance())).build();
+        appComponent = DaggerAppComponent.builder().loginModule(new LoginModule()).build();
     }
 
     public AppComponent getComponent() {

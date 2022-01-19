@@ -10,16 +10,16 @@ public class AuthRepository implements AuthNetwork {
     @Inject
     FirebaseAuth firebaseAuth;
 
-    private boolean isLoginSuccessful;
 
     private Integer infoText;
 
-    private void setIsLoginSuccessful(boolean isLoginSuccesful) {
-        this.isLoginSuccessful = isLoginSuccesful;
-    }
-
     private void setInfoText(Integer infoText) {
         this.infoText = infoText;
+    }
+
+    @Override
+    public int getInfoText() {
+        return infoText;
     }
 
     public AuthRepository() {
@@ -28,34 +28,25 @@ public class AuthRepository implements AuthNetwork {
 
     @Override
     public boolean checkIfUserLoggedIn() {
-        if (firebaseAuth.getCurrentUser() == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return firebaseAuth.getCurrentUser() != null;
+
     }
 
     @Override
     public int register(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                setInfoText(R.string.success_registration);
-            } else {
-                setInfoText(R.string.invalid_email_or_password);
-            }
+            int message = task.isSuccessful() ? R.string.success_registration : R.string.user_already_registered;
+            setInfoText(message);
         });
         return infoText;
     }
 
     @Override
-    public boolean login(String email, String password) {
+    public int login(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                setIsLoginSuccessful(true);
-            } else {
-                setIsLoginSuccessful(false);
-            }
+            int message = task.isSuccessful() ? R.string.success_login : R.string.invalid_email_or_password;
+            setInfoText(message);
         });
-        return isLoginSuccessful;
+        return infoText;
     }
 }

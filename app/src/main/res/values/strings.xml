@@ -19,6 +19,8 @@
     <string name="settings_screen_label">Settings screen</string>
     <string name="history_screen_label">History screen</string>
     <!--Login warnings-->
-    <string name="success_registration">Your account was successfully registered!</string>
+    <string name="success_registration">Your account was successfully sign up!</string>
+    <string name="success_login">You successfully sign in!</string>
     <string name="invalid_email_or_password">E-mail or password is incorrect!</string>
+    <string name="user_already_registered">User already registered!</string>
 </resources>

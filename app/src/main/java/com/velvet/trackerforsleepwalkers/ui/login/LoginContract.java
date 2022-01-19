@@ -10,10 +10,14 @@ public class LoginContract {
 
         void setInfoText(int infoText);
 
-        void onLoginSuccess();
+        void checkIfUserSignIn();
+
+        void success();
     }
 
     public interface View extends FragmentContract.View {
+        void setInfoText(int infoText);
+
         void proceedToPasswordRecovery();
 
         void proceedToNextScreen();

@@ -1,5 +1,7 @@
 package com.velvet.trackerforsleepwalkers.ui.login;
 
+import android.util.Log;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -17,7 +19,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 public class LoginViewModel extends MviViewModel<LoginViewState> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
-    private final BehaviorSubject<Integer> registerSubject = BehaviorSubject.create();
+
+    private final BehaviorSubject<Integer> infoTextSubject = BehaviorSubject.create();
 
     public LoginViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
@@ -26,15 +29,19 @@ public class LoginViewModel extends MviViewModel<LoginViewState> implements Logi
     @Override
     public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
         super.onAny(owner, event);
-        //check if user already sign in and start checking when it happens
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                loginSubject.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                    if (aBoolean) {
-                        onLoginSuccess();
-                    }
-                }),
-                registerSubject.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(infoText -> {
+                loginSubject
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aBoolean -> {
+                            if (aBoolean) {
+                                success();
+                            }
+                        }, e -> {
+                            e.printStackTrace();
+                        }),
+                infoTextSubject.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(infoText -> {
                     setInfoText(infoText);
                 })
             );
@@ -49,21 +56,27 @@ public class LoginViewModel extends MviViewModel<LoginViewState> implements Logi
 
     @Override
     public void signIn(String email, String password) {
-        loginSubject.onNext(authRepository.login(email, password));
+        infoTextSubject.onNext(authRepository.login(email, password));
+        checkIfUserSignIn();
     }
 
     @Override
     public void signUp(String email, String password) {
-        registerSubject.onNext(authRepository.register(email, password));
+        infoTextSubject.onNext(authRepository.register(email, password));
+    }
+
+    @Override
+    public void success() {
+        setState(LoginViewState.createSuccess());
     }
 
     @Override
     public void setInfoText(int infoText) {
-        setState(LoginViewState.createSignUpState(infoText));
+        setState(LoginViewState.createSetTextState(infoText));
     }
 
     @Override
-    public void onLoginSuccess() {
-        setState(LoginViewState.createSuccess());
+    public void checkIfUserSignIn() {
+        loginSubject.onNext(authRepository.checkIfUserLoggedIn());
     }
 }

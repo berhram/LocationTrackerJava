@@ -4,20 +4,16 @@ import com.velvet.trackerforsleepwalkers.mvi.FragmentContract;
 
 public class LoginContract {
     public interface ViewModel extends FragmentContract.ViewModel<LoginViewState> {
-        void setEmail(String email);
+        void signIn(String email, String password);
 
-        void setPassword(String password);
+        void signUp(String email, String password);
 
         void setInfoText(int infoText);
+
+        void onLoginSuccess();
     }
 
     public interface View extends FragmentContract.View {
-        void setInfoText(int infoText);
-
-        void setEmail(String email);
-
-        void setPassword(String password);
-
         void proceedToPasswordRecovery();
 
         void proceedToNextScreen();

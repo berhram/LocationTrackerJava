@@ -3,19 +3,18 @@ package com.velvet.trackerforsleepwalkers.auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.trackerforsleepwalkers.App;
 import com.velvet.trackerforsleepwalkers.R;
-import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
 
 import javax.inject.Inject;
 
 public class AuthRepository implements AuthNetwork {
     FirebaseAuth firebaseAuth;
 
-    private boolean isLoginSuccesful;
+    private boolean isLoginSuccessful;
 
     private Integer infoText;
 
     private void setIsLoginSuccessful(boolean isLoginSuccesful) {
-        this.isLoginSuccesful = isLoginSuccesful;
+        this.isLoginSuccessful = isLoginSuccesful;
     }
 
     private void setInfoText(Integer infoText) {
@@ -61,6 +60,6 @@ public class AuthRepository implements AuthNetwork {
                 setIsLoginSuccessful(false);
             }
         });
-        return isLoginSuccesful;
+        return isLoginSuccessful;
     }
 }

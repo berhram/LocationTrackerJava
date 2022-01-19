@@ -7,50 +7,63 @@ import androidx.lifecycle.LiveData;
 import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
 import com.velvet.trackerforsleepwalkers.mvi.MviViewModel;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LoginViewModel extends MviViewModel<LoginViewState> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
-    //I don't understand what 'subjects' do. It is like LiveData and UI should observe them?
-    private final PublishSubject<Boolean> isSuccess = PublishSubject.create();
-    private final BehaviorSubject<String> email = BehaviorSubject.create();
-    private final BehaviorSubject<String> password = BehaviorSubject.create();
-    private final BehaviorSubject<String> infoText = BehaviorSubject.create();
-
+    private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
+    private final BehaviorSubject<Integer> registerSubject = BehaviorSubject.create();
 
     public LoginViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
     }
 
-    //what's supposed to happen here? setup of ViewModel?
     @Override
     public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
         super.onAny(owner, event);
+        //check if user already sign in and start checking when it happens
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                isSuccess.
+                loginSubject.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        onLoginSuccess();
+                    }
+                }),
+                registerSubject.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(infoText -> {
+                    setInfoText(infoText);
+                })
             );
+            loginSubject.onNext(authRepository.checkIfUserLoggedIn());
         }
     }
 
     @Override
     protected LoginViewState getDefaultState() {
-        return LoginViewState.createCheckState();
+        return LoginViewState.createInitialState();
     }
 
     @Override
-    public void setEmail(String email) {
-
+    public void signIn(String email, String password) {
+        loginSubject.onNext(authRepository.login(email, password));
     }
 
     @Override
-    public void setPassword(String password) {
-
+    public void signUp(String email, String password) {
+        registerSubject.onNext(authRepository.register(email, password));
     }
 
     @Override
     public void setInfoText(int infoText) {
+        setState(LoginViewState.createSignUpState(infoText));
+    }
 
+    @Override
+    public void onLoginSuccess() {
+        setState(LoginViewState.createSuccess());
     }
 }

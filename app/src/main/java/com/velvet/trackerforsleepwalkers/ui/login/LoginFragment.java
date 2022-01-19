@@ -49,21 +49,6 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
     }
 
     @Override
-    public void setInfoText(int infoText) {
-        binding.infoText.setText(infoText);
-    }
-
-    @Override
-    public void setEmail(String email) {
-        binding.emailInput.setText(email);
-    }
-
-    @Override
-    public void setPassword(String password) {
-        binding.passwordInput.setText(password);
-    }
-
-    @Override
     public void proceedToPasswordRecovery() {
         if (hasHost()) {
             getFragmentHost().proceedToPasswordRecovery();
@@ -80,9 +65,9 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
     @Override
     public void onClick(View v) {
         if (v == binding.signInButton) {
-
+            getModel().signIn(binding.emailInput.getText().toString().trim(), binding.passwordInput.getText().toString().trim());
         } else if (v == binding.signUpButton) {
-
+            getModel().signUp(binding.emailInput.getText().toString().trim(), binding.passwordInput.getText().toString().trim());
         } else if (v == binding.forgotPasswordButton) {
             proceedToPasswordRecovery();
         } else {

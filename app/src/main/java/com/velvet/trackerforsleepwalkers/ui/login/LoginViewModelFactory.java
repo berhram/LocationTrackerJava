@@ -4,18 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.trackerforsleepwalkers.App;
-import com.velvet.trackerforsleepwalkers.AppComponent;
-import com.velvet.trackerforsleepwalkers.auth.AuthRepository;
+import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthNetwork;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.subjects.PublishSubject;
-
 public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @Inject
-    AuthRepository repository;
+    FirebaseAuthNetwork repository;
 
     public LoginViewModelFactory() {
         App.getInstance().getComponent().inject(this);

@@ -1,8 +1,7 @@
-package com.velvet.trackerforsleepwalkers;
+package com.velvet.trackerforsleepwalkers.models;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
-import com.velvet.trackerforsleepwalkers.auth.AuthRepository;
+import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthNetwork;
 
 import javax.inject.Singleton;
 
@@ -19,7 +18,7 @@ public class LoginModule {
 
     @Provides
     @Singleton
-    AuthRepository providesAuthRepository() {
-        return new AuthRepository();
+    FirebaseAuthNetwork providesAuthRepository() {
+        return new FirebaseAuthNetwork();
     }
 }

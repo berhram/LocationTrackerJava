@@ -65,7 +65,7 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
             getModel().signIn(binding.emailInput.getText().toString().trim(), binding.passwordInput.getText().toString().trim());
         } else if (v == binding.signUpButton) {
             getModel().signUp(binding.emailInput.getText().toString().trim(), binding.passwordInput.getText().toString().trim());
-        } else {
+        } else if (v == binding.forgotPasswordButton) {
             proceedToPasswordRecovery();
         }
     }

@@ -1,15 +1,10 @@
 package com.velvet.trackerforsleepwalkers.ui.login;
 
-import android.util.Log;
-
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 
 import com.velvet.trackerforsleepwalkers.auth.AuthNetwork;
 import com.velvet.trackerforsleepwalkers.mvi.MviViewModel;
-
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

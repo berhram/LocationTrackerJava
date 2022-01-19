@@ -2,8 +2,6 @@ package com.velvet.trackerforsleepwalkers;
 
 import android.app.Application;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 public class App extends Application {
 
     private static App instance;

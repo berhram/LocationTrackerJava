@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-
-import com.velvet.trackerforsleepwalkers.App;
 
 import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
 import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
@@ -30,7 +27,7 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
 
     @Override
     protected LoginContract.ViewModel createModel() {
-        return new ViewModelProvider(this, new LoginViewModelFactory(App.getInstance().getComponent())).get(LoginViewModel.class);
+        return new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
     }
 
     @Nullable

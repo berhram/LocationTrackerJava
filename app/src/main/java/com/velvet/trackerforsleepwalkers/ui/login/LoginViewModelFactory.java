@@ -17,7 +17,7 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
     @Inject
     AuthRepository repository;
 
-    public LoginViewModelFactory(AppComponent appComponent) {
+    public LoginViewModelFactory() {
         App.getInstance().getComponent().inject(this);
     }
 

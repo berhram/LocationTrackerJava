@@ -15,10 +15,6 @@ import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
 public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.ViewModel, LoginContract.Host> implements LoginContract.View, View.OnClickListener {
     private FragmentLoginBinding binding;
 
-    public static LoginFragment newInstance() {
-        return new LoginFragment();
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +39,7 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
         binding.signInButton.setOnClickListener(this);
         binding.signUpButton.setOnClickListener(this);
         binding.forgotPasswordButton.setOnClickListener(this);
+
     }
 
     @Override

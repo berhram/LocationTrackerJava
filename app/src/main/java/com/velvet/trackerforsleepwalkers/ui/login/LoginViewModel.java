@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class LoginViewModel extends MviViewModel<LoginViewState> implements LoginContract.ViewModel {
+public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
     private final BehaviorSubject<AuthParams> infoTextSubject = BehaviorSubject.create();
@@ -47,7 +47,6 @@ public class LoginViewModel extends MviViewModel<LoginViewState> implements Logi
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
-                                // nt message = task.isSuccessful() ? R.string.success_registration : R.string.user_already_registered;
                                 if (result.isError()) {
                                     result.error.printStackTrace();
                                     setInfoText(R.string.invalid_email_or_password);
@@ -80,7 +79,7 @@ public class LoginViewModel extends MviViewModel<LoginViewState> implements Logi
 
     @Override
     public void success() {
-        setState(LoginViewState.createSuccess());
+        setAction(new LoginViewEffect());
     }
 
     @Override
@@ -92,7 +91,6 @@ public class LoginViewModel extends MviViewModel<LoginViewState> implements Logi
     public void checkIfUserSignIn() {
         loginSubject.onNext(authRepository.checkIfUserLoggedIn());
     }
-
 
     private static class AuthParams {
         private final String email;

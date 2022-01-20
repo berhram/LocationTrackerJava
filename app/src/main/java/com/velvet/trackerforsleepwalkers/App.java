@@ -3,6 +3,7 @@ package com.velvet.trackerforsleepwalkers;
 import android.app.Application;
 
 import com.velvet.trackerforsleepwalkers.models.AppComponent;
+import com.velvet.trackerforsleepwalkers.models.DaggerAppComponent;
 import com.velvet.trackerforsleepwalkers.models.LoginModule;
 
 public class App extends Application {

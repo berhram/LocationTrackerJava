@@ -6,7 +6,6 @@ public class LoginViewState extends MviViewState<LoginContract.View> {
     private static final int ACTION_INITIAL = 1;
     private static final int ACTION_SET_TEXT = 2;
     private static final int ACTION_SUCCESS  = 3;
-    private static final int ACTION_FORGOT_PASSWORD  = 4;
 
     private final int action;
 
@@ -33,21 +32,14 @@ public class LoginViewState extends MviViewState<LoginContract.View> {
         return new LoginViewState(ACTION_SUCCESS);
     }
 
-    static public LoginViewState createForgotPasswordState() {
-        return new LoginViewState(ACTION_FORGOT_PASSWORD);
-    }
 
     @Override
     public void visit(LoginContract.View screen) {
         if (action == ACTION_INITIAL) {
-
         } else if (action == ACTION_SET_TEXT) {
             screen.setInfoText(infoText);
         } else if (action == ACTION_SUCCESS) {
             screen.proceedToNextScreen();
-
-        } else if (action == ACTION_FORGOT_PASSWORD) {
-            screen.proceedToPasswordRecovery();
         }
     }
 }

@@ -11,4 +11,8 @@ public interface AuthNetwork {
     @NonNull Single<Result<Boolean>> login(String email, String password);
 
     @NonNull Single<Result<Boolean>> register(String email, String password);
+
+    @NonNull Single<Result<Boolean>> requestCode(String email);
+
+    @NonNull Single<Result<Boolean>> checkCode(String code, String newPassword);
 }

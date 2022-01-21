@@ -45,14 +45,14 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
     @Override
     public void proceedToPasswordRecovery() {
         if (hasHost()) {
-            getFragmentHost().proceedToPasswordRecovery();
+            getFragmentHost().proceedToPasswordRecovery("Login");
         }
     }
 
     @Override
     public void proceedToNextScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToNextScreen();
+            getFragmentHost().proceedToNextScreen("Login");
         }
     }
 

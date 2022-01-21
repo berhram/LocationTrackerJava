@@ -18,6 +18,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
 
     public FirebaseAuthNetwork() {
         App.getInstance().getComponent().inject(this);
+        firebaseAuth.useAppLanguage();
     }
 
     @Override
@@ -31,7 +32,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
             final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(email, password);
             Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success(true); // or what data you need
+                return Result.success(true);
             } else {
                 return Result.error(task.getException());
             }
@@ -44,7 +45,33 @@ public class FirebaseAuthNetwork implements AuthNetwork {
             final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(email, password);
             Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success(true); // or what data you need
+                return Result.success(true);
+            } else {
+                return Result.error(task.getException());
+            }
+        });
+    }
+
+    @Override
+    public @NonNull Single<Result<Boolean>> requestCode(String email) {
+        return Single.fromCallable(() -> {
+            final Task<Void> task = firebaseAuth.sendPasswordResetEmail(email);
+            Tasks.await(task);
+            if (task.isSuccessful()) {
+                return Result.success(true);
+            } else {
+                return Result.error(task.getException());
+            }
+        });
+    }
+
+    @Override
+    public @NonNull Single<Result<Boolean>> checkCode(String code, String newPassword) {
+        return Single.fromCallable(() -> {
+            final Task<Void> task = firebaseAuth.confirmPasswordReset(code, newPassword);
+            Tasks.await(task);
+            if (task.isSuccessful()) {
+                return Result.success(true);
             } else {
                 return Result.error(task.getException());
             }

@@ -1,0 +1,25 @@
+package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
+
+import com.velvet.trackerforsleepwalkers.mvi.FragmentContract;
+
+public class PasswordRecoveryContract {
+    public interface ViewModel extends FragmentContract.ViewModel<PasswordRecoveryViewState> {
+        void requestCode(String email);
+
+        void checkCode(String code, String newPassword);
+
+        void setInfoText(int infoText);
+
+        void success();
+    }
+
+    public interface View extends FragmentContract.View {
+        void setInfoText(int infoText);
+
+        void proceedToPreviousScreen();
+    }
+
+    public interface Host extends FragmentContract.Host {
+        void proceedToPreviousScreen(String id);
+    }
+}

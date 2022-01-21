@@ -10,8 +10,6 @@ public class LoginContract {
 
         void setInfoText(int infoText);
 
-        void checkIfUserSignIn();
-
         void success();
     }
 
@@ -24,8 +22,8 @@ public class LoginContract {
     }
 
     public interface Host extends FragmentContract.Host {
-        void proceedToPasswordRecovery();
+        void proceedToPasswordRecovery(String id);
 
-        void proceedToNextScreen();
+        void proceedToNextScreen(String id);
     }
 }

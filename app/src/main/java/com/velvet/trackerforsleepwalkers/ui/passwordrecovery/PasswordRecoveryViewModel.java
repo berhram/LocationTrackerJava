@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -12,12 +12,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
+public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
     private final AuthNetwork authRepository;
-    private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
-    private final BehaviorSubject<AuthParams> infoTextSubject = BehaviorSubject.create();
+    private final PublishSubject<Boolean> passwordRecoverySubject = PublishSubject.create();
+    private final BehaviorSubject<RecoveryParams> infoTextSubject = BehaviorSubject.create();
 
-    public LoginViewModel(AuthNetwork authRepository) {
+    public PasswordRecoveryViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
     }
 
@@ -26,7 +26,7 @@ public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    loginSubject
+                    passwordRecoverySubject
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(aBoolean -> {
@@ -38,10 +38,10 @@ public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect
                             }),
                     infoTextSubject
                             .switchMap(p -> {
-                                if ("register".equals(p.type)) {
-                                    return authRepository.register(p.email, p.password).toObservable();
+                                if ("request".equals(p.type)) {
+                                    return authRepository.requestCode(p.email).toObservable();
                                 } else {
-                                    return authRepository.login(p.email, p.password).toObservable();
+                                    return authRepository.checkCode(p.code, p.newPassword).toObservable();
                                 }
                             })
                             .subscribeOn(Schedulers.io())
@@ -51,50 +51,55 @@ public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect
                                     result.error.printStackTrace();
                                     setInfoText(R.string.invalid_email_or_password);
                                 } else {
-                                    setInfoText(R.string.success_login);
+                                    setInfoText(R.string.password_successfully_changed);
                                 }
                             }, e -> {
                                 e.printStackTrace();
-                                setInfoText(R.string.invalid_email_or_password);
+                                setInfoText(R.string.invalid_recovery_email);
                             })
             );
-            loginSubject.onNext(authRepository.checkIfUserLoggedIn());
         }
     }
 
     @Override
-    protected LoginViewState getDefaultState() {
-        return LoginViewState.createSetTextState(R.string.initial);
-    }
-
-    @Override
-    public void signIn(String email, String password) {
-        infoTextSubject.onNext(new AuthParams(email, password, "login"));
-    }
-
-    @Override
-    public void signUp(String email, String password) {
-        infoTextSubject.onNext(new AuthParams(email, password, "register"));
+    protected PasswordRecoveryViewState getDefaultState() {
+        return PasswordRecoveryViewState.createSetTextState(R.string.initial);
     }
 
     @Override
     public void success() {
-        setAction(new LoginViewEffect.ProceedToNextScreen());
+        setAction(new PasswordRecoveryViewEffect.ProceedToPreviousScreen());
     }
 
     @Override
     public void setInfoText(int infoText) {
-        setState(LoginViewState.createSetTextState(infoText));
+        setState(PasswordRecoveryViewState.createSetTextState(infoText));
     }
 
-    private static class AuthParams {
-        private final String email;
-        private final String password;
-        private final String type;
+    @Override
+    public void requestCode(String email) {
+        infoTextSubject.onNext(new RecoveryParams(email, "request"));
+    }
 
-        AuthParams(String email, String password, String type) {
+    @Override
+    public void checkCode(String code, String newPassword) {
+        infoTextSubject.onNext(new RecoveryParams(code, newPassword, "check"));
+    }
+
+    private static class RecoveryParams {
+        private final String type;
+        private String email;
+        private String newPassword;
+        private String code;
+
+        RecoveryParams(String code, String newPassword, String type) {
+            this.newPassword = newPassword;
+            this.code = code;
+            this.type = type;
+        }
+
+        RecoveryParams(String email, String type) {
             this.email = email;
-            this.password = password;
             this.type = type;
         }
     }

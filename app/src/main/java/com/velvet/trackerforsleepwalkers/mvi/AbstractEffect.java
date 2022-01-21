@@ -2,7 +2,7 @@ package com.velvet.trackerforsleepwalkers.mvi;
 
 import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
 
-public abstract class AbstractEffect<T>{
+public abstract class AbstractEffect<T> implements MviViewEffect<T>{
     boolean isHandled = false;
 
     public void visit(T screen) {

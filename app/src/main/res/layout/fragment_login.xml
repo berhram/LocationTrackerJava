@@ -37,7 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:inputType="textEmailAddress|textAutoComplete" />
+            android:inputType="textEmailAddress|textAutoComplete"
+            android:textColor="@color/primaryTextColor"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -63,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:textColor="@color/primaryTextColor"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

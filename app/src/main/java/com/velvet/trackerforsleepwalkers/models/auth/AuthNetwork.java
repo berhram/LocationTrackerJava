@@ -12,7 +12,7 @@ public interface AuthNetwork {
 
     @NonNull Single<Result<Boolean>> register(String email, String password);
 
-    @NonNull Single<Result<Boolean>> requestCode(String email);
+    @NonNull Single<Result<FirebaseAuthUtils.RecoveryResult>> requestCode(String email);
 
-    @NonNull Single<Result<Boolean>> checkCode(String code, String newPassword);
+    @NonNull Single<Result<FirebaseAuthUtils.RecoveryResult>> checkCode(String code, String newPassword);
 }

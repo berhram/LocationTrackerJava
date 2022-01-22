@@ -53,12 +53,12 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     }
 
     @Override
-    public @NonNull Single<Result<Boolean>> requestCode(String email) {
+    public @NonNull Single<Result<FirebaseAuthUtils.RecoveryResult>> requestCode(String email) {
         return Single.fromCallable(() -> {
             final Task<Void> task = firebaseAuth.sendPasswordResetEmail(email);
             Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success(true);
+                return Result.success(new FirebaseAuthUtils.RecoveryResult(true, "request"));
             } else {
                 return Result.error(task.getException());
             }
@@ -66,12 +66,12 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     }
 
     @Override
-    public @NonNull Single<Result<Boolean>> checkCode(String code, String newPassword) {
+    public @NonNull Single<Result<FirebaseAuthUtils.RecoveryResult>> checkCode(String code, String newPassword) {
         return Single.fromCallable(() -> {
             final Task<Void> task = firebaseAuth.confirmPasswordReset(code, newPassword);
             Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success(true);
+                return Result.success(new FirebaseAuthUtils.RecoveryResult(true, "check"));
             } else {
                 return Result.error(task.getException());
             }

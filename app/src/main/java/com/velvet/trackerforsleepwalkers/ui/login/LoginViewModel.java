@@ -48,10 +48,13 @@ public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
                                 if (result.isError()) {
+                                    //TODO add variety in messages like in recovery screen
                                     result.error.printStackTrace();
                                     setInfoText(R.string.invalid_email_or_password);
                                 } else {
                                     setInfoText(R.string.success_login);
+                                    //login after successful sign in
+                                    loginSubject.onNext(authRepository.checkIfUserLoggedIn());
                                 }
                             }, e -> {
                                 e.printStackTrace();
@@ -87,6 +90,7 @@ public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect
         setState(LoginViewState.createSetTextState(infoText));
     }
 
+    //TODO remove from there
     private static class AuthParams {
         private final String email;
         private final String password;

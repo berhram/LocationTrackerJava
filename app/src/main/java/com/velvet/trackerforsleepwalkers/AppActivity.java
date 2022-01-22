@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.velvet.trackerforsleepwalkers.databinding.ActivityMainBinding;
 import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
@@ -34,8 +35,10 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
     @Override
     public void proceedToNextScreen(String id) {
         if (id.equals("Login")) {
+            Log.d("nav", "proceedToNextScreen");
             navController.navigate(LoginFragmentDirections.loginScreenToMapScreen());
         } else if (id.equals("Password recovery")) {
+            Log.d("nav", "proceedToNextScreen");
             navController.navigate(PasswordRecoveryFragmentDirections.passwordRecoveryScreenToLoginScreen());
         }
     }

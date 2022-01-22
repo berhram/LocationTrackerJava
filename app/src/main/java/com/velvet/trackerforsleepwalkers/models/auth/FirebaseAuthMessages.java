@@ -1,6 +1,6 @@
 package com.velvet.trackerforsleepwalkers.models.auth;
 
-public class FirebaseAuthUtils {
+public class FirebaseAuthMessages {
     //classes used to communicate with auth repo
     public static class RecoveryParams {
         private final String type;
@@ -47,6 +47,30 @@ public class FirebaseAuthUtils {
 
         public String getId() {
             return id;
+        }
+    }
+
+    public static class AuthParams {
+        private final String email;
+        private final String password;
+        private final String type;
+
+        public AuthParams(String email, String password, String type) {
+            this.email = email;
+            this.password = password;
+            this.type = type;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public String getType() {
+            return type;
         }
     }
 }

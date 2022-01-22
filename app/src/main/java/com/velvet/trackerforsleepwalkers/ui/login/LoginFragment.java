@@ -1,6 +1,7 @@
 package com.velvet.trackerforsleepwalkers.ui.login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
     @Override
     public void proceedToNextScreen() {
         if (hasHost()) {
+            Log.d("Nav", "proceedToNextScreen in Fr");
             getFragmentHost().proceedToNextScreen("Login");
         }
     }

@@ -30,7 +30,6 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     public @NonNull Single<Result<Boolean>> register(String email, String password) {
         return Single.fromCallable(() -> {
             final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(email, password);
-            Tasks.await(task);
             if (task.isSuccessful()) {
                 return Result.success(true);
             } else {
@@ -43,7 +42,6 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     public @NonNull Single<Result<Boolean>> login(String email, String password) {
         return Single.fromCallable(() -> {
             final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(email, password);
-            Tasks.await(task);
             if (task.isSuccessful()) {
                 return Result.success(true);
             } else {
@@ -53,12 +51,11 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     }
 
     @Override
-    public @NonNull Single<Result<FirebaseAuthUtils.RecoveryResult>> requestCode(String email) {
+    public @NonNull Single<Result<FirebaseAuthMessages.RecoveryResult>> requestCode(String email) {
         return Single.fromCallable(() -> {
             final Task<Void> task = firebaseAuth.sendPasswordResetEmail(email);
-            Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success(new FirebaseAuthUtils.RecoveryResult(true, "request"));
+                return Result.success(new FirebaseAuthMessages.RecoveryResult(true, "request"));
             } else {
                 return Result.error(task.getException());
             }
@@ -66,12 +63,11 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     }
 
     @Override
-    public @NonNull Single<Result<FirebaseAuthUtils.RecoveryResult>> checkCode(String code, String newPassword) {
+    public @NonNull Single<Result<FirebaseAuthMessages.RecoveryResult>> checkCode(String code, String newPassword) {
         return Single.fromCallable(() -> {
             final Task<Void> task = firebaseAuth.confirmPasswordReset(code, newPassword);
-            Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success(new FirebaseAuthUtils.RecoveryResult(true, "check"));
+                return Result.success(new FirebaseAuthMessages.RecoveryResult(true, "check"));
             } else {
                 return Result.error(task.getException());
             }

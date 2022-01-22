@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.models.auth.AuthNetwork;
-import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthUtils;
+import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthMessages;
 import com.velvet.trackerforsleepwalkers.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> passwordRecoverySubject = PublishSubject.create();
-    private final BehaviorSubject<FirebaseAuthUtils.RecoveryParams> infoTextSubject = BehaviorSubject.create();
+    private final BehaviorSubject<FirebaseAuthMessages.RecoveryParams> infoTextSubject = BehaviorSubject.create();
 
     public PasswordRecoveryViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
@@ -57,7 +57,7 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryView
                                     }
                                 } else {
                                     if (result.data.getId().equals("request")) {
-                                        setInfoText(R.string.code_succesfully_sent);
+                                        setInfoText(R.string.code_successfully_sent);
                                     } else {
                                         setInfoText(R.string.password_successfully_changed);
                                     }
@@ -86,11 +86,11 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryView
 
     @Override
     public void requestCode(String email) {
-        infoTextSubject.onNext(new FirebaseAuthUtils.RecoveryParams(email, "request"));
+        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(email, "request"));
     }
 
     @Override
     public void checkCode(String code, String newPassword) {
-        infoTextSubject.onNext(new FirebaseAuthUtils.RecoveryParams(code, newPassword, "check"));
+        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(code, newPassword, "check"));
     }
 }

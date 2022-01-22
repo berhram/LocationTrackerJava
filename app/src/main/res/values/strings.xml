@@ -21,6 +21,7 @@
     <string name="success_login">You successfully sign in!</string>
     <string name="invalid_email_or_password">E-mail or password is incorrect!</string>
     <string name="user_already_registered">User already registered!</string>
+    <string name="something_went_wrong">Something went wrong…</string>
 
     <!--Recovery screen-->
     <!--Recovery buttons text-->
@@ -32,7 +33,7 @@
     <string name="new_password_title">New password</string>
     <!--Recovery warnings-->
     <string name="invalid_recovery_email">Email not found!</string>
-    <string name="code_succesfully_sent">Code successfully sent</string>
+    <string name="code_successfully_sent">Code successfully sent</string>
     <string name="invalid_recovery_code">Code is invalid!</string>
     <string name="password_successfully_changed">Password successfully changed!</string>
 

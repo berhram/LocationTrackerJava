@@ -14,7 +14,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import java.lang.reflect.ParameterizedType;
 
-public abstract class HostedFragment<STATE extends MviViewState, VIEW_MODEL extends FragmentContract.ViewModel<STATE>, HOST extends FragmentContract.Host>
+public abstract class HostedFragment<STATE extends MviViewState,
+        VIEW_MODEL extends FragmentContract.ViewModel<STATE, EFFECT>,
+        HOST extends FragmentContract.Host,
+        EFFECT extends MviViewEffect<VIEW>,
+        VIEW extends FragmentContract.View>
         extends NavHostFragment
         implements FragmentContract.View, Observer<STATE>, LifecycleObserver {
 
@@ -42,6 +46,7 @@ public abstract class HostedFragment<STATE extends MviViewState, VIEW_MODEL exte
         getLifecycle().addObserver(this);
         if (getModel() != null) {
             getModel().getStateObservable().observe(this, this);
+            getModel().getEffectObservable().observe(this, a -> a.visit((VIEW) this));
         }
     }
 
@@ -56,6 +61,7 @@ public abstract class HostedFragment<STATE extends MviViewState, VIEW_MODEL exte
             getLifecycle().removeObserver(this);
             if (getModel() != null) {
                 getModel().getStateObservable().removeObservers(this);
+                //TODO remove effect observer but how?
             }
         }
     }

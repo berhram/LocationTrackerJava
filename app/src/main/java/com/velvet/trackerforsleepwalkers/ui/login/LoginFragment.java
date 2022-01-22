@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
 import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
 
-public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.ViewModel, LoginContract.Host> implements LoginContract.View, View.OnClickListener {
+public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.ViewModel, LoginContract.Host, LoginViewEffect, LoginContract.View> implements LoginContract.View, View.OnClickListener {
     private FragmentLoginBinding binding;
 
     @Override

@@ -2,7 +2,7 @@ package com.velvet.trackerforsleepwalkers.ui.login;
 
 import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
 
-public class LoginViewState extends MviViewState<LoginContract.View> {
+public class LoginViewState implements MviViewState<LoginContract.View> {
     private static final int ACTION_SET_TEXT = 1;
 
     private final int action;

@@ -3,7 +3,7 @@ package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
 import com.velvet.trackerforsleepwalkers.mvi.FragmentContract;
 
 public class PasswordRecoveryContract {
-    public interface ViewModel extends FragmentContract.ViewModel<PasswordRecoveryViewState> {
+    public interface ViewModel extends FragmentContract.ViewModel<PasswordRecoveryViewState, PasswordRecoveryViewEffect> {
         void requestCode(String email);
 
         void checkCode(String code, String newPassword);

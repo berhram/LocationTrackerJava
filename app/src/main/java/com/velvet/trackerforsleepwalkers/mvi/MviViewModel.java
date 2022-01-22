@@ -11,15 +11,24 @@ import androidx.lifecycle.ViewModel;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public abstract class MviViewModel<T, A> extends ViewModel implements FragmentContract.ViewModel<T> {
+public abstract class MviViewModel<V extends FragmentContract.View,
+        S extends MviViewState,
+        E extends MviViewEffect>
+        extends ViewModel
+        implements FragmentContract.ViewModel<S, E> {
     private final CompositeDisposable onStopDisposables = new CompositeDisposable();
     private final CompositeDisposable onDestroyDisposables = new CompositeDisposable();
-    private final MutableLiveData<T> stateHolder = new MutableLiveData<>();
-    private final MutableLiveData<A> actionHolder = new MutableLiveData<>();
+    private final MutableLiveData<S> stateHolder = new MutableLiveData<>();
+    private final MutableLiveData<E> effectHolder = new MutableLiveData<>();
 
     @Override
-    public LiveData<T> getStateObservable() {
+    public LiveData<S> getStateObservable() {
         return stateHolder;
+    }
+
+    @Override
+    public LiveData<E> getEffectObservable() {
+        return effectHolder;
     }
 
     @CallSuper
@@ -33,8 +42,8 @@ public abstract class MviViewModel<T, A> extends ViewModel implements FragmentCo
         }
     }
 
-    protected void setAction(A action) {
-        actionHolder.setValue(action);
+    protected void setAction(E action) {
+        effectHolder.setValue(action);
     }
 
     protected void observeTillStop(Disposable... subscriptions) {
@@ -45,11 +54,11 @@ public abstract class MviViewModel<T, A> extends ViewModel implements FragmentCo
         onDestroyDisposables.addAll(subscriptions);
     }
 
-    protected void setState(T state) {
+    protected void setState(S state) {
         stateHolder.setValue(state);
     }
 
-    protected void postState(T state) {
+    protected void postState(S state) {
         stateHolder.postValue(state);
     }
 
@@ -61,9 +70,9 @@ public abstract class MviViewModel<T, A> extends ViewModel implements FragmentCo
         return onStopDisposables.size() != 0;
     }
 
-    protected T getLastState() {
+    protected S getLastState() {
         return stateHolder.getValue() == null ? getDefaultState() : stateHolder.getValue();
     }
 
-    protected abstract T getDefaultState();
+    protected abstract S getDefaultState();
 }

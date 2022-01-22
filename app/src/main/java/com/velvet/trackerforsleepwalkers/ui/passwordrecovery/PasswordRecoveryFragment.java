@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentPasswordRecoveryBinding;
 import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
 
-public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host> implements PasswordRecoveryContract.View, View.OnClickListener {
+public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
     private FragmentPasswordRecoveryBinding binding;
 
     @Override

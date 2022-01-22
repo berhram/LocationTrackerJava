@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
+public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryContract.View,  PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> passwordRecoverySubject = PublishSubject.create();
     private final BehaviorSubject<FirebaseAuthMessages.RecoveryParams> infoTextSubject = BehaviorSubject.create();

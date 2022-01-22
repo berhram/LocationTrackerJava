@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class LoginViewModel extends MviViewModel<LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
+public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
     private final BehaviorSubject<FirebaseAuthMessages.AuthParams> infoTextSubject = BehaviorSubject.create();

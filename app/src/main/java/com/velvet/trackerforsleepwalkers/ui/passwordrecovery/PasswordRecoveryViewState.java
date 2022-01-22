@@ -2,7 +2,7 @@ package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
 
 import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
 
-public class PasswordRecoveryViewState extends MviViewState<PasswordRecoveryContract.View> {
+public class PasswordRecoveryViewState implements MviViewState<PasswordRecoveryContract.View> {
     private static final int ACTION_SET_TEXT = 1;
 
     private final int action;

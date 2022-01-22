@@ -35,10 +35,8 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
     @Override
     public void proceedToNextScreen(String id) {
         if (id.equals("Login")) {
-            Log.d("nav", "proceedToNextScreen");
             navController.navigate(LoginFragmentDirections.loginScreenToMapScreen());
         } else if (id.equals("Password recovery")) {
-            Log.d("nav", "proceedToNextScreen");
             navController.navigate(PasswordRecoveryFragmentDirections.passwordRecoveryScreenToLoginScreen());
         }
     }

@@ -52,7 +52,6 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
     @Override
     public void proceedToNextScreen() {
         if (hasHost()) {
-            Log.d("Nav", "proceedToNextScreen in Fr");
             getFragmentHost().proceedToNextScreen("Login");
         }
     }

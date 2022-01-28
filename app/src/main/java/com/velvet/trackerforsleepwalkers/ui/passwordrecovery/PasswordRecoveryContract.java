@@ -16,10 +16,10 @@ public class PasswordRecoveryContract {
     public interface View extends FragmentContract.View {
         void setInfoText(int infoText);
 
-        void proceedToPreviousScreen();
+        void proceedToLoginScreen();
     }
 
     public interface Host extends FragmentContract.Host {
-        void proceedToPreviousScreen(String id);
+        void proceedToLoginScreen(String id);
     }
 }

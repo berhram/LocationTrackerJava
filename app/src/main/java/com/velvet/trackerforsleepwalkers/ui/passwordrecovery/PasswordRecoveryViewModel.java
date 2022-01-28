@@ -76,7 +76,7 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
 
     @Override
     public void success() {
-        setAction(new PasswordRecoveryViewEffect.ProceedToPreviousScreen());
+        setAction(PasswordRecoveryViewEffect.proceedToPreviousScreen());
     }
 
     @Override

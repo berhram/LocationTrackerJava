@@ -13,7 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
 import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
 
-public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.ViewModel, LoginContract.Host, LoginViewEffect, LoginContract.View> implements LoginContract.View, View.OnClickListener {
+public class LoginFragment extends HostedFragment<LoginViewState,
+        LoginContract.ViewModel,
+        LoginContract.Host,
+        LoginViewEffect,
+        LoginContract.View> implements LoginContract.View, View.OnClickListener {
     private FragmentLoginBinding binding;
 
     @Override
@@ -23,7 +27,8 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
 
     @Override
     protected LoginContract.ViewModel createModel() {
-        return new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
+        //Why ide require this and other cast?
+        return new ViewModelProvider(this, (ViewModelProvider.Factory) new LoginViewModelFactory()).get(LoginViewModel.class);
     }
 
     @Nullable
@@ -45,14 +50,14 @@ public class LoginFragment extends HostedFragment<LoginViewState, LoginContract.
     @Override
     public void proceedToPasswordRecovery() {
         if (hasHost()) {
-            getFragmentHost().proceedToPasswordRecovery("Login");
+            getFragmentHost().proceedToPasswordRecovery();
         }
     }
 
     @Override
-    public void proceedToNextScreen() {
+    public void proceedToMapScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToNextScreen("Login");
+            getFragmentHost().proceedToMapScreen("Login");
         }
     }
 

@@ -13,7 +13,7 @@
             android:id="@+id/login_screen_to_map_screen"
             app:destination="@id/map_screen" />
         <action
-            android:id="@+id/login_screen_to_passord_recovery_screen"
+            android:id="@+id/login_screen_to_password_recovery_screen"
             app:destination="@id/password_recovery_screen" />
     </fragment>
 
@@ -33,24 +33,8 @@
         android:label="@string/map_screen_label"
         tools:layout="@layout/fragment_map">
         <action
-            android:id="@+id/map_screen_to_history_screen"
-            app:destination="@+id/history_screen" />
-        <action
             android:id="@+id/map_screen_to_settings_screen"
             app:destination="@+id/settings_screen" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/history_screen"
-        android:name="com.velvet.trackerforsleepwalkers.ui.history.HistoryFragment"
-        android:label="@string/history_screen_label"
-        tools:layout="@layout/fragment_history">
-        <action
-            android:id="@+id/history_screen_to_settings_screen"
-            app:destination="@+id/settings_screen" />
-        <action
-            android:id="@+id/history_screen_to_map_screen"
-            app:destination="@+id/map_screen" />
     </fragment>
 
     <fragment
@@ -59,8 +43,8 @@
         android:label="@string/settings_screen_label"
         tools:layout="@layout/fragment_settings">
         <action
-            android:id="@+id/settings_screen_to_history_screen"
-            app:destination="@+id/history_screen" />
+            android:id="@+id/settings_screen_to_login_screen"
+            app:destination="@+id/login_screen" />
         <action
             android:id="@+id/settings_screen_to_map_screen"
             app:destination="@+id/map_screen" />

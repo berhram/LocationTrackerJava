@@ -37,6 +37,9 @@
     <string name="invalid_recovery_code">Code is invalid!</string>
     <string name="password_successfully_changed">Password successfully changed!</string>
 
+    <!--Map screen-->
+    <string name="please_give_access">Please grant location permission!</string>
+
     <!--Menu item names-->
     <string name="map_menu_item">Map</string>
     <string name="map_time_menu_item">History</string>

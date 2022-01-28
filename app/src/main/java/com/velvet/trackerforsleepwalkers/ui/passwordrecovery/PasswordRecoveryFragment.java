@@ -41,9 +41,9 @@ public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryVie
     }
 
     @Override
-    public void proceedToPreviousScreen() {
+    public void proceedToLoginScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToPreviousScreen("Password recovery");
+            getFragmentHost().proceedToLoginScreen("Password recovery");
         }
     }
 

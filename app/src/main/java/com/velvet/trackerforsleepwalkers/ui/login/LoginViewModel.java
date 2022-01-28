@@ -82,7 +82,7 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
 
     @Override
     public void success() {
-        setAction(new LoginViewEffect.ProceedToNextScreen());
+        setAction(LoginViewEffect.proceedToNextScreen());
     }
 
     @Override

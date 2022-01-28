@@ -18,12 +18,12 @@ public class LoginContract {
 
         void proceedToPasswordRecovery();
 
-        void proceedToNextScreen();
+        void proceedToMapScreen();
     }
 
     public interface Host extends FragmentContract.Host {
-        void proceedToPasswordRecovery(String id);
+        void proceedToPasswordRecovery();
 
-        void proceedToNextScreen(String id);
+        void proceedToMapScreen(String id);
     }
 }

@@ -2,12 +2,24 @@ package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
 
 import com.velvet.trackerforsleepwalkers.mvi.AbstractEffect;
 
-public abstract class PasswordRecoveryViewEffect extends AbstractEffect<PasswordRecoveryContract.View> {
-    static final class ProceedToPreviousScreen extends PasswordRecoveryViewEffect {
-        @Override
+public class PasswordRecoveryViewEffect extends AbstractEffect<PasswordRecoveryContract.View> {
+    private static final int ACTION_PREVIOUS = 1;
+
+    private final int action;
+
+    public PasswordRecoveryViewEffect(int action) {
+        this.action = action;
+    }
+
+    static public PasswordRecoveryViewEffect proceedToPreviousScreen() {
+        return new PasswordRecoveryViewEffect(ACTION_PREVIOUS);
+    }
+
+    @Override
         public void handle(PasswordRecoveryContract.View screen) {
-            screen.proceedToPreviousScreen();
+            if (action == ACTION_PREVIOUS) {
+                screen.proceedToLoginScreen();
+            }
         }
 
-    }
 }

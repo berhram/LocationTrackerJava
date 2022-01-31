@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentMapBinding;
-import com.velvet.trackerforsleepwalkers.location.LocationService;
+import com.velvet.trackerforsleepwalkers.models.location.LocationService;
 import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
 
 
@@ -61,19 +61,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActivityResultLauncher<String[]> locationPermissionRequest =
-                registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                    if (!result.get(Manifest.permission.ACCESS_FINE_LOCATION) || !result.get(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                        Toast.makeText(getContext(), R.string.please_give_access, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            locationPermissionRequest.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION});
-        } else {
-            locationPermissionRequest.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
-        }
-        Intent intent = new Intent(getContext(), LocationService.class);
-        getContext().startService(intent);
+
     }
 
     @Override

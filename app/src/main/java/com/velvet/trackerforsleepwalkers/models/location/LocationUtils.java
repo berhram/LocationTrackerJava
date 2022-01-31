@@ -1,14 +1,7 @@
-package com.velvet.trackerforsleepwalkers.location;
+package com.velvet.trackerforsleepwalkers.models.location;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.location.Location;
 import android.preference.PreferenceManager;
-
-import com.velvet.trackerforsleepwalkers.R;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 public class LocationUtils {
     private static final String KEY_REQUESTING_LOCATION_UPDATES = "requesting_location_updates";

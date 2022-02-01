@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.velvet.trackerforsleepwalkers.databinding.ActivityMainBinding;
 import com.velvet.trackerforsleepwalkers.models.location.LocationService;
+import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
 import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
 import com.velvet.trackerforsleepwalkers.ui.login.LoginFragmentDirections;
 import com.velvet.trackerforsleepwalkers.ui.map.MapContract;
@@ -33,8 +34,7 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
     private NavController navController;
     private ActivityMainBinding binding;
     private ActivityResultLauncher<String[]> locationPermissionRequest;
-    private SharedPreferences.Editor editor;
-    private SharedPreferences preferences;
+    private SharedPreferenceProvider preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +47,9 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
                         Toast.makeText(this, R.string.please_give_access, Toast.LENGTH_SHORT).show();
                     }
                 });
-        preferences = getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE);
-        if (preferences.getString("Source", "").equals("")) {
-            editor = getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE).edit();
-            editor.putString("Source", LocationManager.GPS_PROVIDER);
-            editor.apply();
+        preferences = new SharedPreferenceProvider(this);
+        if (preferences.get("Source", "").equals("")) {
+            preferences.put("Source", LocationManager.GPS_PROVIDER);
         }
     }
 
@@ -94,15 +92,13 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
 
     @Override
     public void setSource(String source) {
-        editor = getApplicationContext().getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE).edit();
         if (source.equals("Passive")) {
-            editor.putString("Source", LocationManager.PASSIVE_PROVIDER);
+            preferences.put("Source", LocationManager.PASSIVE_PROVIDER);
         } else if (source.equals("GPS")) {
-            editor.putString("Source", LocationManager.GPS_PROVIDER);
+            preferences.put("Source", LocationManager.GPS_PROVIDER);
         } else if (source.equals("Network")) {
-            editor.putString("Source", LocationManager.NETWORK_PROVIDER);
+            preferences.put("Source", LocationManager.NETWORK_PROVIDER);
         }
-        editor.apply();
     }
 
     public void checkOrRequestPermissions() {

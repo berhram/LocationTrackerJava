@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentSettingsBinding;
+import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
 import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
 
 public class SettingsFragment extends HostedFragment<SettingsViewState,
@@ -66,7 +67,7 @@ public class SettingsFragment extends HostedFragment<SettingsViewState,
     @Override
     public void setSourceSwitch() {
         RadioButton button;
-        String defaultSwitch = getActivity().getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE).getString("Source", "");
+        String defaultSwitch = new SharedPreferenceProvider(getContext()).get("Source", "");
         if (defaultSwitch.equals("Passive")) {
             button = binding.sourceSwitcher.findViewById(R.id.passive);
             button.setChecked(true);

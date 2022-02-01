@@ -10,11 +10,15 @@ public class SettingsContract {
         void proceedToMapScreen();
 
         void proceedToLoginScreen();
+
+        void setSourceSwitch();
     }
 
     public interface Host extends FragmentContract.Host {
         void proceedToMapScreen(String id);
 
         void proceedToLoginScreen(String id);
+
+        void setSource(String source);
     }
 }

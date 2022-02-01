@@ -37,6 +37,14 @@
     <string name="invalid_recovery_code">Code is invalid!</string>
     <string name="password_successfully_changed">Password successfully changed!</string>
 
+    <!--Settings screen-->
+    <!--Settings buttons text-->
+    <string name="gps">GPS</string>
+    <string name="passive">Passive</string>
+    <string name="network">Network</string>
+    <!--Settings buttons titles-->
+    <string name="location_source_text">Select location source:</string>
+
     <!--Map screen-->
     <string name="please_give_access">Please grant location permission!</string>
 

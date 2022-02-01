@@ -4,17 +4,17 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.velvet.trackerforsleepwalkers.databinding.ActivityMainBinding;
@@ -33,6 +33,8 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
     private NavController navController;
     private ActivityMainBinding binding;
     private ActivityResultLauncher<String[]> locationPermissionRequest;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,12 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
                         Toast.makeText(this, R.string.please_give_access, Toast.LENGTH_SHORT).show();
                     }
                 });
+        preferences = getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE);
+        if (preferences.getString("Source", "").equals("")) {
+            editor = getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE).edit();
+            editor.putString("Source", LocationManager.GPS_PROVIDER);
+            editor.apply();
+        }
     }
 
     @Override
@@ -82,6 +90,19 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
         if (id.equals("Map")) {
             navController.navigate(MapFragmentDirections.mapScreenToSettingsScreen());
         }
+    }
+
+    @Override
+    public void setSource(String source) {
+        editor = getApplicationContext().getSharedPreferences("com.velvet.trackerforsleepwalkers", MODE_PRIVATE).edit();
+        if (source.equals("Passive")) {
+            editor.putString("Source", LocationManager.PASSIVE_PROVIDER);
+        } else if (source.equals("GPS")) {
+            editor.putString("Source", LocationManager.GPS_PROVIDER);
+        } else if (source.equals("Network")) {
+            editor.putString("Source", LocationManager.NETWORK_PROVIDER);
+        }
+        editor.apply();
     }
 
     public void checkOrRequestPermissions() {

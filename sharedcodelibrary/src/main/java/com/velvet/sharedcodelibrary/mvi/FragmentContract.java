@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.mvi;
+package com.velvet.sharedcodelibrary.mvi;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;

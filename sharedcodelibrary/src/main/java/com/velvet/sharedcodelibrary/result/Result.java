@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.models.result;
+package com.velvet.sharedcodelibrary.result;
 
 public class Result<T> {
 

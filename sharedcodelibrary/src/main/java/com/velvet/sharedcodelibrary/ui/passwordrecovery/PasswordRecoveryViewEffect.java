@@ -1,6 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
+package com.velvet.sharedcodelibrary.ui.passwordrecovery;
 
-import com.velvet.trackerforsleepwalkers.mvi.AbstractEffect;
+import com.velvet.sharedcodelibrary.mvi.AbstractEffect;
 
 public class PasswordRecoveryViewEffect extends AbstractEffect<PasswordRecoveryContract.View> {
     private static final int ACTION_PREVIOUS = 1;

@@ -1,8 +1,6 @@
 package com.velvet.trackerforsleepwalkers.ui.settings;
 
-import com.velvet.trackerforsleepwalkers.mvi.AbstractEffect;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginViewEffect;
+import com.velvet.sharedcodelibrary.mvi.AbstractEffect;
 
 public class SettingsViewEffect extends AbstractEffect<SettingsContract.View> {
     private static final int ACTION_MAP = 1;

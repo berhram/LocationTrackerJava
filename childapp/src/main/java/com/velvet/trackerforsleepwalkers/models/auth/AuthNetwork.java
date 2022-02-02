@@ -1,6 +1,6 @@
 package com.velvet.trackerforsleepwalkers.models.auth;
 
-import com.velvet.trackerforsleepwalkers.models.result.Result;
+import com.velvet.sharedcodelibrary.result.Result;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Single;

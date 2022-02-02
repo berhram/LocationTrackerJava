@@ -1,6 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
+package com.velvet.sharedcodelibrary.ui.passwordrecovery;
 
-import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
+import com.velvet.sharedcodelibrary.mvi.MviViewState;
 
 public class PasswordRecoveryViewState implements MviViewState<PasswordRecoveryContract.View> {
     private static final int ACTION_SET_TEXT = 1;

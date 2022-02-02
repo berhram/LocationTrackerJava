@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
+package com.velvet.sharedcodelibrary.ui.passwordrecovery;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

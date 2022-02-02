@@ -2,9 +2,9 @@ package com.velvet.trackerforsleepwalkers.models;
 
 import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthNetwork;
 import com.velvet.trackerforsleepwalkers.models.data.FirestoreLocationRepository;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginViewModelFactory;
+import com.velvet.sharedcodelibrary.ui.login.LoginViewModelFactory;
 import com.velvet.trackerforsleepwalkers.ui.map.MapViewModelFactory;
-import com.velvet.trackerforsleepwalkers.ui.passwordrecovery.PasswordRecoveryViewModelFactory;
+import com.velvet.sharedcodelibrary.ui.passwordrecovery.PasswordRecoveryViewModelFactory;
 
 import javax.inject.Singleton;
 

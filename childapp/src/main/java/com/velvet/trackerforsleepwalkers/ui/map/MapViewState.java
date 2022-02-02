@@ -1,6 +1,6 @@
 package com.velvet.trackerforsleepwalkers.ui.map;
 
-import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
+import com.velvet.sharedcodelibrary.mvi.MviViewState;
 
 public class MapViewState implements MviViewState<MapContract.View> {
     private static final int ACTION_CREATE_FILTER = 1;

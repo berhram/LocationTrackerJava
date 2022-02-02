@@ -1,6 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.sharedcodelibrary.ui.login;
 
-import com.velvet.trackerforsleepwalkers.mvi.FragmentContract;
+import com.velvet.sharedcodelibrary.mvi.FragmentContract;
 
 public class LoginContract {
     public interface ViewModel extends FragmentContract.ViewModel<LoginViewState, LoginViewEffect> {

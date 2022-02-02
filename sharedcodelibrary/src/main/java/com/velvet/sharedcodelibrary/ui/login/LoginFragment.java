@@ -1,7 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.sharedcodelibrary.ui.login;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
-import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
+import com.velvet.sharedcodelibrary.mvi.HostedFragment;
 
 public class LoginFragment extends HostedFragment<LoginViewState,
         LoginContract.ViewModel,

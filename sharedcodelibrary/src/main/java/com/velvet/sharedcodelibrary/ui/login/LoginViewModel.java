@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.sharedcodelibrary.ui.login;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.models.auth.AuthNetwork;
 import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthMessages;
-import com.velvet.trackerforsleepwalkers.mvi.MviViewModel;
+import com.velvet.sharedcodelibrary.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

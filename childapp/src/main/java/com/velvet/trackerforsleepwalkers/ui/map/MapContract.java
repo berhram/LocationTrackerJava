@@ -1,8 +1,6 @@
 package com.velvet.trackerforsleepwalkers.ui.map;
 
-import com.velvet.trackerforsleepwalkers.mvi.FragmentContract;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginViewEffect;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginViewState;
+import com.velvet.sharedcodelibrary.mvi.FragmentContract;
 
 public class MapContract {
     public interface ViewModel extends FragmentContract.ViewModel<MapViewState, MapViewEffect> {

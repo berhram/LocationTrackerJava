@@ -6,7 +6,7 @@
     app:startDestination="@id/login_screen">
     <fragment
         android:id="@+id/login_screen"
-        android:name="com.velvet.trackerforsleepwalkers.ui.login.LoginFragment"
+        android:name="com.velvet.sharedcodelibrary.ui.login.LoginFragment"
         android:label="@string/login_screen_label"
         tools:layout="@layout/fragment_login">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/password_recovery_screen"
-        android:name="com.velvet.trackerforsleepwalkers.ui.passwordrecovery.PasswordRecoveryFragment"
+        android:name="com.velvet.sharedcodelibrary.ui.passwordrecovery.PasswordRecoveryFragment"
         android:label="@string/password_recovery_screen_label"
         tools:layout="@layout/fragment_password_recovery">
         <action

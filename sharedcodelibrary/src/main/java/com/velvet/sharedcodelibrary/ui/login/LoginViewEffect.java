@@ -1,6 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.sharedcodelibrary.ui.login;
 
-import com.velvet.trackerforsleepwalkers.mvi.AbstractEffect;
+import com.velvet.sharedcodelibrary.mvi.AbstractEffect;
 
 public class LoginViewEffect extends AbstractEffect<LoginContract.View> {
     private static final int ACTION_NEXT = 1;

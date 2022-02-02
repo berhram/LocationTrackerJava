@@ -1,6 +1,4 @@
-package com.velvet.trackerforsleepwalkers.mvi;
-
-import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
+package com.velvet.sharedcodelibrary.mvi;
 
 public abstract class AbstractEffect<T> implements MviViewEffect<T>{
     boolean isHandled = false;

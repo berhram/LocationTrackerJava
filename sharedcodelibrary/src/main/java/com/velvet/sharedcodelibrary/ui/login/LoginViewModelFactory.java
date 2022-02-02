@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.sharedcodelibrary.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

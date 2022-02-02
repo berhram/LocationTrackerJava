@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
+package com.velvet.sharedcodelibrary.ui.passwordrecovery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.trackerforsleepwalkers.databinding.FragmentPasswordRecoveryBinding;
-import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
+import com.velvet.sharedcodelibrary.mvi.HostedFragment;
 
 public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
     private FragmentPasswordRecoveryBinding binding;

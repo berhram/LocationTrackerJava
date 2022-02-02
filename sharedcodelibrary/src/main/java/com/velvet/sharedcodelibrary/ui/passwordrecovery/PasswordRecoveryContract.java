@@ -1,6 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.passwordrecovery;
+package com.velvet.sharedcodelibrary.ui.passwordrecovery;
 
-import com.velvet.trackerforsleepwalkers.mvi.FragmentContract;
+import com.velvet.sharedcodelibrary.mvi.FragmentContract;
 
 public class PasswordRecoveryContract {
     public interface ViewModel extends FragmentContract.ViewModel<PasswordRecoveryViewState, PasswordRecoveryViewEffect> {

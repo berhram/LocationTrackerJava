@@ -70,4 +70,6 @@ dependencies {
     testImplementation 'androidx.room:room-testing:2.4.1'
 
     implementation 'com.google.android.gms:play-services-location:19.0.1'
+
+    implementation project(path: ':sharedcodelibrary')
 }

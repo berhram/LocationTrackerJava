@@ -16,15 +16,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.velvet.trackerforsleepwalkers.databinding.ActivityMainBinding;
 import com.velvet.trackerforsleepwalkers.services.LocationService;
 import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginContract;
-import com.velvet.trackerforsleepwalkers.ui.login.LoginFragmentDirections;
+import com.velvet.sharedcodelibrary.ui.login.LoginContract;
+import com.velvet.sharedcodelibrary.ui.login.LoginFragmentDirections;
 import com.velvet.trackerforsleepwalkers.ui.map.MapContract;
 import com.velvet.trackerforsleepwalkers.ui.map.MapFragmentDirections;
-import com.velvet.trackerforsleepwalkers.ui.passwordrecovery.PasswordRecoveryContract;
-import com.velvet.trackerforsleepwalkers.ui.passwordrecovery.PasswordRecoveryFragmentDirections;
+import com.velvet.sharedcodelibrary.ui.passwordrecovery.PasswordRecoveryContract;
+import com.velvet.sharedcodelibrary.ui.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.trackerforsleepwalkers.ui.settings.SettingsContract;
 import com.velvet.trackerforsleepwalkers.ui.settings.SettingsFragmentDirections;
 

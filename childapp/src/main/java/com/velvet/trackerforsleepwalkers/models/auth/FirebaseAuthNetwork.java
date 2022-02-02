@@ -1,11 +1,10 @@
 package com.velvet.trackerforsleepwalkers.models.auth;
 
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.trackerforsleepwalkers.App;
-import com.velvet.trackerforsleepwalkers.models.result.Result;
+import com.velvet.sharedcodelibrary.result.Result;
 
 import javax.inject.Inject;
 

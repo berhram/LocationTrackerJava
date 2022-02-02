@@ -3,17 +3,8 @@ package com.velvet.trackerforsleepwalkers.ui.map;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.velvet.trackerforsleepwalkers.R;
-import com.velvet.trackerforsleepwalkers.models.auth.AuthNetwork;
-import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthMessages;
 import com.velvet.trackerforsleepwalkers.models.data.LocationRepository;
-import com.velvet.trackerforsleepwalkers.mvi.MviViewModel;
-
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.subjects.BehaviorSubject;
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import com.velvet.sharedcodelibrary.mvi.MviViewModel;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
 

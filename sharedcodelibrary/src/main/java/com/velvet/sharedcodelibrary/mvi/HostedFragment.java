@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.mvi;
+package com.velvet.sharedcodelibrary.mvi;
 
 import android.content.Context;
 import android.os.Bundle;

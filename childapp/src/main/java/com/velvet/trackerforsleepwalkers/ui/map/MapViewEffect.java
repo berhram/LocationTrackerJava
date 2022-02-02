@@ -1,6 +1,6 @@
 package com.velvet.trackerforsleepwalkers.ui.map;
 
-import com.velvet.trackerforsleepwalkers.mvi.AbstractEffect;
+import com.velvet.sharedcodelibrary.mvi.AbstractEffect;
 
 public class MapViewEffect extends AbstractEffect<MapContract.View> {
     private static final int ACTION_SETTINGS = 1;

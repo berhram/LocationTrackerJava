@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.mvi;
+package com.velvet.sharedcodelibrary.mvi;
 
 import androidx.annotation.CallSuper;
 import androidx.lifecycle.Lifecycle;
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+//TODO add libs to library and parents app
 
 public abstract class MviViewModel<V extends FragmentContract.View,
         S extends MviViewState,

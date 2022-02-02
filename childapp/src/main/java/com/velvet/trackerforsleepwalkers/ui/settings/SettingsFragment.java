@@ -1,7 +1,5 @@
 package com.velvet.trackerforsleepwalkers.ui.settings;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentSettingsBinding;
 import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
-import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
+import com.velvet.sharedcodelibrary.mvi.HostedFragment;
 
 public class SettingsFragment extends HostedFragment<SettingsViewState,
         SettingsContract.ViewModel,

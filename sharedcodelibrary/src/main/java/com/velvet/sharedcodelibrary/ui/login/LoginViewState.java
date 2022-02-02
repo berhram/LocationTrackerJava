@@ -1,6 +1,6 @@
-package com.velvet.trackerforsleepwalkers.ui.login;
+package com.velvet.sharedcodelibrary.ui.login;
 
-import com.velvet.trackerforsleepwalkers.mvi.MviViewState;
+import com.velvet.sharedcodelibrary.mvi.MviViewState;
 
 public class LoginViewState implements MviViewState<LoginContract.View> {
     private static final int ACTION_SET_TEXT = 1;

@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentMapBinding;
-import com.velvet.trackerforsleepwalkers.mvi.HostedFragment;
+import com.velvet.sharedcodelibrary.mvi.HostedFragment;
 
 
 public class MapFragment extends HostedFragment<MapViewState,

@@ -6,4 +6,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Tracker for sleepwalkers"
-include ':app'
+include ':childapp'
+include ':parentapp'
+include ':sharedcodelibrary'

@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers;
+package com.velvet.sharedmodule;
 
 import android.app.Application;
 

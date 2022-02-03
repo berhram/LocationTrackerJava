@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers;
+package com.velvet.sharedmodule;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;

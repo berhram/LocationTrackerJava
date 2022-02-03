@@ -1,14 +1,14 @@
-package com.velvet.trackerforsleepwalkers.models;
+package com.velvet.sharedmodule;
 
 import com.velvet.sharedmodule.auth.FirebaseAuthNetwork;
-import com.velvet.trackerforsleepwalkers.models.data.FirestoreLocationRepository;
 import com.velvet.sharedmodule.ui.login.LoginViewModelFactory;
-import com.velvet.parentapp.ui.map.MapViewModelFactory;
 import com.velvet.sharedmodule.ui.passwordrecovery.PasswordRecoveryViewModelFactory;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+
+//TODO setup dagger for multi module
 
 @Component(modules = {LoginModule.class, MapModule.class})
 @Singleton

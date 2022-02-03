@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.models;
+package com.velvet.parentapp;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.velvet.trackerforsleepwalkers.models.data.FirestoreLocationRepository;

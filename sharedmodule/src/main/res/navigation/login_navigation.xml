@@ -4,15 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/login_screen">
-
     <fragment
         android:id="@+id/login_screen"
-        android:name="com.velvet.childapp.ui.login.LoginFragment"
+        android:name="com.velvet.sharedmodule.ui.login.LoginFragment"
         android:label="@string/login_screen_label"
         tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/login_screen_to_settings_screen"
-            app:destination="@id/settings_screen" />
+        <deepLink app:uri="tracker://login"/>
         <action
             android:id="@+id/login_screen_to_password_recovery_screen"
             app:destination="@id/password_recovery_screen" />
@@ -27,15 +24,4 @@
             android:id="@+id/password_recovery_screen_to_login_screen"
             app:destination="@id/login_screen" />
     </fragment>
-
-    <fragment
-        android:id="@+id/settings_screen"
-        android:name="com.velvet.trackerforsleepwalkers.ui.settings.SettingsFragment"
-        android:label="@string/settings_screen_label"
-        tools:layout="@layout/fragment_settings">
-        <action
-            android:id="@+id/settings_screen_to_login_screen"
-            app:destination="@+id/login_screen" />
-    </fragment>
-
 </navigation>

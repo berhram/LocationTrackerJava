@@ -9,7 +9,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId 'com.velvet.trackerforsleepwalkers'
+        applicationId 'com.velvet.childapp'
         minSdk 21
         targetSdk 31
         versionCode 1

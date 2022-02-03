@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.models.preferences;
+package com.velvet.childapp.models.preferences;
 
 public interface PreferenceProvider {
     void put(String key, String value);

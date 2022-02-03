@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.trackerforsleepwalkers.App;
-import com.velvet.trackerforsleepwalkers.models.data.FirestoreLocationRepository;
+import com.velvet.childapp.models.data.FirestoreLocationRepository;
 
 import javax.inject.Inject;
 

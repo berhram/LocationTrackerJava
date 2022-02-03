@@ -1,7 +1,7 @@
 package com.velvet.parentapp;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.velvet.trackerforsleepwalkers.models.data.FirestoreLocationRepository;
+import com.velvet.childapp.models.data.FirestoreLocationRepository;
 
 import javax.inject.Singleton;
 

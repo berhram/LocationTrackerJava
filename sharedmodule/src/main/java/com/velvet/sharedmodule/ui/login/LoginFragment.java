@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.trackerforsleepwalkers.databinding.FragmentLoginBinding;
+import com.velvet.sharedmodule.databinding.FragmentLoginBinding;
 import com.velvet.sharedmodule.mvi.HostedFragment;
 
 public class LoginFragment extends HostedFragment<LoginViewState,

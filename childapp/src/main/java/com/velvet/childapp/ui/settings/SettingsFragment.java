@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.settings;
+package com.velvet.childapp.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.trackerforsleepwalkers.databinding.FragmentSettingsBinding;
-import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
+import com.velvet.childapp.models.preferences.SharedPreferenceProvider;
 import com.velvet.sharedmodule.mvi.HostedFragment;
 
 public class SettingsFragment extends HostedFragment<SettingsViewState,

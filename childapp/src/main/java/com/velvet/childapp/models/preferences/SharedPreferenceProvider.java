@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.models.preferences;
+package com.velvet.childapp.models.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

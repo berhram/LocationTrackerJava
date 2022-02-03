@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.velvet.trackerforsleepwalkers">
+    package="com.velvet.childapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -10,15 +10,15 @@
 
     <application
         android:allowBackup="true"
-        android:name="com.velvet.sharedmodule.App"
+        android:name=".App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TrackerForSleepwalkers">
+        android:theme="@style/LocationTheme">
 
         <activity
-            android:name="com.velvet.sharedmodule.AppActivity"
+            android:name=".AppActivity"
             android:exported="true">
 
             <intent-filter>
@@ -39,8 +39,6 @@
 
     </application>
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="${MAPS_API_KEY}" />
+
 
 </manifest>

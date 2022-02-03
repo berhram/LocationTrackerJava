@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.ui.settings;
+package com.velvet.childapp.ui.settings;
 
 import com.velvet.sharedmodule.mvi.FragmentContract;
 

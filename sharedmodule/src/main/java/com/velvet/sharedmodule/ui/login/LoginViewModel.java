@@ -3,10 +3,6 @@ package com.velvet.sharedmodule.ui.login;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.velvet.sharedmodule.ui.login.LoginContract;
-import com.velvet.sharedmodule.ui.login.LoginViewEffect;
-import com.velvet.sharedmodule.ui.login.LoginViewState;
-import com.velvet.trackerforsleepwalkers.R;
 import com.velvet.sharedmodule.auth.AuthNetwork;
 import com.velvet.sharedmodule.auth.FirebaseAuthMessages;
 import com.velvet.sharedmodule.mvi.MviViewModel;

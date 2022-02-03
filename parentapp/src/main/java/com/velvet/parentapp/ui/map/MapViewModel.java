@@ -3,7 +3,7 @@ package com.velvet.parentapp.ui.map;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.velvet.trackerforsleepwalkers.models.data.LocationRepository;
+import com.velvet.childapp.models.data.LocationRepository;
 import com.velvet.sharedmodule.mvi.MviViewModel;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {

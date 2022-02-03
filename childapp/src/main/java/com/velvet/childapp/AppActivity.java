@@ -1,12 +1,4 @@
-package com.velvet.sharedmodule;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+package com.velvet.childapp;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,16 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.velvet.trackerforsleepwalkers.services.LocationService;
-import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.velvet.sharedmodule.databinding.ActivityMainBinding;
 import com.velvet.sharedmodule.ui.login.LoginContract;
-import com.velvet.sharedmodule.ui.login.LoginFragmentDirections;
-import com.velvet.parentapp.ui.map.MapContract;
-import com.velvet.parentapp.ui.map.MapFragmentDirections;
 import com.velvet.sharedmodule.ui.passwordrecovery.PasswordRecoveryContract;
-import com.velvet.sharedmodule.ui.passwordrecovery.PasswordRecoveryFragmentDirections;
-import com.velvet.trackerforsleepwalkers.ui.settings.SettingsContract;
-import com.velvet.trackerforsleepwalkers.ui.settings.SettingsFragmentDirections;
 
 public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, SettingsContract.Host, MapContract.Host {
 
@@ -42,7 +35,7 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
         locationPermissionRequest =
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                     if (!result.get(Manifest.permission.ACCESS_FINE_LOCATION) || !result.get(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                        Toast.makeText(this, R.string.please_give_access, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, com.velvet.sharedmodule.R.string.please_give_access, Toast.LENGTH_SHORT).show();
                     }
                 });
         preferences = new SharedPreferenceProvider(this);

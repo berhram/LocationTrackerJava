@@ -1,10 +1,10 @@
-package com.velvet.sharedmodule;
+package com.velvet.childapp;
 
 import android.app.Application;
 
-import com.velvet.trackerforsleepwalkers.models.AppComponent;
-import com.velvet.trackerforsleepwalkers.models.DaggerAppComponent;
-import com.velvet.trackerforsleepwalkers.models.LoginModule;
+import com.velvet.sharedmodule.AppComponent;
+import com.velvet.sharedmodule.DaggerAppComponent;
+import com.velvet.sharedmodule.LoginModule;
 
 public class App extends Application {
 

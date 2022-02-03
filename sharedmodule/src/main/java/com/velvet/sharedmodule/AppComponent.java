@@ -8,9 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-//TODO setup dagger for multi module
-
-@Component(modules = {LoginModule.class, MapModule.class})
+@Component(modules = {LoginModule.class})
 @Singleton
 public interface AppComponent {
     void inject(FirebaseAuthNetwork repository);
@@ -18,6 +16,4 @@ public interface AppComponent {
     void inject(LoginViewModelFactory factory);
 
     void inject(PasswordRecoveryViewModelFactory factory);
-
-    void inject(FirestoreLocationRepository repository);
 }

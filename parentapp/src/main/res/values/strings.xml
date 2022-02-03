@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">ParentApp</string>
+    <string name="app_name">Tracker Parent</string>
+
+    <!--Map screen-->
+    <string name="please_give_access">Please grant location permission!</string>
 </resources>

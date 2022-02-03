@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <fragment
         android:id="@+id/settings_screen"
-        android:name="com.velvet.trackerforsleepwalkers.ui.settings.SettingsFragment"
+        android:name="com.velvet.childapp.ui.settings.SettingsFragment"
         android:label="@string/settings_screen_label"
         tools:layout="@layout/fragment_settings">
         <deepLink app:uri="tracker://next"/>

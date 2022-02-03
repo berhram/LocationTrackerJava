@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.models.location;
+package com.velvet.childapp.models.location;
 
 import android.content.Context;
 import android.location.Location;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.LocationSource;
-import com.velvet.trackerforsleepwalkers.models.preferences.SharedPreferenceProvider;
+import com.velvet.childapp.models.preferences.SharedPreferenceProvider;
 
 import io.reactivex.rxjava3.subjects.PublishSubject;
 

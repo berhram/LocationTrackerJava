@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.models;
+package com.velvet.sharedmodule;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.sharedmodule.auth.FirebaseAuthNetwork;

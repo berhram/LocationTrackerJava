@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.velvet.parentapp.ui.map.MapFragment">
+    tools:context="com.velvet.childapp.ui.settings.SettingsFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,10 +37,4 @@
             android:text="@string/network"/>
     </RadioGroup>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

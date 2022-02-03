@@ -1,4 +1,4 @@
-package com.velvet.trackerforsleepwalkers.services;
+package com.velvet.childapp.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.velvet.trackerforsleepwalkers.models.location.LocationEmitter;
+import com.velvet.childapp.models.location.LocationEmitter;
 import com.velvet.sharedmodule.result.Result;
 
 import java.util.Date;

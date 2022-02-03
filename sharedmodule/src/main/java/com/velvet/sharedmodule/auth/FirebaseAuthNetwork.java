@@ -3,7 +3,7 @@ package com.velvet.sharedmodule.auth;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.trackerforsleepwalkers.App;
+import com.velvet.sharedmodule.App;
 import com.velvet.sharedmodule.result.Result;
 
 import javax.inject.Inject;

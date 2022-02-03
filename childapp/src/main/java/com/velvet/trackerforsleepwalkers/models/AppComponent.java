@@ -1,10 +1,10 @@
 package com.velvet.trackerforsleepwalkers.models;
 
-import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthNetwork;
+import com.velvet.sharedmodule.auth.FirebaseAuthNetwork;
 import com.velvet.trackerforsleepwalkers.models.data.FirestoreLocationRepository;
-import com.velvet.sharedcodelibrary.ui.login.LoginViewModelFactory;
-import com.velvet.trackerforsleepwalkers.ui.map.MapViewModelFactory;
-import com.velvet.sharedcodelibrary.ui.passwordrecovery.PasswordRecoveryViewModelFactory;
+import com.velvet.sharedmodule.ui.login.LoginViewModelFactory;
+import com.velvet.parentapp.ui.map.MapViewModelFactory;
+import com.velvet.sharedmodule.ui.passwordrecovery.PasswordRecoveryViewModelFactory;
 
 import javax.inject.Singleton;
 
@@ -20,6 +20,4 @@ public interface AppComponent {
     void inject(PasswordRecoveryViewModelFactory factory);
 
     void inject(FirestoreLocationRepository repository);
-
-    void inject(MapViewModelFactory factory);
 }

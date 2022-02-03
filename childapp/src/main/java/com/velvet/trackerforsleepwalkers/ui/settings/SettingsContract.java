@@ -1,6 +1,6 @@
 package com.velvet.trackerforsleepwalkers.ui.settings;
 
-import com.velvet.sharedcodelibrary.mvi.FragmentContract;
+import com.velvet.sharedmodule.mvi.FragmentContract;
 
 public class SettingsContract {
     public interface ViewModel extends FragmentContract.ViewModel<SettingsViewState, SettingsViewEffect> {

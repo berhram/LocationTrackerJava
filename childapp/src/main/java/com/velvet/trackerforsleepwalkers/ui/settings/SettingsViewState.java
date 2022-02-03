@@ -1,6 +1,6 @@
 package com.velvet.trackerforsleepwalkers.ui.settings;
 
-import com.velvet.sharedcodelibrary.mvi.MviViewState;
+import com.velvet.sharedmodule.mvi.MviViewState;
 
 public class SettingsViewState implements MviViewState<SettingsContract.View> {
     private static final int ACTION_INITIAL = 1;

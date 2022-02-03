@@ -12,7 +12,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.velvet.trackerforsleepwalkers.models.location.LocationEmitter;
-import com.velvet.sharedcodelibrary.result.Result;
+import com.velvet.sharedmodule.result.Result;
 
 import java.util.Date;
 import java.util.HashMap;

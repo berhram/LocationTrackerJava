@@ -1,7 +1,7 @@
 package com.velvet.trackerforsleepwalkers.models;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.trackerforsleepwalkers.models.auth.FirebaseAuthNetwork;
+import com.velvet.sharedmodule.auth.FirebaseAuthNetwork;
 
 import javax.inject.Singleton;
 

@@ -6,6 +6,9 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Tracker for sleepwalkers"
-include ':childapp'
-include ':parentapp'
-include ':sharedmodule'
+include ':tracker'
+include ':map'
+include ':core'
+include ':auth'
+include ':models'
+include ':mvi'

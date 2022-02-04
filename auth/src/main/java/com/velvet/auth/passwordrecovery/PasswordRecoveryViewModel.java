@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.velvet.models.auth.AuthNetwork;
 import com.velvet.models.auth.FirebaseAuthMessages;
-import com.velvet.mvi.mvi.MviViewModel;
+import com.velvet.mvi.MviViewModel;
 import com.velvet.tracker.R;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

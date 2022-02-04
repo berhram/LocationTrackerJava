@@ -1,6 +1,7 @@
 package com.velvet.auth.login;
 
-import com.velvet.mvi.mvi.FragmentContract;
+
+import com.velvet.mvi.FragmentContract;
 
 public class LoginContract {
     public interface ViewModel extends FragmentContract.ViewModel<LoginViewState, LoginViewEffect> {

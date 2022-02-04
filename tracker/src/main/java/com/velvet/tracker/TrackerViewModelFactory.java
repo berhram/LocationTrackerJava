@@ -1,4 +1,4 @@
-package com.velvet.tracker.ui;
+package com.velvet.tracker;
 
 public class TrackerViewModelFactory {
 

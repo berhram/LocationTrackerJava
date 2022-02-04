@@ -1,39 +1,6 @@
 <resources>
     <!--App name-->
-    <string name="app_name">Tracker for sleepwalkers</string>
+    <string name="app_name_tracker"/>
 
-    <!--Login screen-->
-    <!--Login buttons text-->
-    <string name="email_button">Sign In</string>
-    <string name="register_button">Sign Up</string>
-    <string name="forgot_password">Forgot password?</string>
-    <!--Login input hints-->
-    <string name="email_title">E-mail</string>
-    <string name="password_title">Password</string>
-    <!--Login screen labels-->
-    <string name="login_screen_label">Login screen</string>
-    <string name="password_recovery_screen_label">History screen</string>
-    <string name="map_screen_label">Map screen</string>
-    <string name="settings_screen_label">Settings screen</string>
-    <string name="history_screen_label">History screen</string>
-    <!--Login warnings-->
-    <string name="success_registration">Your account was successfully sign up!</string>
-    <string name="success_login">You successfully sign in!</string>
-    <string name="invalid_email_or_password">E-mail or password is incorrect!</string>
-    <string name="user_already_registered">User already registered!</string>
-    <string name="something_went_wrong">Something went wrong…</string>
-
-    <!--Recovery screen-->
-    <!--Recovery buttons text-->
-    <string name="recovery_code_send_button">Send code</string>
-    <string name="change_password">Change password</string>
-    <!--Recovery input hints-->
-    <string name="recovery_email_title">E-mail</string>
-    <string name="recovery_password_title">Recovery code</string>
-    <string name="new_password_title">New password</string>
-    <!--Recovery warnings-->
-    <string name="invalid_recovery_email">Email not found!</string>
-    <string name="code_successfully_sent">Code successfully sent</string>
-    <string name="invalid_recovery_code">Code is invalid!</string>
-    <string name="password_successfully_changed">Password successfully changed!</string>
+    <string name="please_give_access">Please give location access!</string>
 </resources>

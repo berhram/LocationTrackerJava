@@ -2,8 +2,6 @@ package com.velvet.core;
 
 import android.app.Application;
 
-import com.velvet.core.DaggerAppComponent;
-
 public class App extends Application {
 
     private static App instance;
@@ -14,7 +12,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        appComponent = DaggerAppComponent.builder().loginModule(new LoginModule()).build();
+        appComponent = com.velvet.core.DaggerAppComponent.builder().loginModule(new LoginModule()).build();
     }
 
     public AppComponent getComponent() {

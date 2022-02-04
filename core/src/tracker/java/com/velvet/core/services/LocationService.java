@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.IBinder;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -43,7 +40,7 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         disposables.add(new LocationEmitter(getApplicationContext())
-                .getLocationSubject()
+                .getLocation()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::writeLocationToFirestore));
@@ -70,11 +67,6 @@ public class LocationService extends Service {
         database.collection("Tracker")
                 .document("Locations")
                 .set(locationHashMap)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        errorSubject.onNext(new Result<>(null, new Exception("Firebase write error")));
-                    }
-                });
+                .addOnFailureListener(e -> errorSubject.onNext(Result.error(new Exception("Something went wrong in service"))));
     }
 }

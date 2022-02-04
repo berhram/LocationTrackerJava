@@ -1,51 +1,64 @@
 package com.velvet.models.location;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.maps.LocationSource;
-import com.velvet.models.preferences.SharedPreferenceProvider;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class LocationEmitter implements LocationSource, LocationListener {
+
+public class LocationEmitter extends LocationCallback implements LocationEmitterInterface {
     private final PublishSubject<Location> locationSubject = PublishSubject.create();
-    private OnLocationChangedListener locationChangedListener;
-    private final LocationManager locationManager;
-    private final String source;
-    private final long MIN_TIME_MS = 10_000;
-    private final float MIN_DISTANT_M = 0;
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationRequest locationRequest;
+    private final Context context;
 
     public LocationEmitter(Context context) {
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        source = new SharedPreferenceProvider(context).get("Source", "");
+        this.context = context;
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
     }
 
     @Override
-    public void activate(@NonNull OnLocationChangedListener listener) {
-        this.locationChangedListener = listener;
-        if (!source.equals("")) {
-            locationManager.requestLocationUpdates(source, MIN_TIME_MS, MIN_DISTANT_M, this::onLocationChanged);
+    public void start() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000);
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.requestLocationUpdates(locationRequest, this, null);
+        } else {
+            //TODO make error callback
         }
     }
 
     @Override
-    public void onLocationChanged(@NonNull Location location) {
-        if (locationChangedListener != null) {
-            locationSubject.onNext(location);
+    public void onLocationResult(@NonNull LocationResult locationResult) {
+        if (locationResult == null) {
+            return;
+        }
+        for (Location location : locationResult.getLocations()) {
+            if (location != null) {
+                locationSubject.onNext(location);
+            }
         }
     }
 
     @Override
-    public void deactivate() {
-        locationManager.removeUpdates(this::onLocationChanged);
+    public void stop() {
+        fusedLocationClient.removeLocationUpdates(this);
     }
 
-    public PublishSubject<Location> getLocationSubject() {
+    @Override
+    public PublishSubject<Location> getLocation() {
         return locationSubject;
     }
 }

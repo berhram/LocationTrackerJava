@@ -22,8 +22,7 @@ import com.velvet.core.databinding.ActivityMainBinding;
 import com.velvet.map.ui.map.MapContract;
 import com.velvet.models.preferences.SharedPreferenceProvider;
 
-
-public class MapActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, MapContract.Host {
+public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, MapContract.Host {
 
     private NavController navController;
     private ActivityMainBinding binding;
@@ -75,6 +74,7 @@ public class MapActivity extends AppCompatActivity implements LoginContract.Host
     public void proceedToPasswordRecovery() {
         navController.navigate(LoginFragmentDirections.loginScreenToPasswordRecoveryScreen());
     }
+    //TODO add same to another flavor. fix this activity
 
 
     @Override

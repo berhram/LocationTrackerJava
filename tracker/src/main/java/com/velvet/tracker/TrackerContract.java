@@ -1,4 +1,4 @@
-package com.velvet.tracker.ui;
+package com.velvet.tracker;
 
 import com.velvet.mvi.mvi.FragmentContract;
 

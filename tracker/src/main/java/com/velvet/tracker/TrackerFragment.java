@@ -1,4 +1,4 @@
-package com.velvet.tracker.ui;
+package com.velvet.tracker;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.tracker.R;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
 import com.velvet.models.preferences.SharedPreferenceProvider;
 import com.velvet.mvi.mvi.HostedFragment;

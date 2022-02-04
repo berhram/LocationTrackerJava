@@ -1,6 +1,6 @@
 package com.velvet.auth.passwordrecovery;
 
-import com.velvet.mvi.mvi.AbstractEffect;
+import com.velvet.mvi.AbstractEffect;
 
 public class PasswordRecoveryViewEffect extends AbstractEffect<PasswordRecoveryContract.View> {
     private static final int ACTION_PREVIOUS = 1;

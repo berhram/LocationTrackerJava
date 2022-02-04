@@ -1,8 +1,8 @@
 package com.velvet.core;
 
+import com.velvet.auth.login.LoginViewModelFactory;
+import com.velvet.auth.passwordrecovery.PasswordRecoveryViewModelFactory;
 import com.velvet.models.auth.FirebaseAuthNetwork;
-import com.velvet.core.ui.login.LoginViewModelFactory;
-import com.velvet.core.ui.passwordrecovery.PasswordRecoveryViewModelFactory;
 
 import javax.inject.Singleton;
 

@@ -3,15 +3,17 @@ package com.velvet.auth.login;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.velvet.auth.R;
 import com.velvet.models.auth.AuthNetwork;
 import com.velvet.models.auth.FirebaseAuthMessages;
-import com.velvet.mvi.mvi.MviViewModel;
+import com.velvet.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
+//TODO toObservable not work and other too
 public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> loginSubject = PublishSubject.create();

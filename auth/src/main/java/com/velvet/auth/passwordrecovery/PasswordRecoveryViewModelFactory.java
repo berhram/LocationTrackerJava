@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.core.App;
 import com.velvet.models.auth.FirebaseAuthNetwork;
-import com.velvet.tracker.App;
 
 import javax.inject.Inject;
 

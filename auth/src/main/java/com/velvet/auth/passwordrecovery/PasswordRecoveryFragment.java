@@ -9,8 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.mvi.mvi.HostedFragment;
-import com.velvet.tracker.databinding.FragmentPasswordRecoveryBinding;
+import com.velvet.auth.databinding.FragmentPasswordRecoveryBinding;
+import com.velvet.mvi.HostedFragment;
+
 
 public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
     private FragmentPasswordRecoveryBinding binding;

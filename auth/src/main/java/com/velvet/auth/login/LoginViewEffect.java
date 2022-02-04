@@ -1,6 +1,7 @@
 package com.velvet.auth.login;
 
-import com.velvet.mvi.mvi.AbstractEffect;
+
+import com.velvet.mvi.AbstractEffect;
 
 public class LoginViewEffect extends AbstractEffect<LoginContract.View> {
     private static final int ACTION_NEXT = 1;

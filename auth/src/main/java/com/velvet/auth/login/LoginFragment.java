@@ -9,8 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.core.databinding.FragmentLoginBinding;
-import com.velvet.mvi.mvi.HostedFragment;
+import com.velvet.auth.databinding.FragmentLoginBinding;
+import com.velvet.mvi.HostedFragment;
+
 
 public class LoginFragment extends HostedFragment<LoginViewState,
         LoginContract.ViewModel,

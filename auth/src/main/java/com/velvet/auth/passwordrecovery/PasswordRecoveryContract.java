@@ -1,6 +1,6 @@
 package com.velvet.auth.passwordrecovery;
 
-import com.velvet.mvi.mvi.FragmentContract;
+import com.velvet.mvi.FragmentContract;
 
 public class PasswordRecoveryContract {
     public interface ViewModel extends FragmentContract.ViewModel<PasswordRecoveryViewState, PasswordRecoveryViewEffect> {

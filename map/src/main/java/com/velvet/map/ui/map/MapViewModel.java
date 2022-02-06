@@ -3,15 +3,11 @@ package com.velvet.map.ui.map;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.velvet.models.models.data.LocationRepository;
-import com.velvet.mvi.mvi.MviViewModel;
+import com.velvet.mvi.MviViewModel;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
 
-    private final LocationRepository locationRepository;
-
-    public MapViewModel(LocationRepository locationRepository) {
-        this.locationRepository = locationRepository;
+    public MapViewModel() {
     }
 
     @Override

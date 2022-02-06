@@ -4,7 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.app.App;
+import com.velvet.auth.AuthModule;
+import com.velvet.auth.DaggerAuthComponent;
 import com.velvet.models.auth.FirebaseAuthNetwork;
 
 import javax.inject.Inject;
@@ -14,7 +15,7 @@ public class PasswordRecoveryViewModelFactory extends ViewModelProvider.NewInsta
     FirebaseAuthNetwork repository;
 
     public PasswordRecoveryViewModelFactory() {
-        App.getInstance().getComponent().inject(this);
+        DaggerAuthComponent.builder().authModule(new AuthModule()).build().inject(this);
     }
 
     @NonNull

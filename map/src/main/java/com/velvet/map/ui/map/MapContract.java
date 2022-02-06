@@ -1,6 +1,6 @@
 package com.velvet.map.ui.map;
 
-import com.velvet.mvi.mvi.FragmentContract;
+import com.velvet.mvi.FragmentContract;
 
 public class MapContract {
     public interface ViewModel extends FragmentContract.ViewModel<MapViewState, MapViewEffect> {
@@ -8,7 +8,7 @@ public class MapContract {
     }
 
     public interface View extends FragmentContract.View {
-        void proceedToSettingsScreen();
+        void proceedToLoginScreen();
 
         void setMarkers();
 
@@ -16,6 +16,6 @@ public class MapContract {
     }
 
     public interface Host extends FragmentContract.Host {
-        void proceedToSettingsScreen(String id);
+        void proceedToLoginScreen(String id);
     }
 }

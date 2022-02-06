@@ -1,6 +1,6 @@
 package com.velvet.map.ui.map;
 
-import com.velvet.mvi.mvi.MviViewState;
+import com.velvet.mvi.MviViewState;
 
 public class MapViewState implements MviViewState<MapContract.View> {
     private static final int ACTION_CREATE_FILTER = 1;

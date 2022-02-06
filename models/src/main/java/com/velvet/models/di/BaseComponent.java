@@ -1,15 +1,13 @@
 package com.velvet.models.di;
 
-import android.app.Application;
+import com.velvet.models.auth.FirebaseAuthNetwork;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
 @Singleton
-@Component
-interface BaseComponent {
-    void inject(Application application);
-
-
+@Component(modules = {BaseModule.class})
+public interface BaseComponent {
+    void inject(FirebaseAuthNetwork firebaseAuthNetwork);
 }

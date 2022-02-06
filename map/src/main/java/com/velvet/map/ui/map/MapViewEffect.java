@@ -1,6 +1,6 @@
 package com.velvet.map.ui.map;
 
-import com.velvet.mvi.mvi.AbstractEffect;
+import com.velvet.mvi.AbstractEffect;
 
 public class MapViewEffect extends AbstractEffect<MapContract.View> {
     private static final int ACTION_SETTINGS = 1;
@@ -18,7 +18,7 @@ public class MapViewEffect extends AbstractEffect<MapContract.View> {
     @Override
     public void handle(MapContract.View screen) {
         if (action == ACTION_SETTINGS) {
-            screen.proceedToSettingsScreen();
+            screen.proceedToLoginScreen();
         }
     }
 }

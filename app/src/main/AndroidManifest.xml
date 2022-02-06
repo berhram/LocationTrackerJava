@@ -10,7 +10,6 @@
 
     <application
         android:allowBackup="true"
-        android:name="com.velvet.tracker.app.App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
@@ -18,7 +17,7 @@
         android:theme="@style/LocationTheme">
 
         <activity
-            android:name="com.velvet.tracker.app.AppActivity"
+            android:name="com.velvet.app.AppActivity"
             android:exported="true">
 
             <intent-filter>
@@ -32,10 +31,9 @@
         </activity>
 
         <service
-            android:name= "app.services.LocationService"
+            android:name= "com.velvet.app.services.LocationService"
             android:enabled="true"
             android:exported="false"/>
-
 
     </application>
 

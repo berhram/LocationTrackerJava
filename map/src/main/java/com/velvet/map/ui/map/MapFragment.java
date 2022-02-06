@@ -9,7 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.mvi.mvi.HostedFragment;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.velvet.map.R;
+import com.velvet.map.databinding.FragmentMapBinding;
+import com.velvet.mvi.HostedFragment;
 
 
 public class MapFragment extends HostedFragment<MapViewState,
@@ -65,9 +73,9 @@ public class MapFragment extends HostedFragment<MapViewState,
     }
 
     @Override
-    public void proceedToSettingsScreen() {
+    public void proceedToLoginScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToSettingsScreen("Map");
+            getFragmentHost().proceedToLoginScreen("Map");
         }
     }
 

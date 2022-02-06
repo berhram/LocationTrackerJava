@@ -1,16 +1,13 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 
 android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.velvet.logjn"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,7 +31,6 @@ android {
 
 dependencies {
     implementation project(':mvi')
-    implementation project(':core')
     implementation project(':models')
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -48,4 +44,7 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.40.5'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.40.5'
+
+    implementation 'androidx.navigation:navigation-fragment:2.5.0-alpha01'
+    implementation 'androidx.navigation:navigation-ui:2.5.0-alpha01'
 }

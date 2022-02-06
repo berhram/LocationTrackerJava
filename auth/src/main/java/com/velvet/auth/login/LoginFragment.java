@@ -27,7 +27,7 @@ public class LoginFragment extends HostedFragment<LoginViewState,
 
     @Override
     protected LoginContract.ViewModel createModel() {
-        //Why ide require this and other cast?
+        //TODO fix this cast
         return new ViewModelProvider(this, (ViewModelProvider.Factory) new LoginViewModelFactory()).get(LoginViewModel.class);
     }
 
@@ -55,9 +55,9 @@ public class LoginFragment extends HostedFragment<LoginViewState,
     }
 
     @Override
-    public void proceedToMapScreen() {
+    public void proceedToNextScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToMapScreen("Login");
+            getFragmentHost().proceedToNextScreen("Login");
         }
     }
 

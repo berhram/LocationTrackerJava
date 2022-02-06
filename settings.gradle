@@ -8,7 +8,7 @@ dependencyResolutionManagement {
 rootProject.name = "Tracker for sleepwalkers"
 include ':tracker'
 include ':map'
-include ':core'
+include ':app'
 include ':auth'
 include ':models'
 include ':mvi'

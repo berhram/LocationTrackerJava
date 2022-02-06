@@ -19,7 +19,7 @@ public class LoginViewEffect extends AbstractEffect<LoginContract.View> {
     @Override
     public void handle(LoginContract.View screen) {
         if (action == ACTION_NEXT) {
-            screen.proceedToMapScreen();
+            screen.proceedToNextScreen();
         }
     }
 }

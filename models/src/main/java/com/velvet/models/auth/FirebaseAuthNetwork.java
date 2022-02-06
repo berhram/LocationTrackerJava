@@ -3,7 +3,6 @@ package com.velvet.models.auth;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.core.App;
 import com.velvet.models.result.Result;
 
 import javax.inject.Inject;
@@ -16,6 +15,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     FirebaseAuth firebaseAuth;
 
     public FirebaseAuthNetwork() {
+
         App.getInstance().getComponent().inject(this);
         firebaseAuth.useAppLanguage();
     }

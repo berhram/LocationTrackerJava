@@ -1,4 +1,4 @@
-package com.velvet.core.services;
+package com.velvet.app.services;
 
 import android.app.Service;
 import android.content.Intent;

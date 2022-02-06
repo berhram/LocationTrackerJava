@@ -8,10 +8,10 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-@Component(modules = {LoginModule.class})
+@Component(modules = {AppModule.class})
 @Singleton
 public interface AppComponent {
-    void inject(FirebaseAuthNetwork repository);
+    FirebaseAuthNetwork firebaseAuthNetwork();
 
     void inject(LoginViewModelFactory factory);
 

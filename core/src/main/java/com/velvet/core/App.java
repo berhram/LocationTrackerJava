@@ -2,7 +2,7 @@ package com.velvet.core;
 
 import android.app.Application;
 
-public class App extends Application {
+public class App  extends Application implements AppComponentProvider {
 
     private static App instance;
 
@@ -12,15 +12,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        appComponent = com.velvet.core.DaggerAppComponent.builder().loginModule(new LoginModule()).build();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule()).build();
     }
 
-    public AppComponent getComponent() {
+    @Override
+    public AppComponent provideAppComponent() {
         return appComponent;
     }
 
     public static App getInstance() {
         return instance;
     }
-
 }

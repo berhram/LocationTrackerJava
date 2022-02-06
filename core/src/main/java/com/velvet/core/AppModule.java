@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class LoginModule {
+public class AppModule {
     @Provides
     @Singleton
     FirebaseAuth providesFirebaseAuth() {

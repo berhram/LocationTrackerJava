@@ -1,6 +1,6 @@
 package com.velvet.tracker;
 
-import com.velvet.mvi.mvi.MviViewState;
+import com.velvet.mvi.MviViewState;
 
 public class TrackerViewState implements MviViewState<TrackerContract.View> {
     private static final int ACTION_INITIAL = 1;
@@ -18,7 +18,6 @@ public class TrackerViewState implements MviViewState<TrackerContract.View> {
     @Override
     public void visit(TrackerContract.View screen) {
         if (action == ACTION_INITIAL) {
-            screen.setSourceSwitch();
         }
     }
 }

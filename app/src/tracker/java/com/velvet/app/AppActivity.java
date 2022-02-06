@@ -1,4 +1,4 @@
-package com.velvet.core;
+package com.velvet.app;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,11 +18,11 @@ import androidx.navigation.Navigation;
 
 import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
-import com.velvet.core.databinding.ActivityMainBinding;
-import com.velvet.map.ui.map.MapContract;
+import com.velvet.app.services.LocationService;
 import com.velvet.models.preferences.SharedPreferenceProvider;
+import com.velvet.tracker.TrackerContract;
 
-public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, MapContract.Host {
+public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host {
 
     private NavController navController;
     private ActivityMainBinding binding;
@@ -37,7 +37,7 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
         locationPermissionRequest =
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                     if (!result.get(Manifest.permission.ACCESS_FINE_LOCATION) || !result.get(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                        Toast.makeText(this, com.velvet.core.R.string.please_give_access, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, com.velvet.app.R.string.please_give_access, Toast.LENGTH_SHORT).show();
                     }
                 });
         preferences = new SharedPreferenceProvider(this);
@@ -53,46 +53,24 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
     }
 
     @Override
-    public void proceedToMapScreen(String id) {
+    public void proceedToNextScreen(String id) {
         if (id.equals("Login")) {
-            navController.navigate(LoginFragmentDirections.loginScreenToMapScreen());
-        } else if (id.equals("Settings")) {
-            navController.navigate(SettingsFragmentDirections.settingsScreenToMapScreen());
+            //navController.navigate();
         }
     }
 
     @Override
     public void proceedToLoginScreen(String id) {
         if (id.equals("Password recovery")) {
-            navController.navigate(PasswordRecoveryFragmentDirections.passwordRecoveryScreenToLoginScreen());
-        } else if (id.equals("Settings")) {
-            navController.navigate(SettingsFragmentDirections.settingsScreenToLoginScreen());
+            //navController.navigate();
+        } else if (id.equals("Tracker")) {
+            //navController.navigate();
         }
     }
 
     @Override
     public void proceedToPasswordRecovery() {
-        navController.navigate(LoginFragmentDirections.loginScreenToPasswordRecoveryScreen());
-    }
-    //TODO add same to another flavor. fix this activity
-
-
-    @Override
-    public void proceedToSettingsScreen(String id) {
-        if (id.equals("Map")) {
-            navController.navigate(MapFragmentDirections.mapScreenToSettingsScreen());
-        }
-    }
-
-    @Override
-    public void setSource(String source) {
-        if (source.equals("Passive")) {
-            preferences.put("Source", LocationManager.PASSIVE_PROVIDER);
-        } else if (source.equals("GPS")) {
-            preferences.put("Source", LocationManager.GPS_PROVIDER);
-        } else if (source.equals("Network")) {
-            preferences.put("Source", LocationManager.NETWORK_PROVIDER);
-        }
+        //navController.navigate();
     }
 
     public void checkOrRequestPermissions() {

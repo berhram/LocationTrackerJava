@@ -1,4 +1,4 @@
-package com.velvet.app.services;
+package com.velvet.models.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class LocationService extends Service {
+public class TrackerService extends Service {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final BehaviorSubject<Result<Void>> errorSubject = BehaviorSubject.create();
     private FirebaseFirestore database;
@@ -62,11 +62,8 @@ public class LocationService extends Service {
     }
 
     private void writeLocationToFirestore(Location location) {
-        Map<Timestamp, Location> locationHashMap = new HashMap<>();
-        locationHashMap.put(new Timestamp(new Date()), location);
         database.collection("Tracker")
-                .document("Locations")
-                .set(locationHashMap)
+                .add(location)
                 .addOnFailureListener(e -> errorSubject.onNext(Result.error(new Exception("Something went wrong in service"))));
     }
 }

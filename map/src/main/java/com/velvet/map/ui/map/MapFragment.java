@@ -9,16 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
 import com.velvet.mvi.HostedFragment;
-
 
 public class MapFragment extends HostedFragment<MapViewState,
         MapContract.ViewModel,
@@ -29,6 +26,8 @@ public class MapFragment extends HostedFragment<MapViewState,
         OnMapReadyCallback {
     private FragmentMapBinding binding;
     private GoogleMap map;
+
+
 
 
     @Override
@@ -58,8 +57,8 @@ public class MapFragment extends HostedFragment<MapViewState,
     }
 
     @Override
-    public void setMarkers() {
-
+    public void setMarker(MarkerOptions marker) {
+        map.addMarker(marker);
     }
 
     @Override
@@ -82,9 +81,5 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
 }

@@ -1,5 +1,6 @@
 package com.velvet.map.ui.map;
 
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.mvi.FragmentContract;
 
 public class MapContract {
@@ -10,7 +11,7 @@ public class MapContract {
     public interface View extends FragmentContract.View {
         void proceedToLoginScreen();
 
-        void setMarkers();
+        void setMarker(MarkerOptions marker);
 
         void createFilter();
     }

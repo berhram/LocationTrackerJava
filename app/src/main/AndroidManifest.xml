@@ -31,7 +31,7 @@
         </activity>
 
         <service
-            android:name= "com.velvet.app.services.LocationService"
+            android:name= "com.velvet.models.services.LocationService"
             android:enabled="true"
             android:exported="false"/>
 

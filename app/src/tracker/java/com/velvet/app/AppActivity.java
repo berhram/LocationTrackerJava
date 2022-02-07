@@ -16,14 +16,16 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.velvet.models.services.TrackerService;
 import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
-import com.velvet.app.services.LocationService;
 import com.velvet.models.preferences.SharedPreferenceProvider;
 import com.velvet.tracker.TrackerContract;
 
-public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host {
+import app.R;
+import app.databinding.ActivityMainBinding;
 
+public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host, AppActivityContract {
     private NavController navController;
     private ActivityMainBinding binding;
     private ActivityResultLauncher<String[]> locationPermissionRequest;
@@ -37,7 +39,7 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
         locationPermissionRequest =
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                     if (!result.get(Manifest.permission.ACCESS_FINE_LOCATION) || !result.get(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                        Toast.makeText(this, com.velvet.app.R.string.please_give_access, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.please_give_access, Toast.LENGTH_SHORT).show();
                     }
                 });
         preferences = new SharedPreferenceProvider(this);
@@ -85,7 +87,8 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
         }
     }
 
-    public void startLocationService() {
-        getApplicationContext().startService(new Intent(this, LocationService.class));
+    @Override
+    public void startService() {
+        getApplicationContext().startService(new Intent(this, TrackerService.class));
     }
 }

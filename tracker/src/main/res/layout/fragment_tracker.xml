@@ -4,37 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.velvet.tracker.ui.SettingsFragment">
+    tools:context="com.velvet.tracker.TrackerFragment">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/location_source_title"
-        android:text="@string/location_source_text"/>
-
-    <RadioGroup
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/location_source_title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/source_switcher">
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gps"
-            android:text="@string/gps"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/passive"
-            android:text="@string/passive"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/network"
-            android:text="@string/network"/>
-    </RadioGroup>
+        android:text="@string/start_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

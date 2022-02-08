@@ -15,7 +15,7 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
     FirebaseAuthNetwork repository;
 
     public LoginViewModelFactory() {
-        DaggerAuthComponent.builder().authModule(new AuthModule()).build().inject(this);
+
     }
 
     @NonNull

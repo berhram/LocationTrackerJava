@@ -19,11 +19,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
-    @Inject
-    ServiceCache cache;
+    private final ServiceCache cache;
 
-    public MapViewModel() {
-        DaggerBaseComponent.builder().baseModule(new BaseModule()).build().inject(this);
+    public MapViewModel(ServiceCache cache) {
+        this.cache = cache;
     }
 
     @Override

@@ -15,7 +15,6 @@ public class PasswordRecoveryViewModelFactory extends ViewModelProvider.NewInsta
     FirebaseAuthNetwork repository;
 
     public PasswordRecoveryViewModelFactory() {
-        DaggerAuthComponent.builder().authModule(new AuthModule()).build().inject(this);
     }
 
     @NonNull

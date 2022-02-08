@@ -10,6 +10,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.velvet.models.cache.ServiceCache;
+import com.velvet.models.di.BaseModule;
 import com.velvet.models.filter.DateFilter;
 import com.velvet.models.result.Result;
 
@@ -17,19 +19,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
+import javax.inject.Inject;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class MapService extends Service {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final BehaviorSubject<Result<Void>> errors = BehaviorSubject.create();
-    private final PublishSubject<List<MarkerOptions>> markers = PublishSubject.create();
+    private final PublishSubject<MarkerOptions> markers = PublishSubject.create();
     private FirebaseFirestore database;
     private final long MAX_CACHE_BYTES = 1024 * 1024 * 10;
     private DateFilter filter;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    @Inject
+    ServiceCache cache;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -44,10 +51,11 @@ public class MapService extends Service {
 
     @Override
     public void onCreate() {
+        disposables.add(markers.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(markerOptions ->  cache.put(markerOptions)));
         setup();
     }
 
-    public void setup() {
+    private void setup() {
         database = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
@@ -57,10 +65,6 @@ public class MapService extends Service {
         if (filter == null) {
             filter = new DateFilter(new Date(Long.MIN_VALUE), new Date(Long.MAX_VALUE));
         }
-    }
-
-    public Observable<List<MarkerOptions>> fetchMarkers() {
-
     }
 
     public void setFilter(DateFilter filter) {
@@ -85,7 +89,9 @@ public class MapService extends Service {
     }
 
     @Override
-    public void onDestroy() {}
+    public void onDestroy() {
+        disposables.clear();
+    }
 
     private void receiveAllLocationFromFirestore() {
         database.collection("Tracker")
@@ -93,7 +99,7 @@ public class MapService extends Service {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            markers.onNext(document.getData());
+                            markers.onNext(document.toObject(MarkerOptions.class));
                         }
                     }
                 });

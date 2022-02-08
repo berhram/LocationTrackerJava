@@ -1,9 +1,7 @@
 package com.velvet.models.di;
 
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-
-import com.velvet.models.auth.FirebaseAuthNetwork;
+import com.google.firebase.auth.FirebaseAuth;
+import com.velvet.models.cache.ServiceCache;
 
 import javax.inject.Singleton;
 
@@ -12,7 +10,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {BaseModule.class})
 public interface BaseComponent {
-    void inject(FirebaseAuthNetwork firebaseAuthNetwork);
+    ServiceCache getCache();
 
-    void inject(ViewModel viewModel);
+    FirebaseAuth getAuth();
 }

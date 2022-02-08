@@ -1,28 +1,17 @@
-package com.velvet.map.ui.map;
+package com.velvet.map.ui;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.velvet.models.cache.ServiceCache;
-import com.velvet.models.di.BaseModule;
-import com.velvet.models.di.DaggerBaseComponent;
 import com.velvet.mvi.MviViewModel;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
-    private final ServiceCache cache;
 
-    public MapViewModel(ServiceCache cache) {
-        this.cache = cache;
+    public MapViewModel() {
     }
 
     @Override
@@ -30,10 +19,13 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
+                    /*
                     cache.get()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(this::setMarker)
+
+                     */
             );
         }
     }

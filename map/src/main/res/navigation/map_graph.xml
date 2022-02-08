@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <fragment
         android:id="@+id/map_screen"
-        android:name="com.velvet.map.ui.map.MapFragment"
+        android:name="com.velvet.map.ui.MapFragment"
         android:label="@string/map_screen_label"
         tools:layout="@layout/fragment_map">
         <deepLink app:uri="tracker://next"/>

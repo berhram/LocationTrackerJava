@@ -1,4 +1,4 @@
-package com.velvet.auth;
+package com.velvet.auth.di;
 
 import com.velvet.models.auth.FirebaseAuthNetwork;
 
@@ -10,7 +10,7 @@ import dagger.Provides;
 @Module
 public class AuthModule {
     @Provides
-    @Singleton
+    @AuthScope
     FirebaseAuthNetwork providesFirebaseAuthNetwork() {
         return new FirebaseAuthNetwork();
     }

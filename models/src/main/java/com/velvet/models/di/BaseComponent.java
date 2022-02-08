@@ -1,16 +1,21 @@
 package com.velvet.models.di;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.models.cache.ServiceCache;
+import android.content.Context;
+
+import com.velvet.models.auth.FirebaseAuthNetwork;
 
 import javax.inject.Singleton;
 
+import dagger.BindsInstance;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {BaseModule.class})
+@Component(modules = {BaseModule.class, CacheModule.class, NetworkModule.class})
 public interface BaseComponent {
-    ServiceCache getCache();
+    @Component.Factory
+    interface Factory {
+        BaseComponent create(@BindsInstance Context context);
+    }
 
-    FirebaseAuth getAuth();
+    void inject(FirebaseAuthNetwork network);
 }

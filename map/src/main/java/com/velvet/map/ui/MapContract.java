@@ -1,4 +1,4 @@
-package com.velvet.map.ui.map;
+package com.velvet.map.ui;
 
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.mvi.FragmentContract;
@@ -14,9 +14,13 @@ public class MapContract {
         void setMarker(MarkerOptions marker);
 
         void createFilter();
+
+        void startService();
     }
 
     public interface Host extends FragmentContract.Host {
         void proceedToLoginScreen(String id);
+
+        void startService();
     }
 }

@@ -1,4 +1,4 @@
-package com.velvet.models.services;
+package com.velvet.map.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -10,8 +10,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.velvet.models.cache.ServiceCache;
-import com.velvet.models.di.BaseModule;
 import com.velvet.models.filter.DateFilter;
 import com.velvet.models.result.Result;
 
@@ -35,8 +33,6 @@ public class MapService extends Service {
     private final long MAX_CACHE_BYTES = 1024 * 1024 * 10;
     private DateFilter filter;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    @Inject
-    ServiceCache cache;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -51,7 +47,9 @@ public class MapService extends Service {
 
     @Override
     public void onCreate() {
-        disposables.add(markers.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(markerOptions ->  cache.put(markerOptions)));
+        disposables.add(markers.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
         setup();
     }
 

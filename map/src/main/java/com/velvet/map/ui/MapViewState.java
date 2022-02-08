@@ -1,4 +1,4 @@
-package com.velvet.map.ui.map;
+package com.velvet.map.ui;
 
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.mvi.MviViewState;

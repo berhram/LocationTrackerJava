@@ -1,25 +1,17 @@
 package com.velvet.models.di;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.models.auth.FirebaseAuthNetwork;
-import com.velvet.models.cache.ServiceCache;
+import android.app.Application;
+
+import com.velvet.models.application.App;
 
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 @Module
-public class BaseModule {
-    @Provides
+public abstract class BaseModule {
+    @Binds
     @Singleton
-    ServiceCache provideCache() {
-        return new ServiceCache();
-    }
-
-    @Provides
-    @Singleton
-    FirebaseAuth provideFirebaseAuth() {
-        return FirebaseAuth.getInstance();
-    }
+    abstract Application bindApplication(App application);
 }

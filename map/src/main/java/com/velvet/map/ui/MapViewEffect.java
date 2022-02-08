@@ -1,4 +1,4 @@
-package com.velvet.map.ui.map;
+package com.velvet.map.ui;
 
 import com.velvet.mvi.AbstractEffect;
 

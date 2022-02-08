@@ -1,4 +1,4 @@
-package com.velvet.map.ui.map;
+package com.velvet.map.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,7 +53,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        startService();
     }
 
     @Override
@@ -69,6 +69,13 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void startService() {
+        if (hasHost()) {
+            getFragmentHost().startService();
+        }
     }
 
     @Override

@@ -3,19 +3,22 @@ package com.velvet.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import com.velvet.models.services.MapService;
+import com.velvet.auth.login.LoginFragment;
+import com.velvet.map.service.MapService;
 import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
-import com.velvet.map.ui.map.MapContract;
+import com.velvet.map.ui.MapContract;
 
 import app.databinding.ActivityMainBinding;
 
-public class AppActivity extends Activity implements LoginContract.Host, MapContract.Host, PasswordRecoveryContract.Host, AppActivityContract {
+public class AppActivity extends Activity implements LoginContract.Host, MapContract.Host, PasswordRecoveryContract.Host {
     private NavController navController;
     private ActivityMainBinding binding;
 
@@ -54,7 +57,6 @@ public class AppActivity extends Activity implements LoginContract.Host, MapCont
         //navController.navigate();
     }
 
-    //TODO remove this
     @Override
     public void startService() {
         getApplicationContext().startService(new Intent(this, MapService.class));

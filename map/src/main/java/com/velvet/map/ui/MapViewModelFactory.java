@@ -1,16 +1,13 @@
-package com.velvet.map.ui.map;
+package com.velvet.map.ui;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.models.cache.ServiceCache;
 
 import javax.inject.Inject;
 
 public class MapViewModelFactory extends ViewModelProvider.NewInstanceFactory {
-    @Inject
-    ServiceCache cache;
 
     public MapViewModelFactory() {}
 
@@ -18,7 +15,7 @@ public class MapViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == MapViewModel.class) {
-            return (T) new MapViewModel(cache);
+            return (T) new MapViewModel();
         }
         return null;
     }

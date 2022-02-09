@@ -1,5 +1,6 @@
-package com.velvet.auth.passwordrecovery;
+package com.velvet.auth.passwordrecovery.state;
 
+import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.mvi.AbstractEffect;
 
 public class PasswordRecoveryViewEffect extends AbstractEffect<PasswordRecoveryContract.View> {
@@ -16,10 +17,9 @@ public class PasswordRecoveryViewEffect extends AbstractEffect<PasswordRecoveryC
     }
 
     @Override
-        public void handle(PasswordRecoveryContract.View screen) {
-            if (action == ACTION_PREVIOUS) {
-                screen.proceedToLoginScreen();
-            }
+    public void handle(PasswordRecoveryContract.View screen) {
+        if (action == ACTION_PREVIOUS) {
+            screen.proceedToLoginScreen();
         }
-
+    }
 }

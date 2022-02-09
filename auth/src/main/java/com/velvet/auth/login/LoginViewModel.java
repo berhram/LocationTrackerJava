@@ -4,6 +4,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.velvet.auth.R;
+import com.velvet.auth.login.state.LoginViewEffect;
+import com.velvet.auth.login.state.LoginViewState;
 import com.velvet.models.auth.AuthNetwork;
 import com.velvet.models.auth.FirebaseAuthMessages;
 import com.velvet.mvi.MviViewModel;

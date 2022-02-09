@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.mvi.HostedFragment;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
+import com.velvet.tracker.state.TrackerViewEffect;
+import com.velvet.tracker.state.TrackerViewState;
 
 public class TrackerFragment extends HostedFragment<TrackerViewState,
         TrackerContract.ViewModel,

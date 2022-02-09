@@ -1,7 +1,8 @@
 package com.velvet.models.auth;
 
 public class FirebaseAuthMessages {
-    //classes used to communicate with auth repo
+
+    // classes used to communicate with auth repo
     public static class RecoveryParams {
         private final String type;
         private String email;

@@ -1,6 +1,7 @@
-package com.velvet.tracker;
+package com.velvet.tracker.state;
 
 import com.velvet.mvi.AbstractEffect;
+import com.velvet.tracker.TrackerContract;
 
 public class TrackerViewEffect extends AbstractEffect<TrackerContract.View> {
     private static final int ACTION_LOGIN = 1;

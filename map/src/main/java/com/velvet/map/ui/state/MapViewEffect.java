@@ -1,5 +1,6 @@
-package com.velvet.map.ui;
+package com.velvet.map.ui.state;
 
+import com.velvet.map.ui.MapContract;
 import com.velvet.mvi.AbstractEffect;
 
 public class MapViewEffect extends AbstractEffect<MapContract.View> {

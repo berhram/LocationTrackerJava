@@ -1,5 +1,7 @@
 package com.velvet.auth.passwordrecovery;
 
+import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
+import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
 import com.velvet.mvi.FragmentContract;
 
 public class PasswordRecoveryContract {

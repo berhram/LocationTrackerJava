@@ -4,10 +4,9 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.velvet.map.ui.state.MapViewEffect;
+import com.velvet.map.ui.state.MapViewState;
 import com.velvet.mvi.MviViewModel;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
 

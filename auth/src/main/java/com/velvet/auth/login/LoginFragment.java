@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.auth.databinding.FragmentLoginBinding;
+import com.velvet.auth.login.state.LoginViewEffect;
+import com.velvet.auth.login.state.LoginViewState;
 import com.velvet.mvi.HostedFragment;
 
 

@@ -1,6 +1,7 @@
-package com.velvet.map.ui;
+package com.velvet.map.ui.state;
 
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.velvet.map.ui.MapContract;
 import com.velvet.mvi.MviViewState;
 
 public class MapViewState implements MviViewState<MapContract.View> {

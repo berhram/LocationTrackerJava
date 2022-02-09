@@ -15,6 +15,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
+import com.velvet.map.ui.state.MapViewEffect;
+import com.velvet.map.ui.state.MapViewState;
 import com.velvet.mvi.HostedFragment;
 
 public class MapFragment extends HostedFragment<MapViewState,
@@ -24,11 +26,9 @@ public class MapFragment extends HostedFragment<MapViewState,
         MapContract.View> implements MapContract.View,
         View.OnClickListener,
         OnMapReadyCallback {
+
     private FragmentMapBinding binding;
     private GoogleMap map;
-
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
     }
 }

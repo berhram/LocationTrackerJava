@@ -1,13 +1,13 @@
-package com.velvet.auth.passwordrecovery;
+package com.velvet.auth.passwordrecovery.state;
 
+import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.mvi.MviViewState;
 
 public class PasswordRecoveryViewState implements MviViewState<PasswordRecoveryContract.View> {
     private static final int ACTION_SET_TEXT = 1;
 
     private final int action;
-
-    private int infoText;
+    private final int infoText;
 
     public PasswordRecoveryViewState(int action, int infoText) {
         this.action = action;

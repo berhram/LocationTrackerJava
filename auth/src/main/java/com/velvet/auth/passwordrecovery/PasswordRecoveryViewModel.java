@@ -4,6 +4,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.velvet.auth.R;
+import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
+import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
 import com.velvet.models.auth.AuthNetwork;
 import com.velvet.models.auth.FirebaseAuthMessages;
 import com.velvet.mvi.MviViewModel;
@@ -13,7 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryContract.View,  PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
+public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryContract.View, PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> passwordRecoverySubject = PublishSubject.create();
     private final BehaviorSubject<FirebaseAuthMessages.RecoveryParams> infoTextSubject = BehaviorSubject.create();

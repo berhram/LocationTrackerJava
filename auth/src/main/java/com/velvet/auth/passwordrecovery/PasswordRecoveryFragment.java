@@ -10,17 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.auth.databinding.FragmentPasswordRecoveryBinding;
+import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
+import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
 import com.velvet.mvi.HostedFragment;
 
 
 public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
     private FragmentPasswordRecoveryBinding binding;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     protected PasswordRecoveryContract.ViewModel createModel() {

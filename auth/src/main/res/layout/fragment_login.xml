@@ -2,26 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="app.ui.login.LoginFragment">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/info_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
+        app:layout_constraintBottom_toTopOf="@id/top_height_limiter"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
-        app:layout_constraintBottom_toTopOf="@id/top_height_limiter" />
+        app:layout_constraintStart_toStartOf="@id/start_width_limiter" />
 
     <TextView
         android:id="@+id/email_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/email_title"
         app:layout_constraintBottom_toTopOf="@id/email_input_layout"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
-        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        android:text="@string/email_title" />
+        app:layout_constraintStart_toStartOf="@id/start_width_limiter" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
@@ -38,17 +36,18 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:inputType="textEmailAddress|textAutoComplete"
-            android:textColor="@color/primaryTextColor"/>
+            android:textColor="@color/primaryTextColor" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/password_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/password_title"
         app:layout_constraintBottom_toTopOf="@id/password_input_layout"
         app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
-        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        android:text="@string/password_title"/>
+        app:layout_constraintStart_toStartOf="@id/start_width_limiter" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_input_layout"
@@ -65,38 +64,40 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:inputType="textPassword"
-            android:textColor="@color/primaryTextColor"/>
+            android:textColor="@color/primaryTextColor" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/sign_in_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/middle_height_limiter"
-        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
+        android:text="@string/email_button"
         app:layout_constraintBottom_toTopOf="@id/sign_up_button"
-        android:text="@string/email_button"/>
+        app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
+        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
+        app:layout_constraintTop_toTopOf="@id/middle_height_limiter" />
 
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_button"
-        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
+        android:text="@string/register_button"
         app:layout_constraintBottom_toTopOf="@id/forgot_password_button"
-        android:text="@string/register_button"/>
+        app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
+        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
+        app:layout_constraintTop_toBottomOf="@id/sign_in_button" />
 
-    <Button style="@style/borderlessButton"
+    <Button
         android:id="@+id/forgot_password_button"
+        style="@style/borderlessButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_button"
-        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
-        app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
+        android:text="@string/forgot_password"
         app:layout_constraintBottom_toBottomOf="@id/bottom_height_limiter"
-        android:text="@string/forgot_password"/>
+        app:layout_constraintEnd_toEndOf="@id/end_width_limiter"
+        app:layout_constraintStart_toStartOf="@id/start_width_limiter"
+        app:layout_constraintTop_toBottomOf="@id/sign_up_button" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start_width_limiter"

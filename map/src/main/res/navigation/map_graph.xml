@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation android:id="@+id/map_graph"
-    app:startDestination="@id/map_screen"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:id="@+id/map_graph"
+    app:startDestination="@id/map_screen">
+
     <fragment
         android:id="@+id/map_screen"
         android:name="com.velvet.map.ui.MapFragment"
         android:label="@string/map_screen_label"
         tools:layout="@layout/fragment_map">
-        <deepLink app:uri="tracker://next"/>
+        <deepLink app:uri="tracker://next" />
     </fragment>
+
 </navigation>

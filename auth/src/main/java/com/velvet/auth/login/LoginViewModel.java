@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
-    private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
+    private final PublishSubject<Long> loginSubject = PublishSubject.create();
     private final BehaviorSubject<FirebaseAuthMessages.AuthParams> infoTextSubject = BehaviorSubject.create();
 
     public LoginViewModel(AuthNetwork authRepository) {
@@ -31,6 +31,7 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
                     loginSubject
+                            .map(t -> authRepository.checkIfUserLoggedIn())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(aBoolean -> {
@@ -57,14 +58,14 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                                     setInfoText(R.string.invalid_email_or_password);
                                 } else {
                                     setInfoText(R.string.success_login);
-                                    loginSubject.onNext(authRepository.checkIfUserLoggedIn());
+                                    loginSubject.onNext(System.currentTimeMillis());
                                 }
                             }, e -> {
                                 e.printStackTrace();
                                 setInfoText(R.string.invalid_email_or_password);
                             })
             );
-            loginSubject.onNext(authRepository.checkIfUserLoggedIn());
+            loginSubject.onNext(System.currentTimeMillis());
         }
     }
 

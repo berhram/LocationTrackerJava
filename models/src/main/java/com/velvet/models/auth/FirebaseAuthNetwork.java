@@ -3,21 +3,23 @@ package com.velvet.models.auth;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.velvet.models.application.App;
-import com.velvet.models.di.BaseModule;
+import com.velvet.models.Values;
 import com.velvet.models.result.Result;
 
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FirebaseAuthNetwork implements AuthNetwork {
     @Inject
     FirebaseAuth firebaseAuth;
 
     public FirebaseAuthNetwork() {
-        App.getInstance().getComponent().inject(this);
+        //TODO fix DI
+        //App.getInstance().getComponent().inject(this);
         firebaseAuth.useAppLanguage();
     }
 
@@ -35,7 +37,8 @@ public class FirebaseAuthNetwork implements AuthNetwork {
             } else {
                 return Result.error(task.getException());
             }
-        });
+        }).subscribeOn(Schedulers.io());
+        //here
     }
 
     @Override
@@ -55,7 +58,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
         return Single.fromCallable(() -> {
             final Task<Void> task = firebaseAuth.sendPasswordResetEmail(email);
             if (task.isSuccessful()) {
-                return Result.success(new FirebaseAuthMessages.RecoveryResult(true, "request"));
+                return Result.success(new FirebaseAuthMessages.RecoveryResult(Values.REQUEST));
             } else {
                 return Result.error(task.getException());
             }
@@ -67,7 +70,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
         return Single.fromCallable(() -> {
             final Task<Void> task = firebaseAuth.confirmPasswordReset(code, newPassword);
             if (task.isSuccessful()) {
-                return Result.success(new FirebaseAuthMessages.RecoveryResult(true, "check"));
+                return Result.success(new FirebaseAuthMessages.RecoveryResult(Values.CHECK));
             } else {
                 return Result.error(task.getException());
             }

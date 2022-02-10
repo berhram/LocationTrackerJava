@@ -61,7 +61,7 @@ public abstract class HostedFragment<STATE extends MviViewState,
             getLifecycle().removeObserver(this);
             if (getModel() != null) {
                 getModel().getStateObservable().removeObservers(this);
-                //TODO remove effect observer but how?
+                getModel().getEffectObservable().removeObservers(this);
             }
         }
     }

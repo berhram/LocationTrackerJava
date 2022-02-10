@@ -5,6 +5,7 @@ import com.velvet.tracker.TrackerContract;
 
 public class TrackerViewEffect extends AbstractEffect<TrackerContract.View> {
     private static final int ACTION_LOGIN = 1;
+    private static final int ACTION_START_SERVICE = 2;
 
     private final int action;
 
@@ -20,6 +21,8 @@ public class TrackerViewEffect extends AbstractEffect<TrackerContract.View> {
     public void handle(TrackerContract.View screen) {
         if (action == ACTION_LOGIN) {
             screen.proceedToLoginScreen();
+        } else if (action == ACTION_START_SERVICE) {
+            screen.startService();
         }
     }
 }

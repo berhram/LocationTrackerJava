@@ -36,13 +36,11 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
                                 if (aBoolean) {
                                     success();
                                 }
-                            }, e -> {
-                                e.printStackTrace();
-                            }),
+                            }, Throwable::printStackTrace),
                     infoTextSubject
                             .switchMap(p -> {
-                                if ("request".equals(p.getCode())) {
-                                    return authRepository.requestCode(p.getCode()).toObservable();
+                                if (p.isRequest()) {
+                                    return authRepository.requestCode(p.getEmail()).toObservable();
                                 } else {
                                     return authRepository.checkCode(p.getCode(), p.getNewPassword()).toObservable();
                                 }
@@ -52,21 +50,19 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
                             .subscribe(result -> {
                                 if (result.isError()) {
                                     result.error.printStackTrace();
-                                    if (result.data.getId().equals("request")) {
+                                    if (result.data.isRequest()) {
                                         setInfoText(R.string.invalid_recovery_email);
                                     } else {
                                         setInfoText(R.string.invalid_recovery_code);
                                     }
                                 } else {
-                                    if (result.data.getId().equals("request")) {
+                                    if (result.data.isRequest()) {
                                         setInfoText(R.string.code_successfully_sent);
                                     } else {
                                         setInfoText(R.string.password_successfully_changed);
                                     }
                                 }
-                            }, e -> {
-                                e.printStackTrace();
-                            })
+                            }, Throwable::printStackTrace)
             );
         }
     }
@@ -88,11 +84,11 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
 
     @Override
     public void requestCode(String email) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(email, "request"));
+        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(email));
     }
 
     @Override
     public void checkCode(String code, String newPassword) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(code, newPassword, "check"));
+        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(code, newPassword));
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.velvet.auth.R;
 import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
+import com.velvet.models.Values;
 import com.velvet.models.auth.AuthNetwork;
 import com.velvet.models.auth.FirebaseAuthMessages;
 import com.velvet.mvi.MviViewModel;
@@ -15,7 +16,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-//TODO toObservable not work and other too
 public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Boolean> loginSubject = PublishSubject.create();
@@ -43,10 +43,10 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                             }),
                     infoTextSubject
                             .switchMap(p -> {
-                                if ("register".equals(p.getType())) {
-                                    return authRepository.register(p.getEmail(), p.getPassword()).toObservable();
-                                } else {
+                                if (p.isLogin()) {
                                     return authRepository.login(p.getEmail(), p.getPassword()).toObservable();
+                                } else {
+                                    return authRepository.register(p.getEmail(), p.getPassword()).toObservable();
                                 }
                             })
                             .subscribeOn(Schedulers.io())
@@ -75,12 +75,12 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
 
     @Override
     public void signIn(String email, String password) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.AuthParams(email, password, "login"));
+        infoTextSubject.onNext(new FirebaseAuthMessages.AuthParams(email, password, Values.LOGIN));
     }
 
     @Override
     public void signUp(String email, String password) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.AuthParams(email, password, "register"));
+        infoTextSubject.onNext(new FirebaseAuthMessages.AuthParams(email, password, Values.REGISTER));
     }
 
     @Override

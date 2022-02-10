@@ -10,6 +10,7 @@ public class TrackerContract {
 
     public interface View extends FragmentContract.View {
         void proceedToLoginScreen();
+        void startService();
     }
 
     public interface Host extends FragmentContract.Host {

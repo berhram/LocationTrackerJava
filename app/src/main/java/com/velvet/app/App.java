@@ -1,4 +1,4 @@
-package com.velvet.models.application;
+package com.velvet.app;
 
 import android.app.Application;
 

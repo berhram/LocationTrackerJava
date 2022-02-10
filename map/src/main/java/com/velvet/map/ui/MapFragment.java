@@ -33,8 +33,6 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
-        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -53,7 +51,8 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        startService();
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -69,13 +68,6 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onClick(View v) {
 
-    }
-
-    @Override
-    public void startService() {
-        if (hasHost()) {
-            getFragmentHost().startService();
-        }
     }
 
     @Override

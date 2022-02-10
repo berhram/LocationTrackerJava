@@ -18,6 +18,12 @@ buildscript {
     ext.gradle_version = '7.1.1'
     ext.gradle_secrets_plugin = "2.0.0"
 
+    project.ext {
+        min = 21
+        target = 31
+        compile = 31
+    }
+
     repositories {
         google()
         mavenCentral()

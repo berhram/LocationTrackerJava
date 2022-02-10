@@ -1,5 +1,6 @@
 package com.velvet.tracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.mvi.HostedFragment;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
+import com.velvet.tracker.services.TrackerService;
 import com.velvet.tracker.state.TrackerViewEffect;
 import com.velvet.tracker.state.TrackerViewState;
 
@@ -49,7 +51,11 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
         if (hasHost()) {
             getFragmentHost().proceedToLoginScreen("Tracker");
         }
+    }
 
+    @Override
+    public void startService() {
+        getActivity().startService(new Intent(getActivity(), TrackerService.class));
     }
 
     @Override

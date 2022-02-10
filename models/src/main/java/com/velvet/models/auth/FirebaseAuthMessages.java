@@ -1,27 +1,27 @@
 package com.velvet.models.auth;
 
-public class FirebaseAuthMessages {
+import com.velvet.models.Values;
 
-    // classes used to communicate with auth repo
+public class FirebaseAuthMessages {
     public static class RecoveryParams {
-        private final String type;
+        private final String id;
         private String email;
         private String newPassword;
         private String code;
 
-        public RecoveryParams(String code, String newPassword, String type) {
+        public RecoveryParams(String code, String newPassword) {
             this.newPassword = newPassword;
             this.code = code;
-            this.type = type;
+            this.id = Values.CHECK;
         }
 
-        public RecoveryParams(String email, String type) {
+        public RecoveryParams(String email) {
             this.email = email;
-            this.type = type;
+            this.id = Values.REQUEST;
         }
 
-        public String getType() {
-            return type;
+        public boolean isRequest() {
+            return id.equals(Values.REQUEST);
         }
 
         public String getNewPassword() {
@@ -38,28 +38,26 @@ public class FirebaseAuthMessages {
     }
 
     public static class RecoveryResult {
-        private final boolean success;
         private final String id;
 
-        public RecoveryResult(boolean success, String id) {
-            this.success = success;
+        public RecoveryResult(String id) {
             this.id = id;
         }
 
-        public String getId() {
-            return id;
+        public boolean isRequest() {
+            return id.equals(Values.REQUEST);
         }
     }
 
     public static class AuthParams {
         private final String email;
         private final String password;
-        private final String type;
+        private final String id;
 
-        public AuthParams(String email, String password, String type) {
+        public AuthParams(String email, String password, String id) {
             this.email = email;
             this.password = password;
-            this.type = type;
+            this.id = id;
         }
 
         public String getEmail() {
@@ -70,8 +68,8 @@ public class FirebaseAuthMessages {
             return password;
         }
 
-        public String getType() {
-            return type;
+        public boolean isLogin() {
+            return id.equals(Values.LOGIN);
         }
     }
 }

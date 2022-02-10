@@ -40,6 +40,7 @@ public class AppActivity extends Activity implements LoginContract.Host, MapCont
     public void proceedToNextScreen(String id) {
         if (id.equals("Login")) {
             //navController.navigate();
+            //TODO fix navigation
         }
     }
 

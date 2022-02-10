@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk project.compile
 
     defaultConfig {
         applicationId "com.velvet.trackerforsleepwalkers"
-        minSdk 21
-        targetSdk 31
+        minSdk project.min
+        targetSdk project.target
         versionCode 1
         versionName "1.0"
 

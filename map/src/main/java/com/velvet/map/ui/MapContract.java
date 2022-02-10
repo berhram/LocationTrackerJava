@@ -16,13 +16,9 @@ public class MapContract {
         void setMarker(MarkerOptions marker);
 
         void createFilter();
-
-        void startService();
     }
 
     public interface Host extends FragmentContract.Host {
         void proceedToLoginScreen(String id);
-
-        void startService();
     }
 }

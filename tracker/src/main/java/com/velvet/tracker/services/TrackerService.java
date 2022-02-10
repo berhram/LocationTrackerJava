@@ -1,19 +1,14 @@
-package com.velvet.models.services;
+package com.velvet.tracker.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.os.IBinder;
 
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.velvet.models.location.LocationEmitter;
+import com.velvet.models.location.LocationEmitterImpl;
 import com.velvet.models.result.Result;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -39,7 +34,7 @@ public class TrackerService extends Service {
 
     @Override
     public void onCreate() {
-        disposables.add(new LocationEmitter(getApplicationContext())
+        disposables.add(new LocationEmitterImpl(getApplicationContext())
                 .getLocation()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

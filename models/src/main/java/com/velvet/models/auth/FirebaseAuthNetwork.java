@@ -8,71 +8,53 @@ import com.velvet.models.result.Result;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FirebaseAuthNetwork implements AuthNetwork {
     @Inject
     FirebaseAuth firebaseAuth;
 
     public FirebaseAuthNetwork() {
-        //TODO fix DI
-        //App.getInstance().getComponent().inject(this);
         firebaseAuth.useAppLanguage();
     }
 
     @Override
-    public boolean checkIfUserLoggedIn() {
-        return firebaseAuth.getCurrentUser() != null;
+    public Single<Result<Boolean>> checkIfUserLoggedIn() {
+        return Single.just(Result.success(firebaseAuth.getCurrentUser() != null));
     }
 
-    @Override
-    public @NonNull Single<Result<Boolean>> register(String email, String password) {
+    public Single<Result<Boolean>> sendMessage(AuthMessage message) {
         return Single.fromCallable(() -> {
-            final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(email, password);
-            if (task.isSuccessful()) {
-                return Result.success(true);
+            if (Values.LOGIN.equals(message.getId())) {
+                final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(message.getFirstParam(), message.getSecondParam());
+                if (task.isSuccessful()) {
+                    return Result.success(true);
+                } else {
+                    return Result.error(task.getException());
+                }
+            } else if (Values.REGISTER.equals(message.getId())) {
+                final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(message.getFirstParam(), message.getSecondParam());
+                if (task.isSuccessful()) {
+                    return Result.success(true);
+                } else {
+                    return Result.error(task.getException());
+                }
+            } else if (Values.REQUEST.equals(message.getId())) {
+                final Task<Void> task = firebaseAuth.sendPasswordResetEmail(message.getFirstParam());
+                if (task.isSuccessful()) {
+                    return Result.success(true);
+                } else {
+                    return Result.error(task.getException());
+                }
+            } else if (Values.CHECK.equals(message.getId())) {
+                final Task<Void> task = firebaseAuth.confirmPasswordReset(message.getFirstParam(), message.getSecondParam());
+                if (task.isSuccessful()) {
+                    return Result.success(true);
+                } else {
+                    return Result.error(task.getException());
+                }
             } else {
-                return Result.error(task.getException());
-            }
-        }).subscribeOn(Schedulers.io());
-        //here
-    }
-
-    @Override
-    public @NonNull Single<Result<Boolean>> login(String email, String password) {
-        return Single.fromCallable(() -> {
-            final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(email, password);
-            if (task.isSuccessful()) {
-                return Result.success(true);
-            } else {
-                return Result.error(task.getException());
-            }
-        });
-    }
-
-    @Override
-    public @NonNull Single<Result<FirebaseAuthMessages.RecoveryResult>> requestCode(String email) {
-        return Single.fromCallable(() -> {
-            final Task<Void> task = firebaseAuth.sendPasswordResetEmail(email);
-            if (task.isSuccessful()) {
-                return Result.success(new FirebaseAuthMessages.RecoveryResult(Values.REQUEST));
-            } else {
-                return Result.error(task.getException());
-            }
-        });
-    }
-
-    @Override
-    public @NonNull Single<Result<FirebaseAuthMessages.RecoveryResult>> checkCode(String code, String newPassword) {
-        return Single.fromCallable(() -> {
-            final Task<Void> task = firebaseAuth.confirmPasswordReset(code, newPassword);
-            if (task.isSuccessful()) {
-                return Result.success(new FirebaseAuthMessages.RecoveryResult(Values.CHECK));
-            } else {
-                return Result.error(task.getException());
+                return Result.error(new Exception("Wrong message id!"));
             }
         });
     }

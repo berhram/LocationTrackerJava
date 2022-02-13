@@ -6,9 +6,8 @@ import androidx.lifecycle.LifecycleOwner;
 import com.velvet.auth.R;
 import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
-import com.velvet.models.Values;
+import com.velvet.models.auth.AuthMessage;
 import com.velvet.models.auth.AuthNetwork;
-import com.velvet.models.auth.FirebaseAuthMessages;
 import com.velvet.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -18,8 +17,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
-    private final PublishSubject<Long> loginSubject = PublishSubject.create();
-    private final BehaviorSubject<FirebaseAuthMessages.AuthParams> infoTextSubject = BehaviorSubject.create();
+    private final PublishSubject<Long> checkSubject = PublishSubject.create();
+    private final BehaviorSubject<AuthMessage> authSubject = BehaviorSubject.create();
 
     public LoginViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
@@ -30,26 +29,20 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    loginSubject
-                            .map(t -> authRepository.checkIfUserLoggedIn())
+                    checkSubject
+                            .flatMap(t -> authRepository.checkIfUserLoggedIn().toObservable())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(aBoolean -> {
-                                if (aBoolean) {
+                            .subscribe(result -> {
+                                if (result.data) {
                                     success();
                                 }
                             }, e -> {
                                 setInfoText(R.string.something_went_wrong);
                                 e.printStackTrace();
                             }),
-                    infoTextSubject
-                            .switchMap(p -> {
-                                if (p.isLogin()) {
-                                    return authRepository.login(p.getEmail(), p.getPassword()).toObservable();
-                                } else {
-                                    return authRepository.register(p.getEmail(), p.getPassword()).toObservable();
-                                }
-                            })
+                    authSubject
+                            .flatMap(p -> authRepository.sendMessage(p).toObservable())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
@@ -58,14 +51,14 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                                     setInfoText(R.string.invalid_email_or_password);
                                 } else {
                                     setInfoText(R.string.success_login);
-                                    loginSubject.onNext(System.currentTimeMillis());
+                                    checkSubject.onNext(System.currentTimeMillis());
                                 }
                             }, e -> {
                                 e.printStackTrace();
                                 setInfoText(R.string.invalid_email_or_password);
                             })
             );
-            loginSubject.onNext(System.currentTimeMillis());
+            checkSubject.onNext(System.currentTimeMillis());
         }
     }
 
@@ -76,12 +69,12 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
 
     @Override
     public void signIn(String email, String password) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.AuthParams(email, password, Values.LOGIN));
+        authSubject.onNext(AuthMessage.createLoginMessage(email, password));
     }
 
     @Override
     public void signUp(String email, String password) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.AuthParams(email, password, Values.REGISTER));
+        authSubject.onNext(AuthMessage.createRegisterMessage(email, password));
     }
 
     @Override

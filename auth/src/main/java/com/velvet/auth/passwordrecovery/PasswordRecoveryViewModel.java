@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner;
 import com.velvet.auth.R;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
+import com.velvet.models.auth.AuthMessage;
 import com.velvet.models.auth.AuthNetwork;
-import com.velvet.models.auth.FirebaseAuthMessages;
 import com.velvet.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -17,8 +17,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryContract.View, PasswordRecoveryViewState, PasswordRecoveryViewEffect> implements PasswordRecoveryContract.ViewModel {
     private final AuthNetwork authRepository;
-    private final PublishSubject<Boolean> passwordRecoverySubject = PublishSubject.create();
-    private final BehaviorSubject<FirebaseAuthMessages.RecoveryParams> infoTextSubject = BehaviorSubject.create();
+    private final PublishSubject<AuthMessage> requestSubject = PublishSubject.create();
+    private final BehaviorSubject<AuthMessage> recoverySubject = BehaviorSubject.create();
 
     public PasswordRecoveryViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
@@ -29,38 +29,28 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    passwordRecoverySubject
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(aBoolean -> {
-                                if (aBoolean) {
-                                    success();
-                                }
-                            }, Throwable::printStackTrace),
-                    infoTextSubject
-                            .switchMap(p -> {
-                                if (p.isRequest()) {
-                                    return authRepository.requestCode(p.getEmail()).toObservable();
-                                } else {
-                                    return authRepository.checkCode(p.getCode(), p.getNewPassword()).toObservable();
-                                }
-                            })
+                    recoverySubject
+                            .flatMap(p -> authRepository.sendMessage(p).toObservable())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
                                 if (result.isError()) {
                                     result.error.printStackTrace();
-                                    if (result.data.isRequest()) {
-                                        setInfoText(R.string.invalid_recovery_email);
-                                    } else {
-                                        setInfoText(R.string.invalid_recovery_code);
-                                    }
+                                    setInfoText(R.string.invalid_recovery_code);
                                 } else {
-                                    if (result.data.isRequest()) {
-                                        setInfoText(R.string.code_successfully_sent);
-                                    } else {
-                                        setInfoText(R.string.password_successfully_changed);
-                                    }
+                                    setInfoText(R.string.password_successfully_changed);
+                                }
+                            }, Throwable::printStackTrace),
+                    requestSubject
+                            .flatMap(p -> authRepository.sendMessage(p).toObservable())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(result -> {
+                                if (result.isError()) {
+                                    result.error.printStackTrace();
+                                        setInfoText(R.string.invalid_recovery_email);
+                                } else {
+                                    setInfoText(R.string.code_successfully_sent);
                                 }
                             }, Throwable::printStackTrace)
             );
@@ -84,11 +74,11 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
 
     @Override
     public void requestCode(String email) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(email));
+        requestSubject.onNext(AuthMessage.createRequestCodeMessage(email));
     }
 
     @Override
     public void checkCode(String code, String newPassword) {
-        infoTextSubject.onNext(new FirebaseAuthMessages.RecoveryParams(code, newPassword));
+        recoverySubject.onNext(AuthMessage.createCheckCodeAndSetNewPassowordMessage(code, newPassword));
     }
 }

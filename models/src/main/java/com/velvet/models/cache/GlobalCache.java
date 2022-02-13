@@ -9,16 +9,10 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public interface GlobalCache {
-    void addMarkers(List<MarkerOptions> inputMarkers);
+public interface GlobalCache<T> {
+    void addItems(List<T> inputItems);
 
-    void addLocations(List<Location> inputLocations);
+    Observable<List<T>> getItemsObservable();
 
-    Observable<List<MarkerOptions>> getMarkersObservable();
-
-    Observable<List<Location>> getLocationsObservable();
-
-    List<MarkerOptions> getMarkers();
-
-    List<Location> getLocations();
+    List<T> getItems();
 }

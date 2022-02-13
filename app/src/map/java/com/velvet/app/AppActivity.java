@@ -3,15 +3,11 @@ package com.velvet.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import com.velvet.auth.login.LoginFragment;
-import com.velvet.map.service.MapService;
 import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.map.ui.MapContract;
@@ -56,10 +52,5 @@ public class AppActivity extends Activity implements LoginContract.Host, MapCont
     @Override
     public void proceedToPasswordRecovery() {
         //navController.navigate();
-    }
-
-    @Override
-    public void startService() {
-        getApplicationContext().startService(new Intent(this, MapService.class));
     }
 }

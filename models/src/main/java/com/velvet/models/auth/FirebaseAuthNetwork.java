@@ -23,6 +23,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
         return Single.just(Result.success(firebaseAuth.getCurrentUser() != null));
     }
 
+    @Override
     public Single<Result<Boolean>> sendMessage(AuthMessage message) {
         return Single.fromCallable(() -> {
             if (Values.LOGIN.equals(message.getId())) {

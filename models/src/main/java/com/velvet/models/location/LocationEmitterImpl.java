@@ -13,16 +13,27 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.velvet.models.cache.GlobalCache;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.multibindings.ClassKey;
+import dagger.multibindings.StringKey;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
-    private final PublishSubject<Location> locationSubject = PublishSubject.create();
     private final FusedLocationProviderClient fusedLocationClient;
     private final Context context;
+
+    @Inject
+    @ClassKey(Location.class)
+    GlobalCache<Location> cache;
 
     public LocationEmitterImpl(Context context) {
         this.context = context;
@@ -36,8 +47,6 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         locationRequest.setInterval(10 * 1000);
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.requestLocationUpdates(locationRequest, this, null);
-        } else {
-            //TODO make error callback
         }
     }
 
@@ -48,7 +57,9 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         }
         for (Location location : locationResult.getLocations()) {
             if (location != null) {
-                locationSubject.onNext(location);
+                List<Location> tempList = new ArrayList<>();
+                tempList.add(location);
+                cache.addItems(tempList);
             }
         }
     }
@@ -56,10 +67,5 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
     @Override
     public void stop() {
         fusedLocationClient.removeLocationUpdates(this);
-    }
-
-    @Override
-    public Observable<Location> getLocation() {
-        return locationSubject;
     }
 }

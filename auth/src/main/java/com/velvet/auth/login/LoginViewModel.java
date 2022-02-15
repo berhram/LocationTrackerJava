@@ -6,9 +6,9 @@ import androidx.lifecycle.LifecycleOwner;
 import com.velvet.auth.R;
 import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
-import com.velvet.models.auth.AuthMessage;
-import com.velvet.models.auth.AuthNetwork;
-import com.velvet.mvi.MviViewModel;
+import com.velvet.core.models.auth.AuthMessage;
+import com.velvet.core.models.auth.AuthNetwork;
+import com.velvet.libs.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.auth.di.DaggerAuthComponent;
-import com.velvet.models.application.App;
-import com.velvet.models.auth.FirebaseAuthNetwork;
+import com.velvet.core.models.auth.FirebaseAuthNetwork;
 
 import javax.inject.Inject;
 
@@ -15,7 +13,6 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
     FirebaseAuthNetwork repository;
 
     public LoginViewModelFactory() {
-        DaggerAuthComponent.factory().create(App.getInstance().getComponent()).inject(this);
     }
 
     @NonNull

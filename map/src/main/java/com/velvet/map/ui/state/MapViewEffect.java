@@ -1,7 +1,7 @@
 package com.velvet.map.ui.state;
 
 import com.velvet.map.ui.MapContract;
-import com.velvet.mvi.AbstractEffect;
+import com.velvet.libs.mvi.AbstractEffect;
 
 public class MapViewEffect extends AbstractEffect<MapContract.View> {
     private static final int ACTION_LOG_OUT = 1;

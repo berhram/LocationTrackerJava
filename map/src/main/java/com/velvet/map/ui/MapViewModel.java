@@ -9,35 +9,27 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
-import com.velvet.models.cache.GlobalCache;
-import com.velvet.models.location.LocationReceiver;
-import com.velvet.models.result.Result;
-import com.velvet.mvi.MviViewModel;
+import com.velvet.core.models.location.LocationReceiver;
+import com.velvet.libs.mvi.MviViewModel;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.subjects.BehaviorSubject;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
-    @Inject
-    LocationReceiver receiver;
 
-    private final List<Location> lastLocations;
+    private final LocationReceiver receiver;
+    private final List<Location> lastLocations = new ArrayList<>();
+    private final SimpleDateFormat sDF = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss ");
 
-    public MapViewModel() {
-        this.lastLocations = new ArrayList<>();
+    public MapViewModel(LocationReceiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override
@@ -58,7 +50,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
         }
     }
     private MarkerOptions convertLocationToMarker(Location location) {
-        SimpleDateFormat sDF = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss ");
+
         return new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
                 .title(sDF.format(new Date(location.getTime())));
 

@@ -10,5 +10,5 @@ include ":tracker"
 include ":map"
 include ":app"
 include ":auth"
-include ":models"
-include ":mvi"
+include ':core'
+include ':libs'

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.mvi.HostedFragment;
+import com.velvet.libs.mvi.HostedFragment;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
 import com.velvet.tracker.services.TrackerService;
 import com.velvet.tracker.state.TrackerViewEffect;

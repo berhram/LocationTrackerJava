@@ -7,8 +7,8 @@ import android.os.IBinder;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.velvet.models.location.LocationEmitterImpl;
-import com.velvet.models.result.Result;
+import com.velvet.core.models.location.LocationEmitterImpl;
+import com.velvet.core.result.Result;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -20,6 +20,7 @@ public class TrackerService extends Service {
     private final BehaviorSubject<Result<Void>> errorSubject = BehaviorSubject.create();
     private FirebaseFirestore database;
     private final long MAX_CACHE_BYTES = 1024 * 1024 * 10;
+    //TODO get location from cache
 
     @Override
     public IBinder onBind(Intent intent) {

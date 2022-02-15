@@ -4,18 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.core.models.location.LocationReceiver;
 
 import javax.inject.Inject;
 
-public class MapViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+import dagger.android.AndroidInjection;
 
-    public MapViewModelFactory() {}
+public class MapViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+    @Inject
+    LocationReceiver receiver;
+
+    public MapViewModelFactory() {
+        AndroidInjection.inject(this);
+    }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == MapViewModel.class) {
-            return (T) new MapViewModel();
+            return (T) new MapViewModel(receiver);
         }
         return null;
     }

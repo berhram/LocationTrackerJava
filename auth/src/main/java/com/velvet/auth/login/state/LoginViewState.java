@@ -1,7 +1,7 @@
 package com.velvet.auth.login.state;
 
 import com.velvet.auth.login.LoginContract;
-import com.velvet.mvi.MviViewState;
+import com.velvet.libs.mvi.MviViewState;
 
 public class LoginViewState implements MviViewState<LoginContract.View> {
     private static final int ACTION_SET_TEXT = 1;

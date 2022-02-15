@@ -16,10 +16,10 @@ import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.velvet.models.services.TrackerService;
+import com.velvet.core.services.TrackerService;
 import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
-import com.velvet.models.preferences.SharedPreferenceProvider;
+import com.velvet.core.preferences.SharedPreferenceProvider;
 import com.velvet.tracker.TrackerContract;
 
 import app.R;

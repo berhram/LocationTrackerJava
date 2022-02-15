@@ -55,11 +55,11 @@ android {
 }
 
 dependencies {
-    implementation project(":auth")
-    implementation project(":map")
-    implementation project(":tracker")
-    implementation project(":models")
-    implementation project(":mvi")
+    implementation project(path: ':libs')
+    implementation project(path: ":auth")
+    implementation project(path: ":tracker")
+    implementation project(path: ":map")
+    implementation project(path: ':core')
 
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$material"
@@ -78,8 +78,10 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rxjava"
     implementation "io.reactivex.rxjava3:rxandroid:$rxandroid"
 
-    implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+    implementation "com.google.dagger:dagger-android:$dagger"
+    implementation "com.google.dagger:dagger-android-support:$dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
 
     implementation "com.google.android.gms:play-services-maps:$maps"
     implementation "com.google.android.gms:play-services-location:$location"

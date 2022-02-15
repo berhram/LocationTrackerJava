@@ -3,7 +3,7 @@ package com.velvet.auth.login;
 
 import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
-import com.velvet.mvi.FragmentContract;
+import com.velvet.libs.mvi.FragmentContract;
 
 public class LoginContract {
     public interface ViewModel extends FragmentContract.ViewModel<LoginViewState, LoginViewEffect> {

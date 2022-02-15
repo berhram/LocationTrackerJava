@@ -2,7 +2,7 @@ package com.velvet.map.ui.state;
 
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.map.ui.MapContract;
-import com.velvet.mvi.MviViewState;
+import com.velvet.libs.mvi.MviViewState;
 
 public class MapViewState implements MviViewState<MapContract.View> {
     private static final int ACTION_CREATE_FILTER = 1;

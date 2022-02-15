@@ -17,7 +17,7 @@ import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
-import com.velvet.mvi.HostedFragment;
+import com.velvet.libs.mvi.HostedFragment;
 
 public class MapFragment extends HostedFragment<MapViewState,
         MapContract.ViewModel,
@@ -37,7 +37,6 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     @Override
     protected MapContract.ViewModel createModel() {
-        //why
         return new ViewModelProvider(this, (ViewModelProvider.Factory) new MapViewModelFactory()).get(MapViewModel.class);
     }
 

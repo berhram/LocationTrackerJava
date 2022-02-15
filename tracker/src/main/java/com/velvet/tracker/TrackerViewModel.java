@@ -1,6 +1,6 @@
 package com.velvet.tracker;
 
-import com.velvet.mvi.MviViewModel;
+import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.tracker.state.TrackerViewEffect;
 import com.velvet.tracker.state.TrackerViewState;
 

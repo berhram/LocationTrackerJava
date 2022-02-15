@@ -1,6 +1,6 @@
 package com.velvet.tracker.state;
 
-import com.velvet.mvi.MviViewState;
+import com.velvet.libs.mvi.MviViewState;
 import com.velvet.tracker.TrackerContract;
 
 public class TrackerViewState implements MviViewState<TrackerContract.View> {

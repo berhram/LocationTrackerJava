@@ -30,7 +30,7 @@ public class LoginFragment extends HostedFragment<LoginViewState,
     @Override
     protected LoginContract.ViewModel createModel() {
         //TODO fix this cast
-        return new ViewModelProvider(this, (ViewModelProvider.Factory) new LoginViewModelFactory()).get(LoginViewModel.class);
+        return new ViewModelProvider(this, (ViewModelProvider.Factory) new LoginViewModelFactory(getContext())).get(LoginViewModel.class);
     }
 
     @Nullable

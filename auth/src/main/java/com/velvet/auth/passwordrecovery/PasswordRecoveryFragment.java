@@ -20,7 +20,7 @@ public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryVie
 
     @Override
     protected PasswordRecoveryContract.ViewModel createModel() {
-        return new ViewModelProvider(this, (ViewModelProvider.Factory) new PasswordRecoveryViewModelFactory()).get(PasswordRecoveryViewModel.class);
+        return new ViewModelProvider(this, (ViewModelProvider.Factory) new PasswordRecoveryViewModelFactory(getContext())).get(PasswordRecoveryViewModel.class);
     }
 
     @Nullable

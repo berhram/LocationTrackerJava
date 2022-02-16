@@ -26,11 +26,10 @@ import com.velvet.tracker.services.TrackerService;
 import app.R;
 import app.databinding.ActivityMainBinding;
 
-public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host, AppActivityContract {
+public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host {
     private NavController navController;
     private ActivityMainBinding binding;
     private ActivityResultLauncher<String[]> locationPermissionRequest;
-    private SharedPreferenceProvider preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,6 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
                         Toast.makeText(this, R.string.please_give_access, Toast.LENGTH_SHORT).show();
                     }
                 });
-        preferences = new SharedPreferenceProvider(this);
-        if (preferences.get("Source", "").equals("")) {
-            preferences.put("Source", LocationManager.GPS_PROVIDER);
-        }
     }
 
     @Override

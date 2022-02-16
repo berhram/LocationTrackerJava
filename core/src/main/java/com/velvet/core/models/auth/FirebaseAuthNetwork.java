@@ -15,6 +15,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     FirebaseAuth firebaseAuth;
 
     public FirebaseAuthNetwork() {
+        //TODO add DI
         firebaseAuth.useAppLanguage();
     }
 

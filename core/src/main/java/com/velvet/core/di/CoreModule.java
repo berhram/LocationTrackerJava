@@ -1,5 +1,10 @@
 package com.velvet.core.di;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.velvet.core.cache.GlobalCache;
+import com.velvet.core.cache.MessageCache;
+import com.velvet.core.models.location.LocationEmitter;
+import com.velvet.core.models.location.LocationEmitterImpl;
 import com.velvet.core.models.location.LocationReceiver;
 import com.velvet.core.models.location.LocationReceiverImpl;
 
@@ -14,5 +19,17 @@ public class CoreModule {
     @Singleton
     LocationReceiver provideLocationReceiver() {
         return new LocationReceiverImpl();
+    }
+
+    @Provides
+    @Singleton
+    GlobalCache<Boolean> provideCache() {
+        return new MessageCache();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseFirestore provideDB() {
+        return FirebaseFirestore.getInstance();
     }
 }

@@ -21,6 +21,7 @@ import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.core.preferences.SharedPreferenceProvider;
 import com.velvet.tracker.TrackerContract;
+import com.velvet.tracker.services.TrackerService;
 
 import app.R;
 import app.databinding.ActivityMainBinding;
@@ -87,7 +88,6 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
         }
     }
 
-    @Override
     public void startService() {
         getApplicationContext().startService(new Intent(this, TrackerService.class));
     }

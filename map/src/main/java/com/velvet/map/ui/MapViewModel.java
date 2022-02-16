@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.velvet.core.Values;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
 import com.velvet.core.models.location.LocationReceiver;
@@ -37,7 +38,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    Observable.interval(20, TimeUnit.MINUTES)
+                    Observable.interval(Values.LOCATION_READ_FREQUENTLY_SEC, TimeUnit.SECONDS)
                             .flatMap(t -> receiver.getLocations().toObservable())
                             .map(listResult -> listResult.data)
                             .flatMap(Observable::fromIterable)

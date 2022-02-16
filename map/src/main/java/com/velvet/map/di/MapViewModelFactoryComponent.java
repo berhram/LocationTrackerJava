@@ -1,7 +1,6 @@
 package com.velvet.map.di;
 
 import com.velvet.core.di.CoreComponent;
-import com.velvet.core.di.CoreModule;
 import com.velvet.libs.di.scopes.FeatureScope;
 import com.velvet.map.ui.MapViewModelFactory;
 

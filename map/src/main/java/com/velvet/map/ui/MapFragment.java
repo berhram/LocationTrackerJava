@@ -37,7 +37,7 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     @Override
     protected MapContract.ViewModel createModel() {
-        return new ViewModelProvider(this, (ViewModelProvider.Factory) new MapViewModelFactory()).get(MapViewModel.class);
+        return new ViewModelProvider(this, (ViewModelProvider.Factory) new MapViewModelFactory(getContext())).get(MapViewModel.class);
     }
 
     @Nullable

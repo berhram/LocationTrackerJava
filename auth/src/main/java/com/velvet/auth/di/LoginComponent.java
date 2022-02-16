@@ -6,8 +6,8 @@ import com.velvet.libs.di.scopes.FeatureScope;
 
 import dagger.Component;
 
-@Component(dependencies = {CoreComponent.class})
 @FeatureScope
+@Component(dependencies = {CoreComponent.class})
 public interface LoginComponent {
     void inject(LoginViewModelFactory factory);
 }

@@ -62,5 +62,4 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-maps:$maps"
     implementation "com.google.android.gms:play-services-location:$location"
-
 }

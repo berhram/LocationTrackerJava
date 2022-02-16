@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.auth.di.DaggerRecoveryComponent;
 import com.velvet.auth.di.RecoveryComponent;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;

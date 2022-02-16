@@ -25,6 +25,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ":libs")
+
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$material"
     implementation "androidx.constraintlayout:constraintlayout:$constraint"
@@ -47,10 +49,8 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$junit_android"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 
+    implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-    implementation "com.google.dagger:dagger-android:$dagger"
-    implementation "com.google.dagger:dagger-android-support:$dagger"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
 
     implementation "com.google.android.gms:play-services-maps:$maps"
     implementation "com.google.android.gms:play-services-location:$location"

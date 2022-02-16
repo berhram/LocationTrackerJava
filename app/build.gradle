@@ -78,10 +78,8 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rxjava"
     implementation "io.reactivex.rxjava3:rxandroid:$rxandroid"
 
+    implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
-    implementation "com.google.dagger:dagger-android:$dagger"
-    implementation "com.google.dagger:dagger-android-support:$dagger"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
 
     implementation "com.google.android.gms:play-services-maps:$maps"
     implementation "com.google.android.gms:play-services-location:$location"

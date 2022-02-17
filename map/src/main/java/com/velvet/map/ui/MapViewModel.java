@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.core.Values;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
-import com.velvet.core.models.location.LocationReceiver;
+import com.velvet.core.models.location.receiver.LocationReceiver;
 import com.velvet.libs.mvi.MviViewModel;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
 
     private final LocationReceiver receiver;
     private final List<Location> lastLocations = new ArrayList<>();
-    private final SimpleDateFormat sDF = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss ");
+    private final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
 
     public MapViewModel(LocationReceiver receiver) {
         this.receiver = receiver;

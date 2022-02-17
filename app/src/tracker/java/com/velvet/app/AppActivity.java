@@ -13,18 +13,22 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.velvet.auth.login.LoginContract;
+import com.velvet.auth.login.LoginFragmentDirections;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
+import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.tracker.TrackerContract;
+import com.velvet.tracker.TrackerFragment;
 import com.velvet.tracker.services.TrackerService;
 
 import app.R;
 import app.databinding.ActivityMainBinding;
 
-public class AppActivity extends AppCompatActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host {
+public class AppActivity extends FragmentActivity implements LoginContract.Host, PasswordRecoveryContract.Host, TrackerContract.Host {
     private NavController navController;
     private ActivityMainBinding binding;
     private ActivityResultLauncher<String[]> locationPermissionRequest;
@@ -58,7 +62,7 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
     @Override
     public void proceedToLoginScreen(String id) {
         if (id.equals("Password recovery")) {
-            //navController.navigate();
+            navController.navigate(PasswordRecoveryFragmentDirections.recoveryToLogin());
         } else if (id.equals("Tracker")) {
             //navController.navigate();
         }
@@ -66,7 +70,17 @@ public class AppActivity extends AppCompatActivity implements LoginContract.Host
 
     @Override
     public void proceedToPasswordRecovery() {
-        //navController.navigate();
+        navController.navigate(LoginFragmentDirections.loginToRecovery());
+    }
+
+    @Override
+    public void startNotification() {
+
+    }
+
+    @Override
+    public void stopNotification() {
+
     }
 
     public void checkOrRequestPermissions() {

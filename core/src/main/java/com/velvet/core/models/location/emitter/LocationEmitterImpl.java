@@ -1,4 +1,4 @@
-package com.velvet.core.models.location;
+package com.velvet.core.models.location.emitter;
 
 import android.Manifest;
 import android.content.Context;
@@ -14,20 +14,12 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.velvet.core.Values;
-import com.velvet.core.cache.GlobalCache;
-import com.velvet.core.models.auth.AuthMessage;
 import com.velvet.core.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import dagger.multibindings.ClassKey;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.subjects.BehaviorSubject;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
 
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {

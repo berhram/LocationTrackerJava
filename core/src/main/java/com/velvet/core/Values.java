@@ -11,4 +11,6 @@ public class Values {
     public static final long LOCATION_READ_FREQUENTLY_SEC  = 20 * 60;
 
     public static final long MAX_CACHE_BYTES = 1024 * 1024 * 10;
+
+    public static final String DATE_PATTERN = "yyyy.MM.dd HH:mm:ss";
 }

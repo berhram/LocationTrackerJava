@@ -14,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import java.lang.reflect.ParameterizedType;
 
-public abstract class HostedFragment<STATE extends MviViewState,
+public abstract class HostedFragment<STATE extends MviViewState<VIEW>,
         VIEW_MODEL extends FragmentContract.ViewModel<STATE, EFFECT>,
         HOST extends FragmentContract.Host,
         EFFECT extends MviViewEffect<VIEW>,
@@ -74,7 +74,7 @@ public abstract class HostedFragment<STATE extends MviViewState,
 
     @Override
     public void onChanged(STATE screenState) {
-        screenState.visit(this);
+        screenState.visit((VIEW) this);
     }
 
     protected boolean hasHost() {

@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.auth.di.DaggerLoginComponent;
-import com.velvet.auth.di.LoginComponent;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
 
@@ -18,7 +16,6 @@ public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory 
     FirebaseAuthNetwork repository;
 
     public LoginViewModelFactory(Context context) {
-        DaggerLoginComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(context)).build().inject(this);
     }
 
     @NonNull

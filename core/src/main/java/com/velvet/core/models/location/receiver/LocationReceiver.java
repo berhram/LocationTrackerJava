@@ -1,4 +1,4 @@
-package com.velvet.core.models.location;
+package com.velvet.core.models.location.receiver;
 
 import android.location.Location;
 

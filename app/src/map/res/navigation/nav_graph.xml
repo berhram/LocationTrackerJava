@@ -8,8 +8,8 @@
         android:name="com.velvet.auth.login.LoginFragment"
         android:label="LoginFragment">
         <action
-            android:id="@+id/login_to_tracker"
-            app:destination="@id/tracker_fragment"/>
+            android:id="@+id/login_to_map"
+            app:destination="@id/map_fragment"/>
 
         <action
             android:id="@+id/login_to_recovery"
@@ -17,10 +17,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/tracker_fragment"
-        android:name="com.velvet.tracker.TrackerFragment">
+        android:id="@+id/map_fragment"
+        android:name="com.velvet.map.ui.MapFragment">
         <action
-            android:id="@+id/tracker_to_login"
+            android:id="@+id/map_to_login"
             app:destination="@id/login_fragment"/>
     </fragment>
 

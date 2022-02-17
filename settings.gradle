@@ -6,8 +6,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Tracker for sleepwalkers"
-include ':libs'
-include ':core'
+include ":libs"
+include ":core"
 include ":tracker"
 include ":map"
 include ":auth"

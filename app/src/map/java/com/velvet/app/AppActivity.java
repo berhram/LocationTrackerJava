@@ -1,20 +1,22 @@
 package com.velvet.app;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.velvet.auth.login.LoginContract;
+import com.velvet.auth.login.LoginFragmentDirections;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
+import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.map.ui.MapContract;
+import com.velvet.map.ui.MapFragmentDirections;
 
 import app.databinding.ActivityMainBinding;
 
-public class AppActivity extends Activity implements LoginContract.Host, MapContract.Host, PasswordRecoveryContract.Host {
+public class AppActivity extends FragmentActivity implements LoginContract.Host, MapContract.Host, PasswordRecoveryContract.Host {
     private NavController navController;
     private ActivityMainBinding binding;
 
@@ -35,22 +37,21 @@ public class AppActivity extends Activity implements LoginContract.Host, MapCont
     @Override
     public void proceedToNextScreen(String id) {
         if (id.equals("Login")) {
-            //navController.navigate();
-            //TODO fix navigation
+            navController.navigate(LoginFragmentDirections.loginToMap());
         }
     }
 
     @Override
     public void proceedToLoginScreen(String id) {
         if (id.equals("Password recovery")) {
-            //navController.navigate();
+            navController.navigate(PasswordRecoveryFragmentDirections.recoveryToLogin());
         } else if (id.equals("Map")) {
-            //navController.navigate();
+            navController.navigate(MapFragmentDirections.mapToLogin());
         }
     }
 
     @Override
     public void proceedToPasswordRecovery() {
-        //navController.navigate();
+        navController.navigate(LoginFragmentDirections.loginToRecovery());
     }
 }

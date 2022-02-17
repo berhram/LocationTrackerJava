@@ -6,9 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.location.receiver.LocationReceiver;
-import com.velvet.map.di.DaggerMapViewModelFactoryComponent;
 
 import javax.inject.Inject;
 
@@ -16,10 +14,6 @@ import javax.inject.Inject;
 public class MapViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @Inject
     LocationReceiver receiver;
-
-    public MapViewModelFactory(Context context) {
-        DaggerMapViewModelFactoryComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(context)).build().inject(this);
-    }
 
     @NonNull
     @Override

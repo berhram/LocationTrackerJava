@@ -1,9 +1,7 @@
 package com.velvet.core.di;
 
-import com.velvet.core.cache.GlobalCache;
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
-import com.velvet.core.models.location.emitter.LocationEmitter;
 import com.velvet.core.models.location.receiver.LocationReceiver;
 
 import javax.inject.Singleton;

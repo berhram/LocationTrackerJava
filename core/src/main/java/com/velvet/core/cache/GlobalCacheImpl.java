@@ -6,7 +6,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public abstract class AbstractGlobalCache<T> implements GlobalCache<T> {
+public class GlobalCacheImpl<T> implements GlobalCache<T> {
     private final BehaviorSubject<List<T>> cachedItems = BehaviorSubject.createDefault(new ArrayList<>());
 
     @Override

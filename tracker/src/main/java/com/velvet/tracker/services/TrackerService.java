@@ -8,12 +8,16 @@ import android.os.IBinder;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.velvet.core.Values;
 import com.velvet.core.cache.GlobalCache;
+import com.velvet.core.cache.MessageCache;
 import com.velvet.core.di.CoreInjectHelper;
-import com.velvet.core.models.location.LocationEmitter;
-import com.velvet.core.models.location.LocationEmitterImpl;
+import com.velvet.core.models.location.emitter.LocationEmitter;
+import com.velvet.core.models.location.emitter.LocationEmitterDatabase;
+import com.velvet.core.models.location.emitter.LocationEmitterImpl;
 import com.velvet.core.result.Result;
 import com.velvet.tracker.di.DaggerTrackerServiceComponent;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -27,19 +31,13 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 public class TrackerService extends Service {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final BehaviorSubject<Result<Void>> errorSubject = BehaviorSubject.create();
-    private LocationEmitter emitter;
-
-    // @Inject
-    // FirebaseFirestore database;
+    private final LocationEmitter emitter;
 
     @Inject
-    GlobalCache<Boolean> messageCache;
+    MessageCache messageCache;
 
     public TrackerService() {
-        DaggerTrackerServiceComponent.builder()
-                .coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext()))
-                .build()
-                .inject(this);
+        this.emitter = new LocationEmitterDatabase(new LocationEmitterImpl(this));
     }
 
     @Override
@@ -59,20 +57,12 @@ public class TrackerService extends Service {
                 Observable.interval(Values.LOCATION_READ_FREQUENTLY_SEC, TimeUnit.SECONDS)
                         .flatMap(t -> emitter.getLocations().toObservable())
                         .map(listResult -> listResult.data)
-                        .flatMap(Observable::fromIterable)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::writeLocationToFirestore));
-        emitter = new LocationEmitterImpl(getApplicationContext());
-        setup();
-    }
-
-    public void setup() {
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .setCacheSizeBytes(Values.MAX_CACHE_BYTES)
-                .build();
-        // database.setFirestoreSettings(settings);
+                        .subscribe(locations -> {
+                            messageCache.addRawDate(new Date(locations.get(locations.size()-1).getTime()));
+                        })
+        );
     }
 
     @Override
@@ -80,9 +70,5 @@ public class TrackerService extends Service {
         disposables.clear();
     }
 
-    private void writeLocationToFirestore(Location location) {
-        // database.collection("Tracker")
-        //         .add(location)
-        //         .addOnFailureListener(e -> errorSubject.onNext(Result.error(new Exception("Something went wrong in service"))));
-    }
+
 }

@@ -1,7 +1,6 @@
 package com.velvet.core.models.auth;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
@@ -12,7 +11,8 @@ import io.reactivex.rxjava3.core.Single;
 
 public class FirebaseAuthNetwork implements AuthNetwork {
 
-    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    @Inject
+    FirebaseAuth firebaseAuth;
 
     public FirebaseAuthNetwork() {
         firebaseAuth.useAppLanguage();
@@ -27,36 +27,24 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     public Single<Result<Boolean>> sendMessage(AuthMessage message) {
         return Single.fromCallable(() -> {
             if (Values.LOGIN.equals(message.getId())) {
-                final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(message.getFirstParam(), message.getSecondParam());
-                if (task.isSuccessful()) {
-                    return Result.success(true);
-                } else {
-                    return Result.error(task.getException());
-                }
+                return taskValidator(firebaseAuth.signInWithEmailAndPassword(message.getFirstParam(), message.getSecondParam()));
             } else if (Values.REGISTER.equals(message.getId())) {
-                final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(message.getFirstParam(), message.getSecondParam());
-                if (task.isSuccessful()) {
-                    return Result.success(true);
-                } else {
-                    return Result.error(task.getException());
-                }
+                return taskValidator(firebaseAuth.createUserWithEmailAndPassword(message.getFirstParam(), message.getSecondParam()));
             } else if (Values.REQUEST.equals(message.getId())) {
-                final Task<Void> task = firebaseAuth.sendPasswordResetEmail(message.getFirstParam());
-                if (task.isSuccessful()) {
-                    return Result.success(true);
-                } else {
-                    return Result.error(task.getException());
-                }
+                return taskValidator(firebaseAuth.sendPasswordResetEmail(message.getFirstParam()));
             } else if (Values.CHECK.equals(message.getId())) {
-                final Task<Void> task = firebaseAuth.confirmPasswordReset(message.getFirstParam(), message.getSecondParam());
-                if (task.isSuccessful()) {
-                    return Result.success(true);
-                } else {
-                    return Result.error(task.getException());
-                }
+                return taskValidator(firebaseAuth.confirmPasswordReset(message.getFirstParam(), message.getSecondParam()));
             } else {
                 return Result.error(new Exception("Wrong message id!"));
             }
         });
+    }
+
+    private Result<Boolean> taskValidator(Task task) {
+        if (task.isSuccessful()) {
+            return Result.success(true);
+        } else {
+            return Result.error(task.getException());
+        }
     }
 }

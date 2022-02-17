@@ -1,5 +1,6 @@
 package com.velvet.core.di;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.velvet.core.cache.GlobalCacheImpl;
 import com.velvet.core.cache.MessageCache;
@@ -37,5 +38,11 @@ public class CoreModule {
     @Singleton
     FirebaseAuthNetwork provideAuthRepo() {
         return new FirebaseAuthNetwork();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseAuth provideAuth() {
+        return FirebaseAuth.getInstance();
     }
 }

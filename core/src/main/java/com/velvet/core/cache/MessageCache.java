@@ -22,8 +22,8 @@ public class MessageCache extends GlobalCacheDecorator<String> {
     }
 
     @Override
-    public Observable<List<String>> getItemsObservable() {
-        return super.getItemsObservable();
+    public void addItem(String item) {
+        super.addItem(item);
     }
 
     @Override

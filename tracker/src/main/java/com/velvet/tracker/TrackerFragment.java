@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.core.Values;
 import com.velvet.libs.mvi.HostedFragment;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
 import com.velvet.tracker.services.TrackerService;
@@ -54,8 +55,39 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     }
 
     @Override
+    public void setLastLocation(String text) {
+        binding.lastLocation5.setText(binding.lastLocation4.getText());
+        binding.lastLocation4.setText(binding.lastLocation3.getText());
+        binding.lastLocation3.setText(binding.lastLocation2.getText());
+        binding.lastLocation2.setText(binding.lastLocation1.getText());
+        binding.lastLocation1.setText(text);
+    }
+
+    @Override
+    public void setStartButtonText(String text) {
+        if (Values.START.equals(text)) {
+            binding.startButton.setText(R.string.start_button);
+        } else if (Values.STOP.equals(text)) {
+            binding.startButton.setText(R.string.stop_button);
+        }
+    }
+
+    @Override
     public void startService() {
         getActivity().startService(new Intent(getActivity(), TrackerService.class));
+        setStartButtonText(Values.STOP);
+        if (hasHost()) {
+            getFragmentHost().startNotification();
+        }
+    }
+
+    @Override
+    public void stopService() {
+        getActivity().stopService(new Intent(getActivity(), TrackerService.class));
+        setStartButtonText(Values.START);
+        if (hasHost()) {
+            getFragmentHost().stopNotification();
+        }
     }
 
     @Override

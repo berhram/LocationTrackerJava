@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Observable;
 public interface GlobalCache<T> {
     void addItems(List<T> inputItems);
 
-    Observable<List<T>> getItemsObservable();
+    void addItem(T inputItem);
 
     List<T> getItems();
 }

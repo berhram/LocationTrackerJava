@@ -17,8 +17,8 @@ public class GlobalCacheDecorator<T> implements GlobalCache<T> {
     }
 
     @Override
-    public Observable<List<T>> getItemsObservable() {
-        return globalCache.getItemsObservable();
+    public void addItem(T inputItem) {
+        globalCache.addItem(inputItem);
     }
 
     @Override

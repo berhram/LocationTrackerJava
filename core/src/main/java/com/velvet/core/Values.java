@@ -13,4 +13,7 @@ public class Values {
     public static final long MAX_CACHE_BYTES = 1024 * 1024 * 10;
 
     public static final String DATE_PATTERN = "yyyy.MM.dd HH:mm:ss";
+
+    public static final String START = "start";
+    public static final String STOP = "stop";
 }

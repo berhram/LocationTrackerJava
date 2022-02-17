@@ -7,23 +7,22 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class GlobalCacheImpl<T> implements GlobalCache<T> {
-    private final BehaviorSubject<List<T>> cachedItems = BehaviorSubject.createDefault(new ArrayList<>());
+    private final List<T> cachedItems = new ArrayList<>();
 
     @Override
     public void addItems(List<T> inputItems) {
-        final List<T> oldItems = cachedItems.getValue();
-        final List<T> newItems = new ArrayList<>(inputItems.size() + oldItems.size());
-        newItems.addAll(oldItems);
-        newItems.addAll(inputItems);
-        cachedItems.onNext(newItems);
+        cachedItems.addAll(inputItems);
     }
+
     @Override
-    public Observable<List<T>> getItemsObservable() {
-        return cachedItems;
+    public void addItem(T inputItem) {
+        cachedItems.add(inputItem);
     }
 
     @Override
     public List<T> getItems() {
-        return cachedItems.getValue();
+        List<T> tempList = cachedItems;
+        cachedItems.clear();
+        return tempList;
     }
 }

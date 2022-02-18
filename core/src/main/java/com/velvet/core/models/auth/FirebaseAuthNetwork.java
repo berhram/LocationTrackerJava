@@ -1,5 +1,7 @@
 package com.velvet.core.models.auth;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.core.Values;
@@ -42,8 +44,10 @@ public class FirebaseAuthNetwork implements AuthNetwork {
 
     private Result<Boolean> taskValidator(Task task) {
         if (task.isSuccessful()) {
+            Log.d("AUTH", "taskValidator: Success");
             return Result.success(true);
         } else {
+            Log.d("AUTH", "taskValidator: Failure");
             return Result.error(task.getException());
         }
     }

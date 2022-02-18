@@ -1,6 +1,7 @@
 plugins {
     id "com.android.library"
     id "androidx.navigation.safeargs"
+    id "com.google.gms.google-services"
 }
 
 android {
@@ -41,6 +42,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$viewmodel"
 
     implementation "androidx.navigation:navigation-fragment:$navigation"
+    implementation "androidx.fragment:fragment:$fragment"
     implementation "androidx.navigation:navigation-ui:$navigation"
 
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")

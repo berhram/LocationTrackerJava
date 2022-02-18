@@ -20,6 +20,4 @@ public interface CoreComponent {
     MessageCache provideMessageCache();
 
     Context provideAppContext();
-
-    //LocationEmitter provideEmitter();
 }

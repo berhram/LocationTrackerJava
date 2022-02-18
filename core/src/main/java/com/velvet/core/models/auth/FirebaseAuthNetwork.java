@@ -17,7 +17,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
 
     public FirebaseAuthNetwork(Context appCtx) {
         // can't initialize properly for some reason
-        final FirebaseApp firebaseApp = FirebaseApp.initializeApp(appCtx);
+        //final FirebaseApp firebaseApp = FirebaseApp.initializeApp(appCtx);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.useAppLanguage();
     }

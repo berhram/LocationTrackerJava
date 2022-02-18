@@ -12,7 +12,6 @@ import com.velvet.auth.login.LoginFragmentDirections;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.map.ui.MapContract;
-import com.velvet.map.ui.MapFragmentDirections;
 
 import app.databinding.ActivityMainBinding;
 

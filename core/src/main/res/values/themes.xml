@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="LocationTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
@@ -20,7 +20,9 @@
         <item name="android:textColor">@color/primaryColor</item>
     </style>
 
-    <style name="borderlessButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="borderlessButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/primaryColor</item>
+        <item name="strokeWidth">3dp</item>
+        <item name="strokeColor">@color/primaryColor</item>
     </style>
 </resources>

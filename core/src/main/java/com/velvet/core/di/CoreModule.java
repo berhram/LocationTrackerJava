@@ -1,5 +1,7 @@
 package com.velvet.core.di;
 
+import android.content.Context;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.velvet.core.cache.GlobalCacheImpl;
@@ -15,6 +17,12 @@ import dagger.Provides;
 
 @Module
 public class CoreModule {
+
+    private final Context appCtx;
+
+    public CoreModule(Context appCtx) {
+        this.appCtx = appCtx;
+    }
 
     @Provides
     @Singleton
@@ -36,13 +44,18 @@ public class CoreModule {
 
     @Provides
     @Singleton
-    FirebaseAuthNetwork provideAuthRepo() {
-        return new FirebaseAuthNetwork();
+    FirebaseAuthNetwork provideAuthRepo(Context appCtx) {
+        return new FirebaseAuthNetwork(appCtx);
     }
 
     @Provides
     @Singleton
     FirebaseAuth provideAuth() {
         return FirebaseAuth.getInstance();
+    }
+
+    @Provides
+    Context provideAppContext() {
+        return appCtx;
     }
 }

@@ -14,22 +14,17 @@ import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
 import com.velvet.libs.mvi.HostedFragment;
 
-
 public class LoginFragment extends HostedFragment<LoginViewState,
         LoginContract.ViewModel,
         LoginContract.Host,
         LoginViewEffect,
         LoginContract.View> implements LoginContract.View, View.OnClickListener {
+
     private FragmentLoginBinding binding;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected LoginContract.ViewModel createModel() {
-        return new ViewModelProvider(this, (ViewModelProvider.Factory) new LoginViewModelFactory()).get(LoginViewModel.class);
+        return new ViewModelProvider(this, new LoginViewModelFactory(requireActivity())).get(LoginViewModel.class);
     }
 
     @Nullable

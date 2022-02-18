@@ -7,10 +7,25 @@ import com.velvet.core.di.CoreComponentProvider;
 import com.velvet.core.di.CoreModule;
 import com.velvet.core.di.DaggerCoreComponent;
 
-public class App extends Application {
+public class App extends Application implements CoreComponentProvider {
+
+    private static App instance;
+
+    public static App getInstance() {
+        return instance;
+    }
+
+    private CoreComponent component;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        DaggerCoreComponent.builder().coreModule(new CoreModule()).build();
+        instance = this;
+        component = DaggerCoreComponent.builder().coreModule(new CoreModule(this)).build();
+    }
+
+    @Override
+    public CoreComponent provideCoreComponent() {
+        return component;
     }
 }

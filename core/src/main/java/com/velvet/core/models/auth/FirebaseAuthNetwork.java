@@ -1,22 +1,24 @@
 package com.velvet.core.models.auth;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
-
-import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
 
 public class FirebaseAuthNetwork implements AuthNetwork {
 
-    @Inject
-    FirebaseAuth firebaseAuth;
+    private final FirebaseAuth firebaseAuth;
 
-    public FirebaseAuthNetwork() {
+    public FirebaseAuthNetwork(Context appCtx) {
+        // can't initialize properly for some reason
+        final FirebaseApp firebaseApp = FirebaseApp.initializeApp(appCtx);
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.useAppLanguage();
     }
 

@@ -1,6 +1,7 @@
 package com.velvet.core.models.location.emitter;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -20,7 +21,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LocationEmitterDatabase extends LocationEmitterDecorator {
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private final PublishSubject<Result<List<Location>>> locationSubject = PublishSubject.create();
+    private final PublishSubject<List<Result<Location>>> locationSubject = PublishSubject.create();
 
     @Inject
     FirebaseFirestore database;
@@ -32,15 +33,18 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
                 .setPersistenceEnabled(true)
                 .setCacheSizeBytes(Values.MAX_CACHE_BYTES)
                 .build());
+        Log.d("Database", "location writer created");
+
     }
 
     @Override
     public void start() {
         super.start();
+        Log.d("Database", "location writer started");
         disposables.add(
                 locationSubject
-                        .map(listResult -> listResult.data)
                         .flatMap(Observable::fromIterable)
+                        .filter(locationResult -> !locationResult.isError())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::writeLocationToFirestore)
@@ -52,14 +56,15 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
         super.stop();
     }
 
-    private void writeLocationToFirestore(Location location) {
+    private void writeLocationToFirestore(Result<Location> location) {
         database.collection("Tracker")
-                .add(location);
+                .add(location.data);
+        Log.d("Database", "location written" + location.data);
     }
 
     @Override
-    public Single<Result<List<Location>>> getLocations() {
-
+    public Single<List<Result<Location>>> getLocations() {
+        super.getLocations().toObservable().subscribe(locationSubject);
         return super.getLocations();
     }
 }

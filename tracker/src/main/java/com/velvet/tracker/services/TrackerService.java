@@ -47,11 +47,15 @@ public class TrackerService extends Service {
         disposables.add(
                 Observable.interval(Values.LOCATION_READ_FREQUENTLY_SEC, TimeUnit.SECONDS)
                         .flatMap(t -> emitter.getLocations().toObservable())
-                        .map(listResult -> listResult.data)
+                        .flatMap(Observable::fromIterable)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(locations -> {
-                            messageCache.addRawDate(new Date(locations.get(locations.size()-1).getTime()));
+                            if (locations.isError()){
+                                messageCache.addItem(locations.error.getMessage());
+                            } else {
+                                messageCache.addRawDate(new Date(locations.data.getTime()));
+                            }
                         })
         );
     }

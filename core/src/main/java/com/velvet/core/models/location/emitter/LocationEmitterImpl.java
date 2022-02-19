@@ -1,13 +1,10 @@
 package com.velvet.core.models.location.emitter;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -24,30 +21,32 @@ import io.reactivex.rxjava3.core.Single;
 
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
     private final FusedLocationProviderClient fusedLocationClient;
-    private final Context context;
-    List<Location> locationList = new ArrayList<>();
+    private final List<Result<Location>> locationList = new ArrayList<>();
+    private final LocationRequest locationRequest = LocationRequest.create();
 
     public LocationEmitterImpl(Context context) {
-        this.context = context;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
     }
 
     @Override
     public void start() {
-        LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(Values.LOCATION_WRITE_FREQUENTLY_MILLIS);
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.requestLocationUpdates(locationRequest, this, null);
+        try {
+            fusedLocationClient.requestLocationUpdates(locationRequest, this, Looper.getMainLooper());
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            locationList.add(Result.error(e));
         }
+
     }
 
     @Override
-    public Single<Result<List<Location>>> getLocations() {
+    public Single<List<Result<Location>>> getLocations() {
         return Single.fromCallable(() -> {
-            List<Location> outputed = locationList;
+            List<Result<Location>> outputed = locationList;
             locationList.clear();
-            return Result.success(outputed);
+            return outputed;
         });
     }
 
@@ -58,7 +57,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         }
         for (Location location : locationResult.getLocations()) {
             if (location != null) {
-                locationList.add(location);
+                locationList.add(Result.success(location));
             }
         }
     }

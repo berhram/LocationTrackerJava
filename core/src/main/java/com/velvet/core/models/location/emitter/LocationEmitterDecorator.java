@@ -26,7 +26,7 @@ public class LocationEmitterDecorator implements LocationEmitter {
     }
 
     @Override
-    public Single<Result<List<Location>>> getLocations() {
+    public Single<List<Result<Location>>> getLocations() {
         return locationEmitter.getLocations();
     }
 }

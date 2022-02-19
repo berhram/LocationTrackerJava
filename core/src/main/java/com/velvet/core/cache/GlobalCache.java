@@ -10,4 +10,5 @@ public interface GlobalCache<T> {
     void addItem(T inputItem);
 
     List<T> getItems();
+
 }

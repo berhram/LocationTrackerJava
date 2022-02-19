@@ -11,5 +11,5 @@ import io.reactivex.rxjava3.core.Single;
 public interface LocationEmitter {
     void start();
     void stop();
-    Single<Result<List<Location>>> getLocations();
+    Single<List<Result<Location>>> getLocations();
 }

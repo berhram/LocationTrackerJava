@@ -23,8 +23,7 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final PublishSubject<List<Result<Location>>> locationSubject = PublishSubject.create();
 
-    @Inject
-    FirebaseFirestore database;
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
 
     public LocationEmitterDatabase(LocationEmitter locationEmitter) {
         super(locationEmitter);
@@ -64,6 +63,7 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
 
     @Override
     public Single<List<Result<Location>>> getLocations() {
+        Log.d("Database", "getlocations invoked");
         super.getLocations().toObservable().subscribe(locationSubject);
         return super.getLocations();
     }

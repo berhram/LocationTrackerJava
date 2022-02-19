@@ -3,4 +3,7 @@
     <!--Tracker buttons text-->
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
+
+    <string name="notification_title">Location tracker</string>
+    <string name="notification_message">Location tracker is running</string>
 </resources>

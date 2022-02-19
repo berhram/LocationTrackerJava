@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="notification_title">Location tracker</string>
-    <string name="notification_message">Location tracker is running</string>
+
 </resources>

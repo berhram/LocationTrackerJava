@@ -1,5 +1,7 @@
 package com.velvet.core.cache;
 
+import android.util.Log;
+
 import com.velvet.core.Values;
 
 import java.text.SimpleDateFormat;
@@ -24,10 +26,12 @@ public class MessageCache extends GlobalCacheDecorator<String> {
     @Override
     public void addItem(String item) {
         super.addItem(item);
+        Log.d("Cache", "location written in cache");
     }
 
     @Override
     public List<String> getItems() {
+        Log.d("Cache", "locations accessed from cache");
         return super.getItems();
     }
 

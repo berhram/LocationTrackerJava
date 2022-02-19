@@ -1,6 +1,7 @@
 package com.velvet.tracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     @Override
     public void startService() {
         if (hasHost()) {
+            Log.d("Service", "startService (fragment)");
             getFragmentHost().startService();
         }
     }
@@ -72,6 +74,7 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     @Override
     public void stopService() {
         if (hasHost()) {
+            Log.d("Service", "stopService (fragment)");
             getFragmentHost().stopService();
         }
     }

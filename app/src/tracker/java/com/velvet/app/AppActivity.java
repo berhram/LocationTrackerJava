@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
@@ -101,17 +103,27 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
     @Override
     public void startService() {
         if (isLocationPermissionsGranted()) {
-            getApplicationContext().startService(new Intent(this, TrackerService.class));
+            Log.d("Service", "startService");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                getApplicationContext().startForegroundService(new Intent(this, TrackerService.class));
+            } else {
+                getApplicationContext().startService(new Intent(this, TrackerService.class));
+            }
         } else {
+            Log.d("Service", "request perms");
             requestPermissions();
         }
+        /*
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             startNotification();
         }
+
+         */
     }
 
     @Override
     public void stopService() {
+        Log.d("Service", "stopService");
         getApplicationContext().stopService(new Intent(this, TrackerService.class));
     }
 
@@ -122,7 +134,7 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
             locationPermissionRequest.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
         }
     }
-
+/*
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startNotification() {
         Intent notificationIntent = new Intent(this, AppActivity.class);
@@ -137,9 +149,11 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
         notificationManager.notify(1, notification);
     }
 
+ */
+
 
     private boolean isPermissionGranted(String permission) {
-        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     private boolean isLocationPermissionsGranted() {

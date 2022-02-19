@@ -1,5 +1,7 @@
 package com.velvet.tracker;
 
+import android.util.Log;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -28,7 +30,7 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
                         .flatMap(t -> Observable.fromIterable(messageCache.getItems()))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::setLastLocation)
+                        .subscribe(this::setLastLocation, Throwable::printStackTrace)
             );
         }
     }
@@ -43,6 +45,7 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
 
     @Override
     public void setLastLocation(String location) {
+        Log.d("LastLoc", "setLastLocation invoked");
         setState(TrackerViewState.createSetLocationState(location));
     }
 }

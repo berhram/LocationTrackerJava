@@ -32,7 +32,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
     @Override
     public void start() {
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(Values.LOCATION_WRITE_FREQUENTLY_MILLIS);
+        locationRequest.setInterval(Values.LOCATION_CHECK_FREQUENTLY_MILLIS);
         try {
             fusedLocationClient.requestLocationUpdates(locationRequest, this, Looper.getMainLooper());
         } catch (SecurityException e) {

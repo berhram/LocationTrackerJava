@@ -38,7 +38,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    Observable.interval(Values.LOCATION_READ_FREQUENTLY_SEC, TimeUnit.SECONDS)
+                    Observable.interval(Values.LOCATION_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
                             .flatMap(t -> receiver.getLocations().toObservable())
                             .map(listResult -> listResult.data)
                             .flatMap(Observable::fromIterable)

@@ -43,7 +43,6 @@ public class TrackerService extends Service {
         super.onStartCommand(intent, flags, startId);
         this.emitter = new LocationEmitterDatabase(new LocationEmitterImpl(this));
         emitter.start();
-        Log.d("LOC", "Service and emitter started");
         return START_STICKY;
     }
 
@@ -59,11 +58,15 @@ public class TrackerService extends Service {
             startForeground(1, notification);
         }
         disposables.add(
-                Observable.interval(Values.LOCATION_READ_FREQUENTLY_SEC, TimeUnit.SECONDS)
-                        .flatMap(t -> emitter.getLocations().toObservable())
-                        .flatMap(Observable::fromIterable)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                Observable.interval(Values.LOCATION_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
+                        .flatMap(t -> {
+                            Log.d("LOC", "Service made response");
+                            return emitter.getLocations().toObservable();
+                        })
+                        .flatMap(source -> {
+                            Log.d("LOC", "Service iterate list");
+                            return Observable.fromIterable(source);
+                        })
                         .subscribe(locations -> {
                             Log.d("LOC", "Service receive update");
                             if (locations.isError()){
@@ -71,7 +74,7 @@ public class TrackerService extends Service {
                             } else {
                                 messageCache.addRawDate(new Date(locations.data.getTime()));
                             }
-                        })
+                        }, Throwable::printStackTrace)
         );
     }
 

@@ -61,22 +61,21 @@ public class TrackerService extends Service {
                 Observable.interval(Values.LOCATION_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
                         .flatMap(t -> {
                             Log.d("LOC", "Service made response");
-                            return emitter.getLocations().toObservable();
+                            return Observable.just(emitter.getLocation());
                         })
-                        .flatMap(source -> {
-                            Log.d("LOC", "Service iterate list");
-                            return Observable.fromIterable(source);
-                        })
-                        .subscribe(locations -> {
+                        //TODO why it is always null
+                        .filter(locationResult -> !locationResult.isEmpty())
+                        .subscribe(location -> {
                             Log.d("LOC", "Service receive update");
-                            if (locations.isError()){
-                                messageCache.addItem(locations.error.getMessage());
+                            if (location.isError()){
+                                messageCache.addItem(location.error.getMessage());
                             } else {
-                                messageCache.addRawDate(new Date(locations.data.getTime()));
+                                messageCache.addRawDate(new Date(location.data.getTime()));
                             }
                         }, Throwable::printStackTrace)
         );
     }
+
 
     @Override
     public void onDestroy() {

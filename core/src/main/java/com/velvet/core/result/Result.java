@@ -21,4 +21,8 @@ public class Result<T> {
     public boolean isError() {
         return error != null;
     }
+
+    public boolean isEmpty() {
+        return error == null && data == null;
+    }
 }

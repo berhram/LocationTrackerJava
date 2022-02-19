@@ -22,7 +22,7 @@ import io.reactivex.rxjava3.core.Single;
 
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
     private final FusedLocationProviderClient fusedLocationClient;
-    private final List<Result<Location>> locationList = new ArrayList<>();
+    private Result<Location> lastLocation;
     private final LocationRequest locationRequest = LocationRequest.create();
 
     public LocationEmitterImpl(Context context) {
@@ -37,18 +37,14 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
             fusedLocationClient.requestLocationUpdates(locationRequest, this, Looper.getMainLooper());
         } catch (SecurityException e) {
             e.printStackTrace();
-            locationList.add(Result.error(e));
+            lastLocation = Result.error(e);
         }
 
     }
 
     @Override
-    public Single<List<Result<Location>>> getLocations() {
-        return Single.fromCallable(() -> {
-            List<Result<Location>> outputed = locationList;
-            locationList.clear();
-            return outputed;
-        });
+    public Result<Location> getLocation() {
+        return lastLocation;
     }
 
     @Override
@@ -59,7 +55,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         for (Location location : locationResult.getLocations()) {
             if (location != null) {
                 Log.d("LOC", "Location produced in emitter");
-                locationList.add(Result.success(location));
+                lastLocation = Result.success(location);
             }
         }
     }

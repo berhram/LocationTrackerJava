@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LocationEmitterDatabase extends LocationEmitterDecorator {
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private final PublishSubject<List<Result<Location>>> locationSubject = PublishSubject.create();
+    private final PublishSubject<Result<Location>> locationSubject = PublishSubject.create();
 
     FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -41,7 +41,6 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
         Log.d("LOC", "LocationEmitterDatabase started");
         disposables.add(
                 locationSubject
-                        .flatMap(Observable::fromIterable)
                         .filter(locationResult -> !locationResult.isError())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -60,9 +59,10 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
     }
 
     @Override
-    public Single<List<Result<Location>>> getLocations() {
+    public Result<Location> getLocation() {
+        //TODO something wrong with db certainly...
         Log.d("LOC", "LocationEmitterDatabase getLocations invoked");
-        super.getLocations().toObservable().subscribe(locationSubject);
-        return super.getLocations();
+        locationSubject.onNext(super.getLocation());
+        return super.getLocation();
     }
 }

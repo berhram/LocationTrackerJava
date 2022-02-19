@@ -1,7 +1,5 @@
 package com.velvet.auth.login;
 
-import android.util.Log;
-
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 

@@ -8,13 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;

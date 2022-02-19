@@ -14,12 +14,6 @@ import com.google.android.gms.location.LocationServices;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.rxjava3.core.Single;
-
-
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
     private final FusedLocationProviderClient fusedLocationClient;
     private Result<Location> lastLocation;

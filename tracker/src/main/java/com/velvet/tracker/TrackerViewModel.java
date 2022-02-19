@@ -11,7 +11,6 @@ import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.tracker.state.TrackerViewEffect;
 import com.velvet.tracker.state.TrackerViewState;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;

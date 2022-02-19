@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
-
 public class MessageCache extends GlobalCacheDecorator<String> {
     private final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
 

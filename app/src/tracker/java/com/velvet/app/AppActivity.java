@@ -1,27 +1,20 @@
 package com.velvet.app;
 
 import android.Manifest;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,7 +25,6 @@ import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.core.Values;
 import com.velvet.tracker.TrackerContract;
-import com.velvet.tracker.TrackerFragment;
 import com.velvet.tracker.TrackerFragmentDirections;
 import com.velvet.tracker.services.TrackerService;
 
@@ -43,7 +35,6 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
     private NavController navController;
     private ActivityMainBinding binding;
     private ActivityResultLauncher<String[]> locationPermissionRequest;
-    private NotificationManager notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +81,7 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createChannel() {
-        notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel channel = new NotificationChannel(Values.CHANNEL_ID, Values.CHANNEL_ID,
                 NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for location tracker");

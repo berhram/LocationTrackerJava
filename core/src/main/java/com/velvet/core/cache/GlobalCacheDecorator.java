@@ -2,8 +2,6 @@ package com.velvet.core.cache;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Observable;
-
 public class GlobalCacheDecorator<T> implements GlobalCache<T> {
     private final GlobalCache<T> globalCache;
 

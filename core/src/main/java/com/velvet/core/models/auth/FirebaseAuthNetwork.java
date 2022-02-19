@@ -15,6 +15,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
 
     private final FirebaseAuth firebaseAuth;
 
+    //TODO remove ctx if dont needed
     public FirebaseAuthNetwork(Context appCtx) {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.useAppLanguage();

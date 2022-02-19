@@ -91,10 +91,9 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
         notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel channel = new NotificationChannel(Values.CHANNEL_ID, Values.CHANNEL_ID,
-                NotificationManager.IMPORTANCE_HIGH);
+                NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("Channel for location tracker");
         channel.enableLights(true);
-        channel.setLightColor(Color.RED);
         channel.enableVibration(false);
         notificationManager.createNotificationChannel(channel);
     }
@@ -133,6 +132,7 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
             .setContentText(getText(R.string.notification_message))
             .setSmallIcon(R.drawable.ic_location)
             .setContentIntent(pendingIntent)
+            .setOngoing(true)
             .build();
         notificationManager.notify(1, notification);
     }

@@ -6,11 +6,11 @@ public class Result<T> {
     public final Throwable error;
 
     public static <T> Result<T> success(T data) {
-        return new Result<T>(data, null);
+        return new Result<>(data, null);
     }
 
     public static <T> Result<T> error(Exception exception) {
-        return new Result<T>(null, exception);
+        return new Result<>(null, exception);
     }
 
     public Result(T data, Throwable error) {

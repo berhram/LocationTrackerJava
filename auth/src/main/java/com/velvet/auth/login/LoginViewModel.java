@@ -1,5 +1,7 @@
 package com.velvet.auth.login;
 
+import android.util.Log;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -58,6 +60,9 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                                 setInfoText(R.string.invalid_email_or_password);
                             })
             );
+            checkSubject.onNext(System.currentTimeMillis());
+        }
+        if (event == Lifecycle.Event.ON_RESUME) {
             checkSubject.onNext(System.currentTimeMillis());
         }
     }

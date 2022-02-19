@@ -16,4 +16,6 @@ public class Values {
 
     public static final String START = "start";
     public static final String STOP = "stop";
+
+    public static final String CHANNEL_ID = "Tracker channel";
 }

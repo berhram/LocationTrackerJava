@@ -14,12 +14,11 @@ public class TrackerContract {
         void startService();
         void stopService();
         void setLastLocation(String text);
-        void setStartButtonText(String text);
     }
 
     public interface Host extends FragmentContract.Host {
         void proceedToLoginScreen(String id);
-        void startNotification();
-        void stopNotification();
+        void startService();
+        void stopService();
     }
 }

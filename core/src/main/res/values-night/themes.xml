@@ -22,5 +22,7 @@
 
     <style name="borderlessButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/primaryColor</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="strokeColor">@color/primaryColor</item>
     </style>
 </resources>

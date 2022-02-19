@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.velvet.tracker">
     <application
-        android:theme="@style/AppTheme"/>
+        android:theme="@style/AppTheme">
+        <service
+            android:name= "com.velvet.tracker.services.TrackerService"
+            android:enabled="true"
+            android:foregroundServiceType="location"
+            android:exported="false"/>
+    </application>
 </manifest>

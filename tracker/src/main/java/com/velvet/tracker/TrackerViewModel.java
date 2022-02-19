@@ -45,7 +45,7 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
 
     @Override
     public void setLastLocation(String location) {
-        Log.d("LastLoc", "setLastLocation invoked");
+        Log.d("LOC", "TrackerViewModel setLastLocation invoked");
         setState(TrackerViewState.createSetLocationState(location));
     }
 }

@@ -3,6 +3,7 @@ package com.velvet.core.models.location.emitter;
 import android.content.Context;
 import android.location.Location;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -57,6 +58,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         }
         for (Location location : locationResult.getLocations()) {
             if (location != null) {
+                Log.d("LOC", "Location produced in emitter");
                 locationList.add(Result.success(location));
             }
         }

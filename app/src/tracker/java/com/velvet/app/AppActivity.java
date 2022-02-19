@@ -103,27 +103,18 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
     @Override
     public void startService() {
         if (isLocationPermissionsGranted()) {
-            Log.d("Service", "startService");
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 getApplicationContext().startForegroundService(new Intent(this, TrackerService.class));
             } else {
                 getApplicationContext().startService(new Intent(this, TrackerService.class));
             }
         } else {
-            Log.d("Service", "request perms");
             requestPermissions();
         }
-        /*
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            startNotification();
-        }
-
-         */
     }
 
     @Override
     public void stopService() {
-        Log.d("Service", "stopService");
         getApplicationContext().stopService(new Intent(this, TrackerService.class));
     }
 
@@ -134,23 +125,6 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
             locationPermissionRequest.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
         }
     }
-/*
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void startNotification() {
-        Intent notificationIntent = new Intent(this, AppActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-        Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)
-            .setContentTitle(getText(R.string.notification_title))
-            .setContentText(getText(R.string.notification_message))
-            .setSmallIcon(R.drawable.ic_location)
-            .setContentIntent(pendingIntent)
-            .setOngoing(true)
-            .build();
-        notificationManager.notify(1, notification);
-    }
-
- */
-
 
     private boolean isPermissionGranted(String permission) {
         return ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;

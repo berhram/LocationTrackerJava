@@ -26,12 +26,12 @@ public class MessageCache extends GlobalCacheDecorator<String> {
     @Override
     public void addItem(String item) {
         super.addItem(item);
-        Log.d("Cache", "location written in cache");
+        Log.d("LOC", "MessageCache addItem invoked");
     }
 
     @Override
     public List<String> getItems() {
-        Log.d("Cache", "locations accessed from cache");
+        Log.d("LOC", "MessageCache getItems invoked");
         return super.getItems();
     }
 

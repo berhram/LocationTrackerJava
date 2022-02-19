@@ -66,7 +66,6 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     @Override
     public void startService() {
         if (hasHost()) {
-            Log.d("Service", "startService (fragment)");
             getFragmentHost().startService();
         }
     }
@@ -74,7 +73,6 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     @Override
     public void stopService() {
         if (hasHost()) {
-            Log.d("Service", "stopService (fragment)");
             getFragmentHost().stopService();
         }
     }

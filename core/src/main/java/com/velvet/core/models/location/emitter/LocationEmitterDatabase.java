@@ -32,14 +32,13 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
                 .setPersistenceEnabled(true)
                 .setCacheSizeBytes(Values.MAX_CACHE_BYTES)
                 .build());
-        Log.d("Database", "location writer created");
-
+        Log.d("LOC", "LocationEmitterDatabase created");
     }
 
     @Override
     public void start() {
         super.start();
-        Log.d("Database", "location writer started");
+        Log.d("LOC", "LocationEmitterDatabase started");
         disposables.add(
                 locationSubject
                         .flatMap(Observable::fromIterable)
@@ -56,14 +55,13 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
     }
 
     private void writeLocationToFirestore(Result<Location> location) {
-        database.collection("Tracker")
-                .add(location.data);
-        Log.d("Database", "location written" + location.data);
+        database.collection("Tracker").add(location.data);
+        Log.d("LOC", "LocationEmitterDatabase writeLocationToFirestore invoked");
     }
 
     @Override
     public Single<List<Result<Location>>> getLocations() {
-        Log.d("Database", "getlocations invoked");
+        Log.d("LOC", "LocationEmitterDatabase getLocations invoked");
         super.getLocations().toObservable().subscribe(locationSubject);
         return super.getLocations();
     }

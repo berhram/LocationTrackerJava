@@ -29,7 +29,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class TrackerService extends Service {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private LocationEmitter emitter;
-    private NotificationManager notificationManager;
 
     @Inject
     MessageCache messageCache;
@@ -43,15 +42,14 @@ public class TrackerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         this.emitter = new LocationEmitterDatabase(new LocationEmitterImpl(this));
-        Log.d("Service", "Service started");
+        emitter.start();
+        Log.d("LOC", "Service and emitter started");
         return START_STICKY;
     }
 
     @Override
     public void onCreate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)
                     .setContentTitle(getText(R.string.notification_title))
                     .setContentText(getText(R.string.notification_message))
@@ -67,7 +65,7 @@ public class TrackerService extends Service {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(locations -> {
-                            Log.d("Service", "Service receive update");
+                            Log.d("LOC", "Service receive update");
                             if (locations.isError()){
                                 messageCache.addItem(locations.error.getMessage());
                             } else {
@@ -80,6 +78,7 @@ public class TrackerService extends Service {
     @Override
     public void onDestroy() {
         disposables.clear();
+        emitter.stop();
     }
 
 

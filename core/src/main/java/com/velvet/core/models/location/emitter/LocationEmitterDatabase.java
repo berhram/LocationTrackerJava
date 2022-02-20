@@ -3,9 +3,9 @@ package com.velvet.core.models.location.emitter;
 import android.location.Location;
 import android.util.Log;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.velvet.core.Values;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.velvet.core.result.Result;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -17,15 +17,10 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final PublishSubject<Result<Location>> locationSubject = PublishSubject.create();
 
-    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference("users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     public LocationEmitterDatabase(LocationEmitter locationEmitter) {
         super(locationEmitter);
-        database.setFirestoreSettings(
-                new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .setCacheSizeBytes(Values.MAX_CACHE_BYTES)
-                .build());
         Log.d("LOC", "LocationEmitterDatabase created");
     }
 
@@ -48,13 +43,13 @@ public class LocationEmitterDatabase extends LocationEmitterDecorator {
     }
 
     private void writeLocationToFirestore(Result<Location> location) {
-        database.collection("Tracker").add(location.data);
+        database.child("latitude").push().setValue(location.data.getLatitude());
+        database.child("longitude").push().setValue(location.data.getLongitude());
         Log.d("LOC", "LocationEmitterDatabase writeLocationToFirestore invoked");
     }
 
     @Override
     public Result<Location> getLocation() {
-        //TODO something wrong with db certainly...
         Log.d("LOC", "LocationEmitterDatabase getLocations invoked");
         locationSubject.onNext(super.getLocation());
         return super.getLocation();

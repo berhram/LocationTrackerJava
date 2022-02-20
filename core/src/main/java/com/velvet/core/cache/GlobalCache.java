@@ -2,11 +2,11 @@ package com.velvet.core.cache;
 
 import java.util.List;
 
-public interface GlobalCache<T> {
-    void addItems(List<T> inputItems);
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
+public interface GlobalCache<T> {
     void addItem(T inputItem);
 
-    List<T> getItems();
-
+    PublishSubject<T> getItem();
 }

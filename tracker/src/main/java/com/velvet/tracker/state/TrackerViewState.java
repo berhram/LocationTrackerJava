@@ -25,7 +25,7 @@ public class TrackerViewState implements MviViewState<TrackerContract.View> {
     }
 
     static public TrackerViewState createSetLocationState(String lastLocation) {
-        return new TrackerViewState(ACTION_INITIAL, lastLocation);
+        return new TrackerViewState(ACTION_SET_LOCATION, lastLocation);
     }
 
 

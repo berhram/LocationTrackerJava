@@ -1,25 +1,17 @@
 package com.velvet.core.cache;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class GlobalCacheImpl<T> implements GlobalCache<T> {
-    private final List<T> cachedItems = new ArrayList<>();
-
-    @Override
-    public void addItems(List<T> inputItems) {
-        cachedItems.addAll(inputItems);
-    }
+    private PublishSubject<T> cachedItem = PublishSubject.create();
 
     @Override
     public void addItem(T inputItem) {
-        cachedItems.add(inputItem);
+        cachedItem.onNext(inputItem);
     }
 
     @Override
-    public List<T> getItems() {
-        List<T> tempList = cachedItems;
-        cachedItems.clear();
-        return tempList;
+    public PublishSubject<T> getItem() {
+        return cachedItem;
     }
 }

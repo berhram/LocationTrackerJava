@@ -5,9 +5,9 @@ import android.util.Log;
 import com.velvet.core.Values;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class MessageCache extends GlobalCacheDecorator<String> {
     private final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
@@ -16,10 +16,6 @@ public class MessageCache extends GlobalCacheDecorator<String> {
         super(globalCache);
     }
 
-    @Override
-    public void addItems(List<String> inputItems) {
-        super.addItems(inputItems);
-    }
 
     @Override
     public void addItem(String item) {
@@ -28,14 +24,12 @@ public class MessageCache extends GlobalCacheDecorator<String> {
     }
 
     @Override
-    public List<String> getItems() {
+    public PublishSubject<String> getItem() {
         Log.d("LOC", "MessageCache getItems invoked");
-        return super.getItems();
+        return super.getItem();
     }
 
     public void addRawDate(Date date) {
-        List<String> tempList = new ArrayList<>();
-        tempList.add(sDF.format(date));
-        addItems(tempList);
+        super.addItem(sDF.format(date));
     }
 }

@@ -30,15 +30,9 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                Observable.interval(Values.LOCATION_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
-                        .flatMap(t -> {
-                            Log.d("LOC", "TrackerViewModel working");
-                            if (messageCache.getItems() == null) {
-                                Log.d("LOC", "TrackerViewModel cache is null");
-                            }
-                            Log.d("LOC", "Mem. cell of cache (ViewModel) : " + messageCache);
-                            return Observable.fromIterable(messageCache.getItems());
-                        })
+                    messageCache.getItem()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(s -> {
                             if (s == null) {
                                 Log.d("LOC", "TrackerViewModel location is null");

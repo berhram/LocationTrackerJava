@@ -14,10 +14,18 @@ public class LoginContract {
         void setInfoText(int infoText);
 
         void success();
+
+        void setEmailError(int text);
+
+        void setPasswordError(int text);
     }
 
     public interface View extends FragmentContract.View {
         void setInfoText(int infoText);
+
+        void setEmailError(int text);
+
+        void setPasswordError(int text);
 
         void proceedToPasswordRecovery();
 

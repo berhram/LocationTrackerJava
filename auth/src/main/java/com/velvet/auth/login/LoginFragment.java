@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +19,8 @@ public class LoginFragment extends HostedFragment<LoginViewState,
         LoginContract.ViewModel,
         LoginContract.Host,
         LoginViewEffect,
-        LoginContract.View> implements LoginContract.View, View.OnClickListener {
+        LoginContract.View> implements LoginContract.View,
+        View.OnClickListener {
 
     private FragmentLoginBinding binding;
 
@@ -40,7 +42,13 @@ public class LoginFragment extends HostedFragment<LoginViewState,
         binding.signInButton.setOnClickListener(this);
         binding.signUpButton.setOnClickListener(this);
         binding.forgotPasswordButton.setOnClickListener(this);
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override
@@ -71,5 +79,15 @@ public class LoginFragment extends HostedFragment<LoginViewState,
     @Override
     public void setInfoText(int infoText) {
         binding.infoText.setText(infoText);
+    }
+
+    @Override
+    public void setEmailError(int text) {
+        binding.emailInput.setError(getString(text));
+    }
+
+    @Override
+    public void setPasswordError(int text) {
+        binding.passwordInput.setError(getString(text));
     }
 }

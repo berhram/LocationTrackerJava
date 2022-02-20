@@ -1,11 +1,16 @@
 package com.velvet.auth.login;
 
+import static com.velvet.auth.utils.Validator.validateEmail;
+import static com.velvet.auth.utils.Validator.validatePasswordLength;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 
 import com.velvet.auth.R;
 import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
+import com.velvet.auth.utils.Validator;
 import com.velvet.core.models.auth.AuthMessage;
 import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.libs.mvi.MviViewModel;
@@ -19,9 +24,15 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
     private final AuthNetwork authRepository;
     private final PublishSubject<Long> checkSubject = PublishSubject.create();
     private final BehaviorSubject<AuthMessage> authSubject = BehaviorSubject.create();
+    private final PublishSubject<Integer> validatorSubject = PublishSubject.create();
 
     public LoginViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
+    }
+
+    @Override
+    public LiveData<LoginViewState> getStateObservable() {
+        return super.getStateObservable();
     }
 
     @Override
@@ -42,6 +53,15 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                                 e.printStackTrace();
                             }),
                     authSubject
+                            .filter(m -> {
+                                if (!validateEmail(m.getFirstParam())) {
+                                    validatorSubject.onNext(R.string.email_error);
+                                }
+                                if (!validatePasswordLength(m.getSecondParam())) {
+                                    validatorSubject.onNext(R.string.password_error);
+                                }
+                                return validateEmail(m.getFirstParam()) && validatePasswordLength(m.getSecondParam());
+                            })
                             .flatMap(p -> authRepository.sendMessage(p).toObservable())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -56,7 +76,12 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                             }, e -> {
                                 e.printStackTrace();
                                 setInfoText(R.string.invalid_email_or_password);
-                            })
+                            }),
+                    validatorSubject
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe()
+
             );
             checkSubject.onNext(System.currentTimeMillis());
         }
@@ -88,5 +113,15 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
     @Override
     public void setInfoText(int infoText) {
         setState(LoginViewState.createSetTextState(infoText));
+    }
+
+    @Override
+    public void setEmailError(int text) {
+        setState(LoginViewState.createSetEmailErrorState(text));
+    }
+
+    @Override
+    public void setPasswordError(int text) {
+        setState(LoginViewState.createSetPasswordErrorState(text));
     }
 }

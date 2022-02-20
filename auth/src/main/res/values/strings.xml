@@ -21,6 +21,10 @@
     <string name="something_went_wrong">Something went wrong…</string>
     <string name="initial"/>
 
+    <!--Input errors-->
+    <string name="email_error">Incorrect or empty email!</string>
+    <string name="password_error">Weak or empty password!</string>
+
     <!--Recovery screen-->
     <!--Recovery buttons text-->
     <string name="recovery_code_send_button">Send code</string>

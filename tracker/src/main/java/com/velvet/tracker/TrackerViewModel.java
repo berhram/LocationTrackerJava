@@ -13,13 +13,18 @@ import com.velvet.tracker.state.TrackerViewState;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TrackerViewModel extends MviViewModel<TrackerContract.View, TrackerViewState, TrackerViewEffect> implements TrackerContract.ViewModel {
+
+    private final MessageCache messageCache;
+
+    public TrackerViewModel(MessageCache messageCache) {
+        this.messageCache = messageCache;
+    }
+
     @Override
     public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
         super.onAny(owner, event);
@@ -39,8 +44,7 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
         return TrackerViewState.createInitialState();
     }
 
-    @Inject
-    MessageCache messageCache;
+
 
     @Override
     public void setLastLocation(String location) {

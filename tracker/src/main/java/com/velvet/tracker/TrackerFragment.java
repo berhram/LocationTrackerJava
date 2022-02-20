@@ -43,7 +43,7 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
 
     @Override
     protected TrackerContract.ViewModel createModel() {
-        return new ViewModelProvider(this).get(TrackerViewModel.class);
+        return new ViewModelProvider(this, new TrackerViewModelFactory(requireActivity())).get(TrackerViewModel.class);
     }
 
     @Override

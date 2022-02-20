@@ -9,10 +9,12 @@ import android.util.Log;
 
 import com.velvet.core.Values;
 import com.velvet.core.cache.MessageCache;
+import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.location.emitter.LocationEmitter;
 import com.velvet.core.models.location.emitter.LocationEmitterDatabase;
 import com.velvet.core.models.location.emitter.LocationEmitterImpl;
 import com.velvet.tracker.R;
+import com.velvet.tracker.di.DaggerTrackerComponent;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +41,7 @@ public class TrackerService extends Service {
         super.onStartCommand(intent, flags, startId);
         this.emitter = new LocationEmitterDatabase(new LocationEmitterImpl(this));
         emitter.start();
+        DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext())).build().inject(this);
         return START_STICKY;
     }
 

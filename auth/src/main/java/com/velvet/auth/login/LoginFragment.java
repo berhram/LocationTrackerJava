@@ -42,13 +42,6 @@ public class LoginFragment extends HostedFragment<LoginViewState,
         binding.signInButton.setOnClickListener(this);
         binding.signUpButton.setOnClickListener(this);
         binding.forgotPasswordButton.setOnClickListener(this);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                requireActivity().finish();
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override

@@ -61,9 +61,15 @@ public class LoginFragment extends HostedFragment<LoginViewState,
     @Override
     public void onClick(View v) {
         if (v == binding.signInButton) {
-            getModel().signIn(binding.emailInput.getText().toString().trim(), binding.passwordInput.getText().toString().trim());
+            getModel().signIn(
+                    binding.emailInput.getText().toString().trim(),
+                    binding.passwordInput.getText().toString().trim()
+            );
         } else if (v == binding.signUpButton) {
-            getModel().signUp(binding.emailInput.getText().toString().trim(), binding.passwordInput.getText().toString().trim());
+            getModel().signUp(
+                    binding.emailInput.getText().toString().trim(),
+                    binding.passwordInput.getText().toString().trim()
+            );
         } else if (v == binding.forgotPasswordButton) {
             proceedToPasswordRecovery();
         }

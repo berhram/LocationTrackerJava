@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.velvet.tracker">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.velvet.tracker">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <application
-        android:theme="@style/AppTheme">
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application android:theme="@style/AppTheme">
         <service
-            android:name= "com.velvet.tracker.services.TrackerService"
+            android:name="com.velvet.tracker.services.TrackerService"
             android:enabled="true"
-            android:foregroundServiceType="location"
-            android:exported="false"/>
+            android:exported="false"
+            android:foregroundServiceType="location" />
     </application>
 </manifest>

@@ -14,7 +14,6 @@ import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
 import com.velvet.libs.mvi.HostedFragment;
 
-
 public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
     private FragmentPasswordRecoveryBinding binding;
 
@@ -49,7 +48,10 @@ public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryVie
         if (v == binding.sendCodeButton) {
             getModel().requestCode(binding.emailInput.getText().toString().trim());
         } else if (v == binding.changePasswordButton) {
-            getModel().checkCode(binding.recoveryCode.getText().toString().trim(), binding.newPassword.getText().toString().trim());
+            getModel().checkCode(
+                    binding.recoveryCode.getText().toString().trim(),
+                    binding.newPassword.getText().toString().trim()
+            );
         }
     }
 

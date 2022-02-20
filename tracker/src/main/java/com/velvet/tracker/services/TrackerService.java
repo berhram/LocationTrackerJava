@@ -66,7 +66,8 @@ public class TrackerService extends Service {
                         .filter(locationResult -> !locationResult.isEmpty())
                         .subscribe(location -> {
                             Log.d("LOC", "Service receive update");
-                            if (location.isError()){
+                            Log.d("LOC", "Mem. cell of cache (Service): " + messageCache);
+                            if (location.isError()) {
                                 messageCache.addItem(location.error.getMessage());
                             } else {
                                 messageCache.addRawDate(new Date(location.data.getTime()));

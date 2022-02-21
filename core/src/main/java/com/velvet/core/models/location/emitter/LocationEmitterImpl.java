@@ -3,7 +3,6 @@ package com.velvet.core.models.location.emitter;
 import android.content.Context;
 import android.location.Location;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -14,9 +13,11 @@ import com.google.android.gms.location.LocationServices;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
 
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
     private final FusedLocationProviderClient fusedLocationClient;
-    private Result<Location> lastLocation;
+    private final BehaviorSubject<Result<Location>> lastLocation = BehaviorSubject.create();
     private final LocationRequest locationRequest = LocationRequest.create();
 
     public LocationEmitterImpl(Context context) {
@@ -31,13 +32,13 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
             fusedLocationClient.requestLocationUpdates(locationRequest, this, Looper.getMainLooper());
         } catch (SecurityException e) {
             e.printStackTrace();
-            lastLocation = Result.error(e);
+            lastLocation.onNext(Result.error(e));
         }
 
     }
 
     @Override
-    public Result<Location> getLocation() {
+    public BehaviorSubject<Result<Location>> getLocation() {
         return lastLocation;
     }
 
@@ -46,12 +47,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         if (locationResult == null) {
             return;
         }
-        for (Location location : locationResult.getLocations()) {
-            if (location != null) {
-                Log.d("LOC", "Location produced in emitter");
-                lastLocation = Result.success(location);
-            }
-        }
+        lastLocation.onNext(Result.success(locationResult.getLastLocation()));
     }
 
     @Override

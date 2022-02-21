@@ -35,7 +35,7 @@ public class TrackerService extends Service {
     public void onCreate() {
         controller.start();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)
+            final Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)
                     .setContentTitle(getText(R.string.notification_title))
                     .setContentText(getText(R.string.notification_message))
                     .setSmallIcon(R.drawable.ic_location)
@@ -50,6 +50,4 @@ public class TrackerService extends Service {
     public void onDestroy() {
         controller.stop();
     }
-
-
 }

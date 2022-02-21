@@ -6,6 +6,8 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Single;
 
 public interface AuthNetwork {
-    @NonNull Single<Result<Boolean>> checkIfUserLoggedIn();
-    @NonNull Single<Result<String>> authRequest(AuthMessage message);
+    @NonNull
+    Single<Result<Boolean>> checkIfUserLoggedIn();
+    @NonNull
+    Single<Result<String>> authRequest(AuthMessage message);
 }

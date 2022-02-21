@@ -1,9 +1,9 @@
 package com.velvet.core.cache;
 
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class GlobalCacheImpl<T> implements GlobalCache<T> {
-    private PublishSubject<T> cachedItem = PublishSubject.create();
+    private final BehaviorSubject<T> cachedItem = BehaviorSubject.create();
 
     @Override
     public void addItem(T inputItem) {
@@ -11,7 +11,7 @@ public class GlobalCacheImpl<T> implements GlobalCache<T> {
     }
 
     @Override
-    public PublishSubject<T> getItem() {
+    public BehaviorSubject<T> getItem() {
         return cachedItem;
     }
 }

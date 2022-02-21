@@ -1,35 +1,34 @@
 package com.velvet.core.cache;
 
-import android.util.Log;
-
 import com.velvet.core.Values;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class MessageCache extends GlobalCacheDecorator<String> {
+public class MessageCache implements GlobalCache<String>{
     private final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
 
+    private final GlobalCache<String> globalCache;
+
+
     public MessageCache(GlobalCache<String> globalCache) {
-        super(globalCache);
+        this.globalCache = globalCache;
     }
 
 
     @Override
     public void addItem(String item) {
-        super.addItem(item);
-        Log.d("LOC", "MessageCache addItem invoked");
+        globalCache.addItem(item);
     }
 
     @Override
-    public PublishSubject<String> getItem() {
-        Log.d("LOC", "MessageCache getItems invoked");
-        return super.getItem();
+    public BehaviorSubject<String> getItem() {
+        return globalCache.getItem();
     }
 
     public void addRawDate(Date date) {
-        super.addItem(sDF.format(date));
+        globalCache.addItem(sDF.format(date));
     }
 }

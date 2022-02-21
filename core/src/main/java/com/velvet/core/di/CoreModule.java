@@ -7,6 +7,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.velvet.core.cache.GlobalCacheImpl;
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
+import com.velvet.core.models.database.local.LocalStorage;
+import com.velvet.core.models.database.local.LocalStorageImpl;
+import com.velvet.core.models.location.emitter.LocationEmitter;
+import com.velvet.core.models.location.emitter.LocationEmitterImpl;
 import com.velvet.core.models.location.receiver.LocationReceiver;
 import com.velvet.core.models.location.receiver.LocationReceiverImpl;
 
@@ -38,14 +42,14 @@ public class CoreModule {
 
     @Provides
     @Singleton
-    FirebaseFirestore provideDB() {
-        return FirebaseFirestore.getInstance();
+    LocationEmitter provideEmitter() {
+        return new LocationEmitterImpl(appCtx);
     }
 
     @Provides
     @Singleton
-    FirebaseAuthNetwork provideAuthRepo(Context appCtx) {
-        return new FirebaseAuthNetwork(appCtx);
+    FirebaseAuthNetwork provideAuthRepo() {
+        return new FirebaseAuthNetwork();
     }
 
     @Provides
@@ -58,4 +62,11 @@ public class CoreModule {
     Context provideAppContext() {
         return appCtx;
     }
+
+    @Provides
+    @Singleton
+    LocalStorage provideStorage() {
+        return new LocalStorageImpl(appCtx);
+    }
+
 }

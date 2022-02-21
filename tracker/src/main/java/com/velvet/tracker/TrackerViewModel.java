@@ -30,11 +30,11 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(s -> {
-                            if (s == null) {
-                                Log.d("LOC", "TrackerViewModel location is null");
+                            if (s.isError()) {
+                                setError(s.error.getMessage());
+                            } else {
+                                setLastLocation(s.data);
                             }
-                            Log.d("LOC", "TrackerViewModel location is NOT null");
-                            setLastLocation(s);
                         }, Throwable::printStackTrace)
             );
         }
@@ -49,7 +49,11 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
 
     @Override
     public void setLastLocation(String location) {
-        Log.d("LOC", "TrackerViewModel setLastLocation invoked");
         setState(TrackerViewState.createSetLocationState(location));
+    }
+
+    @Override
+    public void setError(String location) {
+        setState(TrackerViewState.createSetErrorState(location));
     }
 }

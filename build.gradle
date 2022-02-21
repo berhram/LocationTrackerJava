@@ -18,6 +18,8 @@ buildscript {
     ext.gradle_version = "7.1.1"
     ext.gradle_secrets_plugin = "2.0.0"
     ext.fragment = "1.4.1"
+    ext.work = "2.7.1"
+    ext.room = "2.4.1"
 
     project.ext {
         min = 21

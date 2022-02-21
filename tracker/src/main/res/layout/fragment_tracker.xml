@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/last_location_1"
+        android:id="@+id/last_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
@@ -14,38 +14,12 @@
         app:layout_constraintStart_toStartOf="@id/left_guideline" />
 
     <TextView
-        android:id="@+id/last_location_2"
+        android:id="@+id/last_location_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0.8"
-        app:layout_constraintBottom_toTopOf="@id/last_location_1"
-        app:layout_constraintEnd_toEndOf="@id/right_guideline"
-        app:layout_constraintStart_toStartOf="@id/left_guideline" />
-
-    <TextView
-        android:id="@+id/last_location_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:alpha="0.6"
-        app:layout_constraintBottom_toTopOf="@id/last_location_2"
-        app:layout_constraintEnd_toEndOf="@id/right_guideline"
-        app:layout_constraintStart_toStartOf="@id/left_guideline" />
-
-    <TextView
-        android:id="@+id/last_location_4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:alpha="0.4"
-        app:layout_constraintBottom_toTopOf="@id/last_location_3"
-        app:layout_constraintEnd_toEndOf="@id/right_guideline"
-        app:layout_constraintStart_toStartOf="@id/left_guideline" />
-
-    <TextView
-        android:id="@+id/last_location_5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:alpha="0.2"
-        app:layout_constraintBottom_toTopOf="@id/last_location_4"
+        android:text="@string/last_location"
+        app:layout_constraintBottom_toTopOf="@id/last_location"
         app:layout_constraintEnd_toEndOf="@id/right_guideline"
         app:layout_constraintStart_toStartOf="@id/left_guideline" />
 

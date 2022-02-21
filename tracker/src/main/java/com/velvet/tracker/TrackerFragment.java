@@ -50,11 +50,14 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
 
     @Override
     public void setLastLocation(String text) {
-        binding.lastLocation5.setText(binding.lastLocation4.getText());
-        binding.lastLocation4.setText(binding.lastLocation3.getText());
-        binding.lastLocation3.setText(binding.lastLocation2.getText());
-        binding.lastLocation2.setText(binding.lastLocation1.getText());
-        binding.lastLocation1.setText(text);
+        binding.lastLocationTitle.setText(getString(R.string.last_location));
+        binding.lastLocation.setText(text);
+    }
+
+    @Override
+    public void setError(String text) {
+        binding.lastLocationTitle.setText(getString(R.string.error));
+        binding.lastLocation.setText(text);
     }
 
     @Override

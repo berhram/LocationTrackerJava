@@ -55,4 +55,9 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-maps:$maps"
     implementation "com.google.android.gms:play-services-location:$location"
+
+    implementation "androidx.room:room-runtime:$room"
+    annotationProcessor "androidx.room:room-compiler:$room"
+    implementation "androidx.room:room-rxjava3:$room"
+    testImplementation "androidx.room:room-testing:$room"
 }

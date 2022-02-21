@@ -7,6 +7,7 @@ import com.velvet.tracker.state.TrackerViewState;
 public class TrackerContract {
     public interface ViewModel extends FragmentContract.ViewModel<TrackerViewState, TrackerViewEffect> {
         void setLastLocation(String text);
+        void setError(String text);
     }
 
     public interface View extends FragmentContract.View {
@@ -14,6 +15,7 @@ public class TrackerContract {
         void startService();
         void stopService();
         void setLastLocation(String text);
+        void setError(String text);
     }
 
     public interface Host extends FragmentContract.Host {

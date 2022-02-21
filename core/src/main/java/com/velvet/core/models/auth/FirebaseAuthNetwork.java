@@ -1,6 +1,5 @@
 package com.velvet.core.models.auth;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
@@ -14,8 +13,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
 
     private final FirebaseAuth firebaseAuth;
 
-    //TODO remove ctx if dont needed
-    public FirebaseAuthNetwork(Context appCtx) {
+    public FirebaseAuthNetwork() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.useAppLanguage();
     }
@@ -26,29 +24,29 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     }
 
     @Override
-    public Single<Result<Boolean>> sendMessage(AuthMessage message) {
+    public Single<Result<String>> authRequest(AuthMessage message) {
         return Single.fromCallable(() -> {
             if (Values.LOGIN.equals(message.getId())) {
-                return taskValidator(firebaseAuth.signInWithEmailAndPassword(message.getFirstParam(), message.getSecondParam()));
+                return taskValidator(Values.LOGIN ,firebaseAuth.signInWithEmailAndPassword(message.getFirstParam(), message.getSecondParam()));
             } else if (Values.REGISTER.equals(message.getId())) {
-                return taskValidator(firebaseAuth.createUserWithEmailAndPassword(message.getFirstParam(), message.getSecondParam()));
+                return taskValidator(Values.REGISTER ,firebaseAuth.createUserWithEmailAndPassword(message.getFirstParam(), message.getSecondParam()));
             } else if (Values.REQUEST.equals(message.getId())) {
-                return taskValidator(firebaseAuth.sendPasswordResetEmail(message.getFirstParam()));
+                return taskValidator(Values.REQUEST ,firebaseAuth.sendPasswordResetEmail(message.getFirstParam()));
             } else if (Values.CHECK.equals(message.getId())) {
-                return taskValidator(firebaseAuth.confirmPasswordReset(message.getFirstParam(), message.getSecondParam()));
+                return taskValidator(Values.CHECK ,firebaseAuth.confirmPasswordReset(message.getFirstParam(), message.getSecondParam()));
             } else {
                 return Result.error(new Exception("Wrong message id!"));
             }
         });
     }
 
-    private Result<Boolean> taskValidator(Task task) {
+    private Result<String> taskValidator(String type, Task task) {
         if (task.isSuccessful()) {
             Log.d("AUTH", "taskValidator: Success");
-            return Result.success(true);
+            return Result.success(type);
         } else {
             Log.d("AUTH", "taskValidator: Failure");
-            return Result.error(task.getException());
+            return new Result<>(type, task.getException());
         }
     }
 }

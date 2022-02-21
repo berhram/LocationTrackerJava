@@ -13,9 +13,17 @@ public class PasswordRecoveryContract {
         void setInfoText(int infoText);
 
         void success();
+
+        void setEmailError();
+
+        void setPasswordError();
     }
 
     public interface View extends FragmentContract.View {
+        void setEmailError(int text);
+
+        void setPasswordError(int text);
+
         void setInfoText(int infoText);
 
         void proceedToLoginScreen();

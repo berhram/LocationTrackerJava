@@ -15,9 +15,9 @@ public class LoginContract {
 
         void success();
 
-        void setEmailError(int text);
+        void setEmailError();
 
-        void setPasswordError(int text);
+        void setPasswordError();
     }
 
     public interface View extends FragmentContract.View {

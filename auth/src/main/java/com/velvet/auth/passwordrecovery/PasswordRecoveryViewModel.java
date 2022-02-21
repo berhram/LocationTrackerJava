@@ -1,11 +1,15 @@
 package com.velvet.auth.passwordrecovery;
 
+import static com.velvet.auth.utils.Validator.validateEmail;
+import static com.velvet.auth.utils.Validator.validatePasswordLength;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.velvet.auth.R;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
+import com.velvet.core.Values;
 import com.velvet.core.models.auth.AuthMessage;
 import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.libs.mvi.MviViewModel;
@@ -30,29 +34,29 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
                     recoverySubject
-                            .flatMap(p -> authRepository.sendMessage(p).toObservable())
+                            .flatMap(p -> authRepository.authRequest(p).toObservable())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
-                                if (result.isError()) {
-                                    result.error.printStackTrace();
-                                    setInfoText(R.string.invalid_recovery_code);
-                                } else {
-                                    setInfoText(R.string.password_successfully_changed);
-                                }
-                            }, Throwable::printStackTrace),
-                    requestSubject
-                            .flatMap(p -> authRepository.sendMessage(p).toObservable())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(result -> {
-                                if (result.isError()) {
-                                    result.error.printStackTrace();
+                                if (Values.REQUEST.equals(result.data)) {
+                                    if (result.isError()) {
+                                        setInfoText(R.string.code_successfully_sent);
+                                    } else {
                                         setInfoText(R.string.invalid_recovery_email);
+                                    }
+                                } else if (Values.CHECK.equals(result.data)) {
+                                    if (result.isError()) {
+                                        setInfoText(R.string.invalid_recovery_code);
+                                    } else {
+                                        setInfoText(R.string.password_successfully_changed);
+                                    }
                                 } else {
-                                    setInfoText(R.string.code_successfully_sent);
+                                    setInfoText(R.string.something_went_wrong);
                                 }
-                            }, Throwable::printStackTrace)
+                            }, e -> {
+                                setInfoText(R.string.something_went_wrong);
+                                e.printStackTrace();
+                            })
             );
         }
     }
@@ -74,11 +78,29 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
 
     @Override
     public void requestCode(String email) {
-        requestSubject.onNext(AuthMessage.createRequestCodeMessage(email));
+        if (validateEmail(email)) {
+            requestSubject.onNext(AuthMessage.createRequestCodeMessage(email));
+        } else {
+            setEmailError();
+        }
     }
 
     @Override
     public void checkCode(String code, String newPassword) {
-        recoverySubject.onNext(AuthMessage.createCheckCodeAndSetNewPassowordMessage(code, newPassword));
+        if (validatePasswordLength(newPassword)) {
+            recoverySubject.onNext(AuthMessage.createCheckCodeAndSetNewPassowordMessage(code, newPassword));
+        } else {
+            setPasswordError();
+        }
+    }
+
+    @Override
+    public void setEmailError() {
+        setState(PasswordRecoveryViewState.createSetEmailErrorState(R.string.email_error));
+    }
+
+    @Override
+    public void setPasswordError() {
+        setState(PasswordRecoveryViewState.createSetPasswordErrorState(R.string.password_error));
     }
 }

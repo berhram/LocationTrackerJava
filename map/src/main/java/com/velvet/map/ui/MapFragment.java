@@ -80,4 +80,10 @@ public class MapFragment extends HostedFragment<MapViewState,
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

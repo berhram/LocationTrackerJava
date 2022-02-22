@@ -4,19 +4,13 @@ import android.content.Context;
 
 import androidx.work.WorkManager;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.velvet.core.cache.GlobalCacheImpl;
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
-import com.velvet.core.models.database.local.LocalStorage;
-import com.velvet.core.models.database.local.LocalStorageImpl;
-import com.velvet.core.models.database.remote.FirebaseRemoteDatabase;
-import com.velvet.core.models.database.remote.RemoteDatabase;
-import com.velvet.core.models.location.emitter.LocationEmitter;
-import com.velvet.core.models.location.emitter.LocationEmitterImpl;
-import com.velvet.core.models.location.receiver.LocationReceiver;
-import com.velvet.core.models.location.receiver.LocationReceiverImpl;
+import com.velvet.core.models.database.remote.FirebaseLocationNetwork;
+import com.velvet.core.models.database.remote.LocationNetwork;
+import com.velvet.core.models.location.LocationEmitter;
+import com.velvet.core.models.location.LocationEmitterImpl;
 
 import javax.inject.Singleton;
 
@@ -30,12 +24,6 @@ public class CoreModule {
 
     public CoreModule(Context appCtx) {
         this.appCtx = appCtx;
-    }
-
-    @Provides
-    @Singleton
-    LocationReceiver provideLocationReceiver() {
-        return new LocationReceiverImpl();
     }
 
     @Provides
@@ -63,14 +51,8 @@ public class CoreModule {
 
     @Provides
     @Singleton
-    LocalStorage provideStorage() {
-        return new LocalStorageImpl(appCtx);
-    }
-
-    @Provides
-    @Singleton
-    RemoteDatabase provideRemoteDB() {
-        return new FirebaseRemoteDatabase();
+    LocationNetwork provideLocationRepo() {
+        return new FirebaseLocationNetwork(appCtx);
     }
 
     @Provides
@@ -78,6 +60,4 @@ public class CoreModule {
     WorkManager provideWM() {
         return WorkManager.getInstance(appCtx);
     }
-
-
 }

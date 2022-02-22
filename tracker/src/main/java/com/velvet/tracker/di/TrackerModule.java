@@ -2,8 +2,8 @@ package com.velvet.tracker.di;
 
 import android.content.Context;
 
-import com.velvet.tracker.services.TrackerController;
-import com.velvet.tracker.services.TrackerControllerImpl;
+import com.velvet.tracker.services.controller.TrackerController;
+import com.velvet.tracker.services.controller.TrackerControllerFactory;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,6 +19,6 @@ public class TrackerModule {
     @Provides
     @TrackerScope
     TrackerController provideController() {
-        return new TrackerControllerImpl(appCtx);
+        return new TrackerControllerFactory(appCtx).create();
     }
 }

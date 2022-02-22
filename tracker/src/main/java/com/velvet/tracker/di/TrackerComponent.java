@@ -2,8 +2,7 @@ package com.velvet.tracker.di;
 
 import com.velvet.core.di.CoreComponent;
 import com.velvet.tracker.TrackerViewModelFactory;
-import com.velvet.tracker.services.TrackerController;
-import com.velvet.tracker.services.TrackerControllerImpl;
+import com.velvet.tracker.services.controller.TrackerControllerFactory;
 import com.velvet.tracker.services.TrackerService;
 
 import javax.inject.Scope;
@@ -29,5 +28,5 @@ public interface TrackerComponent {
 
     void inject(TrackerViewModelFactory factory);
 
-    void inject(TrackerControllerImpl controller);
+    void inject(TrackerControllerFactory controllerFactory);
 }

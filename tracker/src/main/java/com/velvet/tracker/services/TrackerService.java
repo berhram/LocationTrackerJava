@@ -11,6 +11,7 @@ import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.tracker.R;
 import com.velvet.tracker.di.DaggerTrackerComponent;
 import com.velvet.tracker.di.TrackerModule;
+import com.velvet.tracker.services.controller.TrackerController;
 
 import javax.inject.Inject;
 

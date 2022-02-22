@@ -3,11 +3,17 @@ package com.velvet.tracker.services;
 import android.content.Context;
 import android.location.Location;
 
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import com.velvet.core.Values;
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.database.local.LocalStorage;
 import com.velvet.core.models.database.remote.RemoteDatabase;
+import com.velvet.core.models.database.worker.SyncWorker;
 import com.velvet.core.models.location.emitter.LocationEmitter;
 import com.velvet.core.result.Result;
 import com.velvet.tracker.di.DaggerTrackerComponent;
@@ -22,7 +28,15 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class TrackerControllerImpl implements TrackerController {
     private final CompositeDisposable disposables = new CompositeDisposable();
-    //TODO add work scheduler for db-s
+    Constraints constraints = new Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build();
+    OneTimeWorkRequest sync = new OneTimeWorkRequest.Builder(SyncWorker.class)
+            .setConstraints(constraints)
+            .build();
+
+    @Inject
+    WorkManager workManager;
 
     @Inject
     LocalStorage local;
@@ -55,6 +69,7 @@ public class TrackerControllerImpl implements TrackerController {
                     })
                     .flatMap(locationResult -> {
                         if (!remote.saveLocation(locationResult.data)) {
+                            workManager.enqueue(sync);
                             return local.addLocation(locationResult).toObservable();
                         } else
                             return Observable.just(locationResult);

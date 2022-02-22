@@ -11,6 +11,7 @@ public class LocationEntity {
     @PrimaryKey
     public int id;
 
+    //TODO deal with this error
     @ColumnInfo(name = "location")
     public Location location;
 }

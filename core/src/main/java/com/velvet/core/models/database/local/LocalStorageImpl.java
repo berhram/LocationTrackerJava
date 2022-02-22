@@ -7,6 +7,8 @@ import androidx.room.Room;
 
 import com.velvet.core.result.Result;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Single;
 
 public class LocalStorageImpl implements LocalStorage {
@@ -24,5 +26,13 @@ public class LocalStorageImpl implements LocalStorage {
             dao.insert(locationResult.data);
             return locationResult;
         });
+    }
+
+    public List<Location> getLocations() {
+        return dao.getAll();
+    }
+
+    public void deleteLocation(Location location) {
+        dao.delete(location);
     }
 }

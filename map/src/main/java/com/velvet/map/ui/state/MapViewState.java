@@ -42,7 +42,7 @@ public class MapViewState implements MviViewState<MapContract.View> {
         } else if (action == ACTION_CREATE_FILTER) {
             screen.createFilter();
         } else if (action == ACTION_DEFAULT) {
-            //TODO ???
+
         }
     }
 }

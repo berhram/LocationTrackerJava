@@ -12,8 +12,6 @@ public class PasswordRecoveryContract {
 
         void setInfoText(int infoText);
 
-        void success();
-
         void setEmailError();
 
         void setPasswordError();

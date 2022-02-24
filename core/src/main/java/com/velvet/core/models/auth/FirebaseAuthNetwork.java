@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class FirebaseAuthNetwork implements AuthNetwork {
@@ -51,7 +52,7 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     }
 
     @Override
-    public void signOut() {
-        firebaseAuth.signOut();
+    public Completable signOut() {
+        return Completable.fromRunnable(firebaseAuth::signOut);
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.work.WorkManager;
 
-import com.velvet.core.cache.MessageCache;
+import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.core.models.location.LocationEmitter;
@@ -20,7 +20,7 @@ public interface CoreComponent {
 
     FirebaseAuthNetwork provideAuthRepo();
 
-    MessageCache provideMessageCache();
+    LocationCache provideMessageCache();
 
     Context provideAppContext();
 

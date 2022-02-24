@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.velvet.core.cache.MessageCache;
+import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
 import com.velvet.tracker.di.DaggerTrackerComponent;
@@ -19,7 +19,7 @@ public class TrackerViewModelFactory implements ViewModelProvider.Factory {
     FirebaseAuthNetwork repository;
 
     @Inject
-    MessageCache messageCache;
+    LocationCache locationCache;
 
     public TrackerViewModelFactory(Context ctx) {
         DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx)).build().inject(this);
@@ -29,7 +29,7 @@ public class TrackerViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == TrackerViewModel.class) {
-            return (T) new TrackerViewModel(messageCache, repository);
+            return (T) new TrackerViewModel(locationCache, repository);
         } else {
             throw new RuntimeException("Unknown class " + modelClass);
         }

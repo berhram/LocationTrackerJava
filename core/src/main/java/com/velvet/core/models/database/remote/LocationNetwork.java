@@ -7,12 +7,13 @@ import com.velvet.core.result.Result;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface LocationNetwork {
     Single<Result<Location>> saveLocationToRemote(Location location);
 
-    Single<Result<Location>> saveLocationToLocal(Result<Location> locationResult);
+    Completable saveLocationToLocal(Result<Location> locationResult);
 
     Single<List<Location>> getLocationsFromLocal();
 

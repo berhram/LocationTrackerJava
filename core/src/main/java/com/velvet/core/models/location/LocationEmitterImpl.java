@@ -13,9 +13,10 @@ import com.google.android.gms.location.LocationServices;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
+public class LocationEmitterImpl extends LocationCallback implements LocationEmitter<Result<Location>> {
     private final FusedLocationProviderClient fusedLocationClient;
     private final BehaviorSubject<Result<Location>> lastLocation = BehaviorSubject.create();
     private final LocationRequest locationRequest = LocationRequest.create();
@@ -38,7 +39,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
     }
 
     @Override
-    public BehaviorSubject<Result<Location>> getLocation() {
+    public Observable<Result<Location>> getLocation() {
         return lastLocation;
     }
 

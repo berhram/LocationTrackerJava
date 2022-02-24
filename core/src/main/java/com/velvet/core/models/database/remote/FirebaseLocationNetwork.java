@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class FirebaseLocationNetwork implements LocationNetwork {
@@ -44,10 +45,9 @@ public class FirebaseLocationNetwork implements LocationNetwork {
         });
     }
 
-    public Single<Result<Location>> saveLocationToLocal(Result<Location> locationResult) {
-        return Single.fromCallable(() -> {
+    public Completable saveLocationToLocal(Result<Location> locationResult) {
+        return Completable.fromRunnable(() -> {
             dao.insert(locationResult.data);
-            return locationResult;
         });
     }
 

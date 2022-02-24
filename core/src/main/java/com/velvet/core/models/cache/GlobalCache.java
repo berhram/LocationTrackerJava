@@ -1,4 +1,4 @@
-package com.velvet.core.cache;
+package com.velvet.core.models.cache;
 
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 

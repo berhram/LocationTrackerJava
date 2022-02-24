@@ -3,7 +3,7 @@ package com.velvet.tracker.ui;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.velvet.core.cache.MessageCache;
+import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.tracker.ui.state.TrackerViewEffect;
@@ -13,12 +13,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class TrackerViewModel extends MviViewModel<TrackerContract.View, TrackerViewState, TrackerViewEffect> implements TrackerContract.ViewModel {
-    private final MessageCache messageCache;
+    private final LocationCache locationCache;
     private final AuthNetwork authRepo;
 
 
-    public TrackerViewModel(MessageCache messageCache, AuthNetwork authRepo) {
-        this.messageCache = messageCache;
+    public TrackerViewModel(LocationCache locationCache, AuthNetwork authRepo) {
+        this.locationCache = locationCache;
         this.authRepo = authRepo;
     }
 
@@ -27,7 +27,7 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    messageCache.getItem()
+                    locationCache.getItem()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(s -> {

@@ -1,6 +1,8 @@
 package com.velvet.tracker.services.controller;
 
-import com.velvet.core.cache.MessageCache;
+import android.location.Location;
+
+import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.tracker.model.work.SyncWorkManager;
 import com.velvet.core.models.location.LocationEmitter;
@@ -13,10 +15,10 @@ public class TrackerController implements ServiceController {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final SyncWorkManager workManager;
     private final LocationNetwork locationRepo;
-    private final MessageCache cache;
-    private final LocationEmitter emitter;
+    private final LocationCache cache;
+    private final LocationEmitter<Result<Location>> emitter;
 
-    public TrackerController(SyncWorkManager workManager, LocationNetwork locationRepo, MessageCache cache, LocationEmitter emitter) {
+    public TrackerController(SyncWorkManager workManager, LocationNetwork locationRepo, LocationCache cache, LocationEmitter<Result<Location>> emitter) {
         this.workManager = workManager;
         this.locationRepo = locationRepo;
         this.cache = cache;
@@ -25,6 +27,7 @@ public class TrackerController implements ServiceController {
 
     @Override
     public void start() {
+        emitter.start();
         disposables.add(
             emitter.getLocation()
                     .subscribeOn(Schedulers.io())
@@ -38,16 +41,16 @@ public class TrackerController implements ServiceController {
                     })
                     .flatMap(locationResult -> locationRepo.saveLocationToRemote(locationResult.data).toObservable())
                     .filter(Result::isError)
-                    .flatMap(locationResult -> {
-                            workManager.doSyncWork(locationRepo);
-                            return locationRepo.saveLocationToLocal(locationResult).toObservable();
+                    .flatMapCompletable(locationRepo::saveLocationToLocal)
+                    .subscribe(() -> {
+                        workManager.doSyncWork(locationRepo);
                     })
-                    .subscribe()
         );
     }
 
     @Override
     public void stop() {
+        emitter.stop();
         disposables.clear();
     }
 }

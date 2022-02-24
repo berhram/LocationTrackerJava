@@ -8,12 +8,14 @@ public class TrackerContract {
     public interface ViewModel extends FragmentContract.ViewModel<TrackerViewState, TrackerViewEffect> {
         void setLastLocation(String text);
         void setError(String text);
+        void signOut();
     }
 
     public interface View extends FragmentContract.View {
         void proceedToLoginScreen();
         void startService();
         void stopService();
+        void signOut();
         void setLastLocation(String text);
         void setError(String text);
     }

@@ -26,14 +26,8 @@ public class TrackerService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-        DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext())).trackerModule(new TrackerModule(getApplicationContext())).build().inject(this);
-        return START_STICKY;
-    }
-
-    @Override
     public void onCreate() {
+        DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext())).trackerModule(new TrackerModule(getApplicationContext())).build().inject(this);
         controller.start();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             final Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)
@@ -45,7 +39,6 @@ public class TrackerService extends Service {
             startForeground(1, notification);
         }
     }
-
 
     @Override
     public void onDestroy() {

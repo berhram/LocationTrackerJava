@@ -8,11 +8,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.di.CoreInjectHelper;
+import com.velvet.core.models.auth.FirebaseAuthNetwork;
 import com.velvet.tracker.di.DaggerTrackerComponent;
 
 import javax.inject.Inject;
 
 public class TrackerViewModelFactory implements ViewModelProvider.Factory {
+
+    @Inject
+    FirebaseAuthNetwork repository;
 
     @Inject
     MessageCache messageCache;
@@ -25,7 +29,7 @@ public class TrackerViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == TrackerViewModel.class) {
-            return (T) new TrackerViewModel(messageCache);
+            return (T) new TrackerViewModel(messageCache, repository);
         } else {
             throw new RuntimeException("Unknown class " + modelClass);
         }

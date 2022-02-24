@@ -10,4 +10,5 @@ public interface AuthNetwork {
     Single<Result<Boolean>> checkIfUserLoggedIn();
     @NonNull
     Single<Result<String>> authRequest(AuthMessage message);
+    void signOut();
 }

@@ -75,11 +75,18 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     }
 
     @Override
+    public void signOut() {
+        getModel().signOut();
+    }
+
+    @Override
     public void onClick(View v) {
         if (binding.startButton == v) {
             startService();
         } else if (binding.stopButton == v) {
             stopService();
+        } else if (binding.logoutButton == v) {
+            signOut();
         }
     }
 

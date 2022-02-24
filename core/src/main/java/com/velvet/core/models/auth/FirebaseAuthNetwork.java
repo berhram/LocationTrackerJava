@@ -49,4 +49,9 @@ public class FirebaseAuthNetwork implements AuthNetwork {
             return new Result<>(type, task.getException());
         }
     }
+
+    @Override
+    public void signOut() {
+        firebaseAuth.signOut();
+    }
 }

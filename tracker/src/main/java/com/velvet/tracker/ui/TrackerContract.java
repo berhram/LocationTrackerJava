@@ -1,8 +1,8 @@
-package com.velvet.tracker;
+package com.velvet.tracker.ui;
 
 import com.velvet.libs.mvi.FragmentContract;
-import com.velvet.tracker.state.TrackerViewEffect;
-import com.velvet.tracker.state.TrackerViewState;
+import com.velvet.tracker.ui.state.TrackerViewEffect;
+import com.velvet.tracker.ui.state.TrackerViewState;
 
 public class TrackerContract {
     public interface ViewModel extends FragmentContract.ViewModel<TrackerViewState, TrackerViewEffect> {

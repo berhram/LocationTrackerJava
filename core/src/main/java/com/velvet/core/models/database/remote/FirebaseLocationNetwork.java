@@ -35,11 +35,11 @@ public class FirebaseLocationNetwork implements LocationNetwork {
 
     public Single<Result<Location>> saveLocationToRemote(Location location) {
         return Single.fromCallable(() -> {
-            final Task task = remoteDatabase.child("location").child(sDF.format(new Date(location.getTime()))).push().setValue(location);
+            final Task<Void> task = remoteDatabase.child("location").child(sDF.format(new Date(location.getTime()))).push().setValue(location);
             if (task.isSuccessful()) {
                 return Result.success(location);
             } else {
-                return new Result(location, task.getException());
+                return new Result<>(location, task.getException());
             }
         });
     }

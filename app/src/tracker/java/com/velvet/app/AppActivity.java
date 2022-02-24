@@ -25,7 +25,7 @@ import com.velvet.auth.login.LoginFragmentDirections;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.core.Values;
-import com.velvet.tracker.TrackerContract;
+import com.velvet.tracker.ui.TrackerContract;
 import com.velvet.tracker.TrackerFragmentDirections;
 import com.velvet.tracker.services.TrackerService;
 

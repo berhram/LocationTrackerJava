@@ -27,7 +27,10 @@ public class TrackerService extends Service {
 
     @Override
     public void onCreate() {
-        DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext())).trackerModule(new TrackerModule(getApplicationContext())).build().inject(this);
+        DaggerTrackerComponent.builder()
+                .coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext()))
+                .trackerModule(new TrackerModule(getApplicationContext()))
+                .build().inject(this);
         controller.start();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             final Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)

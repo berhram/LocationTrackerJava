@@ -8,10 +8,10 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.core.Values;
-import com.velvet.map.ui.state.MapViewEffect;
-import com.velvet.map.ui.state.MapViewState;
 import com.velvet.core.models.location.receiver.LocationReceiver;
 import com.velvet.libs.mvi.MviViewModel;
+import com.velvet.map.ui.state.MapViewEffect;
+import com.velvet.map.ui.state.MapViewState;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

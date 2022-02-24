@@ -1,6 +1,4 @@
-package com.velvet.tracker;
-
-import android.util.Log;
+package com.velvet.tracker.ui;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -8,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner;
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.libs.mvi.MviViewModel;
-import com.velvet.tracker.state.TrackerViewEffect;
-import com.velvet.tracker.state.TrackerViewState;
+import com.velvet.tracker.ui.state.TrackerViewEffect;
+import com.velvet.tracker.ui.state.TrackerViewState;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;

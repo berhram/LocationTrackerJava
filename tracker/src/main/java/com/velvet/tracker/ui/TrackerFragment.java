@@ -1,4 +1,4 @@
-package com.velvet.tracker;
+package com.velvet.tracker.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,9 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.libs.mvi.HostedFragment;
+import com.velvet.tracker.R;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
-import com.velvet.tracker.state.TrackerViewEffect;
-import com.velvet.tracker.state.TrackerViewState;
+import com.velvet.tracker.ui.state.TrackerViewEffect;
+import com.velvet.tracker.ui.state.TrackerViewState;
 
 public class TrackerFragment extends HostedFragment<TrackerViewState,
         TrackerContract.ViewModel,

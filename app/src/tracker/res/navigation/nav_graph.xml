@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/tracker_fragment"
-        android:name="com.velvet.tracker.TrackerFragment">
+        android:name="com.velvet.tracker.ui.TrackerFragment">
         <action
             android:id="@+id/tracker_to_login"
             app:destination="@id/login_fragment" />

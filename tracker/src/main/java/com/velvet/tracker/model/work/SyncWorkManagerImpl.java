@@ -1,4 +1,4 @@
-package com.velvet.tracker.work;
+package com.velvet.tracker.model.work;
 
 import androidx.work.Constraints;
 import androidx.work.Data;

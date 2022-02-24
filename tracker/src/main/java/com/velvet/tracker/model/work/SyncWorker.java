@@ -1,4 +1,4 @@
-package com.velvet.tracker.work;
+package com.velvet.tracker.model.work;
 
 import android.content.Context;
 

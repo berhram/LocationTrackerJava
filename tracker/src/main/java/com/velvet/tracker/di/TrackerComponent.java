@@ -1,7 +1,7 @@
 package com.velvet.tracker.di;
 
 import com.velvet.core.di.CoreComponent;
-import com.velvet.tracker.TrackerViewModelFactory;
+import com.velvet.tracker.ui.TrackerViewModelFactory;
 import com.velvet.tracker.services.controller.TrackerControllerFactory;
 import com.velvet.tracker.services.TrackerService;
 

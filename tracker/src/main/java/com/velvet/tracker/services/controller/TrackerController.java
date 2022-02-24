@@ -2,7 +2,7 @@ package com.velvet.tracker.services.controller;
 
 import com.velvet.core.cache.MessageCache;
 import com.velvet.core.models.database.remote.LocationNetwork;
-import com.velvet.tracker.work.SyncWorkManager;
+import com.velvet.tracker.model.work.SyncWorkManager;
 import com.velvet.core.models.location.LocationEmitter;
 import com.velvet.core.result.Result;
 

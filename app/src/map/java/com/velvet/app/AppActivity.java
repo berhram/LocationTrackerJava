@@ -12,7 +12,6 @@ import com.velvet.auth.login.LoginFragmentDirections;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.map.ui.MapContract;
-import com.velvet.map.ui.MapFragmentDirections;
 
 import app.databinding.ActivityMainBinding;
 
@@ -53,5 +52,12 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
     @Override
     public void proceedToPasswordRecovery() {
         navController.navigate(LoginFragmentDirections.loginToRecovery());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        navController = null;
+        binding = null;
     }
 }

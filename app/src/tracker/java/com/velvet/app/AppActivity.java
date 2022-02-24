@@ -26,8 +26,8 @@ import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
 import com.velvet.core.Values;
 import com.velvet.tracker.ui.TrackerContract;
-import com.velvet.tracker.TrackerFragmentDirections;
 import com.velvet.tracker.services.TrackerService;
+import com.velvet.tracker.ui.TrackerFragmentDirections;
 
 import app.R;
 import app.databinding.ActivityMainBinding;
@@ -134,5 +134,12 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
         } else {
             return (isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION) || isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        navController = null;
+        binding = null;
     }
 }

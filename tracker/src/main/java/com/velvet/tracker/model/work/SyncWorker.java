@@ -6,7 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.database.remote.LocationNetwork;
+import com.velvet.tracker.di.DaggerTrackerComponent;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -15,10 +19,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SyncWorker extends Worker {
     CompositeDisposable disposables = new CompositeDisposable();
+    @Inject
     LocationNetwork locationRepo;
 
     public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        DaggerTrackerComponent.builder()
+                .coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext()))
+                .build().inject(this);
     }
 
     @NonNull

@@ -1,6 +1,7 @@
 package com.velvet.tracker.di;
 
 import com.velvet.core.di.CoreComponent;
+import com.velvet.tracker.model.work.SyncWorker;
 import com.velvet.tracker.ui.TrackerViewModelFactory;
 import com.velvet.tracker.services.controller.TrackerControllerFactory;
 import com.velvet.tracker.services.TrackerService;
@@ -24,9 +25,9 @@ import kotlin.annotation.Retention;
         modules = {TrackerModule.class}
 )
 public interface TrackerComponent {
-    void inject(TrackerService factory);
-
     void inject(TrackerViewModelFactory factory);
 
     void inject(TrackerControllerFactory controllerFactory);
+
+    void inject(SyncWorker worker);
 }

@@ -25,7 +25,7 @@ public class SyncWorkManagerImpl implements SyncWorkManager {
         this.workManager = workManager;
     }
 
-    public void syncRepos() {
+    public void scheduleSyncTask() {
         workResult.onNext(workManager.enqueue(sync).getResult().isDone());
     }
 }

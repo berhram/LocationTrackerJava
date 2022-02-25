@@ -16,9 +16,9 @@ public class TrackerController implements ServiceController {
     private final SyncWorkManager workManager;
     private final LocationNetwork locationRepo;
     private final LocationCache cache;
-    private final LocationEmitter<Result<Location>> emitter;
+    private final LocationEmitter emitter;
 
-    public TrackerController(SyncWorkManager workManager, LocationNetwork locationRepo, LocationCache cache, LocationEmitter<Result<Location>> emitter) {
+    public TrackerController(SyncWorkManager workManager, LocationNetwork locationRepo, LocationCache cache, LocationEmitter emitter) {
         this.workManager = workManager;
         this.locationRepo = locationRepo;
         this.cache = cache;
@@ -42,7 +42,7 @@ public class TrackerController implements ServiceController {
                     .flatMap(locationResult -> locationRepo.saveLocationToRemote(locationResult.data).toObservable())
                     .filter(Result::isError)
                     .flatMapCompletable(locationRepo::saveLocationToLocal)
-                    .subscribe(workManager::syncRepos, throwable -> {
+                    .subscribe(workManager::scheduleSyncTask, throwable -> {
                         cache.addItem(Result.error((Exception) throwable));
                     })
         );

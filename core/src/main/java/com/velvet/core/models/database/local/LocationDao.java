@@ -12,11 +12,11 @@ import java.util.List;
 @Dao
 public interface LocationDao {
         @Query("SELECT * FROM locationentity")
-        List<Location> getAll();
+        List<LocationEntity> getAll();
 
         @Insert
-        void insert(Location locations);
+        void insert(LocationEntity locations);
 
         @Delete
-        void delete(Location location);
+        void delete(LocationEntity location);
 }

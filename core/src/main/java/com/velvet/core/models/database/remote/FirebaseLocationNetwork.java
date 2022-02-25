@@ -10,11 +10,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.velvet.core.Values;
+import com.velvet.core.models.database.local.Converters;
 import com.velvet.core.models.database.local.LocalDatabase;
 import com.velvet.core.models.database.local.LocationDao;
+import com.velvet.core.models.database.local.LocationEntity;
 import com.velvet.core.result.Result;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,12 +50,19 @@ public class FirebaseLocationNetwork implements LocationNetwork {
 
     public Completable saveLocationToLocal(Result<Location> locationResult) {
         return Completable.fromRunnable(() -> {
-            dao.insert(locationResult.data);
+            dao.insert(Converters.locationToEntity(locationResult.data));
         });
     }
 
     public Single<List<Location>> getLocationsFromLocal() {
-        return Single.just(dao.getAll());
+        return Single.fromCallable(() -> {
+            List<Location> output = new ArrayList<>();
+            for (LocationEntity entity:
+                    dao.getAll()) {
+                output.add(Converters.entityToLocation(entity));
+            }
+            return output;
+        });
     }
 
     public Single<List<Location>> getLocationsFromRemote() {
@@ -61,6 +71,6 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     public void deleteLocationFromLocal(Location location) {
-        dao.delete(location);
+        dao.delete(Converters.locationToEntity(location));
     }
 }

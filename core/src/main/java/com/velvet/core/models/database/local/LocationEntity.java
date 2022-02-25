@@ -1,17 +1,24 @@
 package com.velvet.core.models.database.local;
 
-import android.location.Location;
-
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.util.Date;
 
 @Entity
+@TypeConverters(Converters.class)
 public class LocationEntity {
-    @PrimaryKey
-    public int id;
+    public LocationEntity(Date date, double latitude, double longitude) {
+        this.date = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
-    //TODO deal with this error
-    @ColumnInfo(name = "location")
-    public Location location;
+    @PrimaryKey
+    public Date date;
+
+    public double latitude;
+
+    public double longitude;
 }

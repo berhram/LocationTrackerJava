@@ -15,7 +15,6 @@ public class TrackerContract {
         void proceedToLoginScreen();
         void startService();
         void stopService();
-        void signOut();
         void setLastLocation(String text);
         void setError(String text);
     }

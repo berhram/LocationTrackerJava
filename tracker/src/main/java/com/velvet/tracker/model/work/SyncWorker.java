@@ -9,6 +9,7 @@ import androidx.work.WorkerParameters;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.tracker.di.DaggerTrackerComponent;
+import com.velvet.tracker.di.TrackerModule;
 
 import javax.inject.Inject;
 
@@ -25,7 +26,7 @@ public class SyncWorker extends Worker {
     public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         DaggerTrackerComponent.builder()
-                .coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext()))
+                .coreComponent(CoreInjectHelper.provideCoreComponent(getApplicationContext())).trackerModule(new TrackerModule(getApplicationContext()))
                 .build().inject(this);
     }
 

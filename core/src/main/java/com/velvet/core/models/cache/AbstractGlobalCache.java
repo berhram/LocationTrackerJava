@@ -2,7 +2,7 @@ package com.velvet.core.models.cache;
 
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class GlobalCacheImpl<T> implements GlobalCache<T> {
+public class AbstractGlobalCache<T> implements GlobalCache<T> {
     private final BehaviorSubject<T> cachedItem = BehaviorSubject.create();
 
     @Override

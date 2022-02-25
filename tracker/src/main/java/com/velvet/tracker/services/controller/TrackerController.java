@@ -42,8 +42,8 @@ public class TrackerController implements ServiceController {
                     .flatMap(locationResult -> locationRepo.saveLocationToRemote(locationResult.data).toObservable())
                     .filter(Result::isError)
                     .flatMapCompletable(locationRepo::saveLocationToLocal)
-                    .subscribe(() -> {
-                        workManager.doSyncWork(locationRepo);
+                    .subscribe(workManager::syncRepos, throwable -> {
+                        cache.addItem(Result.error((Exception) throwable));
                     })
         );
     }

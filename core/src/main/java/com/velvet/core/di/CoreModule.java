@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.work.WorkManager;
 
-import com.velvet.core.models.cache.GlobalCacheImpl;
+import com.velvet.core.models.cache.AbstractGlobalCache;
 import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
 import com.velvet.core.models.database.remote.FirebaseLocationNetwork;
@@ -29,7 +29,7 @@ public class CoreModule {
     @Provides
     @Singleton
     LocationCache provideMessageCache() {
-        return new LocationCache(new GlobalCacheImpl<>());
+        return new LocationCache();
     }
 
     @Provides

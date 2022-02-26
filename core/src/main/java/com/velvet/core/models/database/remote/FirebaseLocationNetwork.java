@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,8 +41,25 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     @Override
     public Single<Result<SimpleLocation>> saveLocationToRemote(SimpleLocation location) {
         return Single.fromCallable(() -> {
-            //TODO idk how to do it
-            remoteDatabase.child("location").
+            remoteDatabase.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    List locations = (List) task.getResult().getValue();
+                    locations.add(location);
+                    return Result.success(location);
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                    remoteDatabase.setValue(new ArrayList<SimpleLocation>()).addOnCompleteListener(taskCreate -> {
+                        if (taskCreate.isSuccessful()) {
+                            //TODO repeat task?
+                        } else {
+                            return Result.error(taskCreate.getException())
+                        }
+                    });
+                }
+            });
+
+
         });
     }
 
@@ -62,7 +80,7 @@ public class FirebaseLocationNetwork implements LocationNetwork {
         return Single.fromCallable(() -> {
             Task<DataSnapshot> task = remoteDatabase.child("location").get();
             if (task.isSuccessful()) {
-                return Result.success(task.getResult().getValue(List.class));
+                return Result.success((List) task.getResult().getValue());
             } else {
                 return Result.error(task.getException());
             }

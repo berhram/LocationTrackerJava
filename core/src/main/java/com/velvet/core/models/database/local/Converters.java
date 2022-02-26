@@ -4,28 +4,28 @@ import android.location.Location;
 
 import androidx.room.TypeConverter;
 
+import com.velvet.core.Values;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Converters {
-    @TypeConverter
-    public Date longToDate(long date) {
-        return new Date(date);
+    private static final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
+
+    static public String dateToString(Date date) {
+        return sDF.format(date);
     }
 
-    @TypeConverter
-    public long longToDate(Date date) {
-        return date.getTime();
+    static public String timeToString(long time) {
+        return sDF.format(new Date(time));
     }
 
-    static public LocationEntity locationToEntity(Location location) {
-        return new LocationEntity(new Date(location.getTime()), location.getLatitude(), location.getLongitude());
-    }
-
-    static public Location entityToLocation(LocationEntity location) {
+    static public Location stringToLocation(String latitude, String longitude) {
         Location output = new Location("");
-        output.setLatitude(location.latitude);
-        output.setLongitude(location.longitude);
-        output.setTime(location.date.getTime());
+        output.setLatitude(Double.parseDouble(latitude));
+        output.setLongitude(Double.parseDouble(longitude));
         return output;
     }
+
+
 }

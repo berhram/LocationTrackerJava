@@ -25,6 +25,7 @@ public class TrackerControllerFactory implements ControllerFactory<TrackerContro
     public TrackerControllerFactory(Context appCtx) {
         DaggerTrackerComponent.builder()
                 .coreComponent(CoreInjectHelper.provideCoreComponent(appCtx))
+                .trackerModule(new TrackerModule(appCtx))
                 .build().inject(this);
     }
 

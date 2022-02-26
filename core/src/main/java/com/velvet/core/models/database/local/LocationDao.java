@@ -1,7 +1,5 @@
 package com.velvet.core.models.database.local;
 
-import android.location.Location;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;

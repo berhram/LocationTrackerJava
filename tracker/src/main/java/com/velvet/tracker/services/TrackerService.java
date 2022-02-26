@@ -7,15 +7,9 @@ import android.os.Build;
 import android.os.IBinder;
 
 import com.velvet.core.Values;
-import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.tracker.R;
-import com.velvet.tracker.di.DaggerTrackerComponent;
-import com.velvet.tracker.di.TrackerModule;
-import com.velvet.tracker.services.controller.ControllerFactory;
 import com.velvet.tracker.services.controller.TrackerController;
 import com.velvet.tracker.services.controller.TrackerControllerFactory;
-
-import javax.inject.Inject;
 
 public class TrackerService extends Service {
     private TrackerController controller;
@@ -28,7 +22,6 @@ public class TrackerService extends Service {
     @Override
     public void onCreate() {
         controller = new TrackerControllerFactory(getApplicationContext()).create();
-
         controller.start();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             final Notification notification = new Notification.Builder(this, Values.CHANNEL_ID)

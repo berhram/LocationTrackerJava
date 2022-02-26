@@ -10,6 +10,7 @@ import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
 import com.velvet.tracker.di.DaggerTrackerComponent;
+import com.velvet.tracker.di.TrackerModule;
 
 import javax.inject.Inject;
 
@@ -22,7 +23,9 @@ public class TrackerViewModelFactory implements ViewModelProvider.Factory {
     LocationCache locationCache;
 
     public TrackerViewModelFactory(Context ctx) {
-        DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx)).build().inject(this);
+        DaggerTrackerComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx))
+                .trackerModule(new TrackerModule(ctx))
+                .build().inject(this);
     }
 
     @NonNull

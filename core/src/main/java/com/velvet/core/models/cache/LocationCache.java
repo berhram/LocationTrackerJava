@@ -1,15 +1,15 @@
 package com.velvet.core.models.cache;
 
 import com.velvet.core.Values;
+import com.velvet.core.models.database.local.Converters;
 import com.velvet.core.result.Result;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class LocationCache extends AbstractGlobalCache<Result<String>> {
-    private final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
 
     public void addRawDate(Date date) {
-        this.addItem(Result.success(sDF.format(date)));
+        this.addItem(Result.success(Converters.dateToString(date)));
     }
 }

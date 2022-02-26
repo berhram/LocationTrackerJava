@@ -1,7 +1,5 @@
 package com.velvet.tracker.services.controller;
 
-import android.location.Location;
-
 import com.velvet.core.models.cache.LocationCache;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.tracker.model.work.SyncWorkManager;

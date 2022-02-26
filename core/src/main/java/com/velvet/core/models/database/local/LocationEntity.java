@@ -1,5 +1,10 @@
 package com.velvet.core.models.database.local;
 
+import static com.velvet.core.models.database.local.Converters.timeToString;
+
+import android.location.Location;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -7,18 +12,24 @@ import androidx.room.TypeConverters;
 import java.util.Date;
 
 @Entity
-@TypeConverters(Converters.class)
 public class LocationEntity {
-    public LocationEntity(Date date, double latitude, double longitude) {
+    public LocationEntity(String date, String latitude, String longitude) {
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+    @NonNull
     @PrimaryKey
-    public Date date;
+    public String date;
 
-    public double latitude;
+    public String latitude;
 
-    public double longitude;
+    public String longitude;
+
+    static public LocationEntity locationToEntity(Location location) {
+        return new LocationEntity(timeToString(location.getTime()),
+                String.valueOf(location.getLatitude()),
+                String.valueOf(location.getLongitude()));
+    }
 }

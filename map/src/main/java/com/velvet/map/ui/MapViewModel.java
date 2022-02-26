@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.core.Values;
-import com.velvet.core.models.location.receiver.LocationReceiver;
+import com.velvet.core.models.database.local.Converters;
 import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
@@ -25,12 +25,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
 
-    private final LocationReceiver receiver;
     private final List<Location> lastLocations = new ArrayList<>();
-    private final SimpleDateFormat sDF = new SimpleDateFormat(Values.DATE_PATTERN);
 
-    public MapViewModel(LocationReceiver receiver) {
-        this.receiver = receiver;
+    public MapViewModel() {
     }
 
     @Override
@@ -38,22 +35,14 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    Observable.interval(Values.LOCATION_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
-                            .flatMap(t -> receiver.getLocations().toObservable())
-                            .map(listResult -> listResult.data)
-                            .flatMap(Observable::fromIterable)
-                            .filter(this::checkIfUpdateNeed)
-                            .map(this::convertLocationToMarker)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(this::setMarker)
+
             );
         }
     }
     private MarkerOptions convertLocationToMarker(Location location) {
 
         return new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude()))
-                .title(sDF.format(new Date(location.getTime())));
+                .title(Converters.dateToString(new Date(location.getTime())));
 
     }
 

@@ -1,6 +1,7 @@
 package com.velvet.tracker.services.controller;
 
 import com.velvet.core.models.cache.LocationCache;
+import com.velvet.core.models.database.local.Converters;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.tracker.model.work.SyncWorkManager;
 import com.velvet.core.models.location.LocationEmitter;
@@ -34,6 +35,7 @@ public class TrackerController implements ServiceController {
                             cache.addItem(Result.error((Exception) locationResult.error));
                             return false;
                         } else {
+                            cache.addItem(Result.success(Converters.timeToString(locationResult.data.time)));
                             return true;
                         }
                     })

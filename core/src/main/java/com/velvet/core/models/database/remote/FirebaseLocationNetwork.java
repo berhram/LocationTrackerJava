@@ -2,26 +2,26 @@ package com.velvet.core.models.database.remote;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.velvet.core.Values;
-import com.velvet.core.filter.DateFilter;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.velvet.core.models.database.local.Converters;
 import com.velvet.core.models.database.local.LocalDatabase;
 import com.velvet.core.models.database.local.LocationDao;
-import com.velvet.core.models.database.local.LocationEntity;
+import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.core.result.Result;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -38,52 +38,42 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable saveLocationToRemote(Location location) {
-        final Task<Void> task = remoteDatabase.child("location")
-                .child(Converters.timeToString(location.getTime()))
-                .child("latitude")
-                .setValue(location.getLatitude())
-                .continueWithTask(voidTask -> remoteDatabase.child("location")
-                .child(Converters.timeToString(location.getTime()))
-                .child("longitude")
-                .setValue(location.getLongitude()));
-        if (task.isSuccessful()) {
-            return Completable.complete();
-        } else {
-            return Completable.error(task.getException());
-        }
+    public Single<Result<SimpleLocation>> saveLocationToRemote(SimpleLocation location) {
+        return Single.fromCallable(() -> {
+            //TODO idk how to do it
+            remoteDatabase.child("location").
+        });
     }
 
     @Override
-    public Completable saveLocationToLocal(Result<Location> locationResult) {
+    public Completable saveLocationToLocal(Result<SimpleLocation> locationResult) {
         return Completable.fromRunnable(() -> {
-            dao.insert(LocationEntity.locationToEntity(locationResult.data));
+            dao.insert(locationResult.data);
         });
     }
 
     @Override
-    public Single<List<Location>> getLocationsFromLocal() {
+    public Single<Result<List<SimpleLocation>>> getLocationsFromLocal() {
+        return Single.fromCallable(() -> Result.success(dao.getAll()));
+    }
+
+    @Override
+    public Single<Result<List<SimpleLocation>>> getLocationsFromRemote() {
         return Single.fromCallable(() -> {
-            List<Location> output = new ArrayList<>();
-            for (LocationEntity entity:
-                    dao.getAll()) {
-                output.add(Converters.entityToLocation(entity));
+            Task<DataSnapshot> task = remoteDatabase.child("location").get();
+            if (task.isSuccessful()) {
+                return Result.success(task.getResult().getValue(List.class));
+            } else {
+                return Result.error(task.getException());
             }
-            return output;
         });
     }
 
     @Override
-    public Single<List<Location>> getLocationsFromRemote(DateFilter filter) {
-        return Single.fromCallable(() -> {
-            //TODO fix it later
-            List<Location> output = new ArrayList<>();
-            return output;
+    public Completable deleteLocationFromLocal(SimpleLocation location) {
+        return Completable.fromCallable(() -> {
+            dao.delete(location);
+            return Completable.complete();
         });
-    }
-
-    @Override
-    public void deleteLocationFromLocal(Location location) {
-        dao.delete(Converters.locationToEntity(location));
     }
 }

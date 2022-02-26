@@ -2,8 +2,6 @@ package com.velvet.core.models.database.local;
 
 import android.location.Location;
 
-import androidx.room.TypeConverter;
-
 import com.velvet.core.Values;
 
 import java.text.SimpleDateFormat;
@@ -27,5 +25,9 @@ public class Converters {
         return output;
     }
 
-
+    static public SimpleLocation locationToSimpleLocation(Location location) {
+        return new SimpleLocation(location.getTime(),
+                location.getLatitude(),
+                location.getLongitude());
+    }
 }

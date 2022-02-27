@@ -1,22 +1,15 @@
 package com.velvet.core.models.database.remote;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.room.Room;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.velvet.core.models.database.local.Converters;
 import com.velvet.core.models.database.local.LocalDatabase;
 import com.velvet.core.models.database.local.LocationDao;
 import com.velvet.core.models.database.local.SimpleLocation;
@@ -39,35 +32,39 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Single<Result<SimpleLocation>> saveLocationToRemote(SimpleLocation location) {
-        return Single.fromCallable(() -> {
-            remoteDatabase.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    List locations = (List) task.getResult().getValue();
-                    locations.add(location);
-                    return Result.success(location);
-                }
-                else {
-                    Log.e("firebase", "Error getting data", task.getException());
-                    remoteDatabase.setValue(new ArrayList<SimpleLocation>()).addOnCompleteListener(taskCreate -> {
-                        if (taskCreate.isSuccessful()) {
-                            //TODO repeat task?
-                        } else {
-                            return Result.error(taskCreate.getException())
-                        }
-                    });
-                }
-            });
-
-
+    public Completable createLocationStorage() {
+        return Completable.fromCallable(() -> {
+            Task<Void> task = remoteDatabase.child("locations").setValue(new ArrayList<SimpleLocation>());
+            if (task.isSuccessful()) {
+                return Completable.complete();
+            } else {
+                return Completable.error(task.getException());
+            }
         });
     }
 
     @Override
+    public Completable saveLocationToRemote(SimpleLocation location) {
+            return Completable.fromCallable(() -> {
+                Task getTask = remoteDatabase.child("locations").get();
+                if (getTask.isSuccessful()) {
+                    List<SimpleLocation> list = (List<SimpleLocation>) getTask.getResult();
+                    list.add(location);
+                    Task setTask = remoteDatabase.child("locations").setValue(list);
+                    if (setTask.isSuccessful()) {
+                        return Completable.complete();
+                    } else {
+                        return Completable.error(setTask.getException());
+                    }
+                } else {
+                    return Completable.error(getTask.getException());
+                }
+            });
+    }
+
+    @Override
     public Completable saveLocationToLocal(Result<SimpleLocation> locationResult) {
-        return Completable.fromRunnable(() -> {
-            dao.insert(locationResult.data);
-        });
+        return Completable.fromRunnable(() -> dao.insert(locationResult.data));
     }
 
     @Override
@@ -78,7 +75,7 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     @Override
     public Single<Result<List<SimpleLocation>>> getLocationsFromRemote() {
         return Single.fromCallable(() -> {
-            Task<DataSnapshot> task = remoteDatabase.child("location").get();
+            Task<DataSnapshot> task = remoteDatabase.child("locations").get();
             if (task.isSuccessful()) {
                 return Result.success((List) task.getResult().getValue());
             } else {

@@ -9,7 +9,9 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface LocationNetwork {
-    Single<Result<SimpleLocation>> saveLocationToRemote(SimpleLocation location);
+    Completable createLocationStorage();
+
+    Completable saveLocationToRemote(SimpleLocation location);
 
     Completable saveLocationToLocal(Result<SimpleLocation> locationResult);
 

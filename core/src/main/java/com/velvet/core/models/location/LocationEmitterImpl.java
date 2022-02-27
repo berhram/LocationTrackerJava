@@ -11,7 +11,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.velvet.core.Values;
-import com.velvet.core.models.database.local.Converters;
+import com.velvet.core.Converters;
 import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.core.result.Result;
 

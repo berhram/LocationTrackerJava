@@ -38,16 +38,11 @@ public class SyncWorker extends Worker {
                 locationRepo.getLocationsFromLocal()
                     .toObservable()
                     .flatMap(listResult -> Observable.fromIterable(listResult.data))
-                    .flatMap(location -> locationRepo.saveLocationToRemote(location).toObservable())
+                    .flatMapCompletable(location -> locationRepo.saveLocationToRemote(location)
+                            .andThen(locationRepo.deleteLocationFromLocal(location)))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(locationResult -> {
-                        if (locationResult.isError()) {
-                            flag[0] = Result.failure();
-                        } else {
-                            locationRepo.deleteLocationFromLocal(locationResult.data);
-                        }
-                    })
+                    .subscribe(() -> flag[0] = Result.success(), e -> flag[0] = Result.failure())
         );
         return flag[0];
     }

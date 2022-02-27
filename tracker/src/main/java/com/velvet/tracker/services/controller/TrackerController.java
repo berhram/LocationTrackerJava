@@ -1,7 +1,7 @@
 package com.velvet.tracker.services.controller;
 
 import com.velvet.core.models.cache.LocationCache;
-import com.velvet.core.models.database.local.Converters;
+import com.velvet.core.Converters;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.tracker.model.work.SyncWorkManager;
 import com.velvet.core.models.location.LocationEmitter;
@@ -39,9 +39,7 @@ public class TrackerController implements ServiceController {
                             return true;
                         }
                     })
-                    .flatMap(locationResult -> locationRepo.saveLocationToRemote(locationResult.data).toObservable())
-                    .filter(Result::isError)
-                    .flatMapCompletable(locationRepo::saveLocationToLocal)
+                    .flatMapCompletable(locationResult -> locationRepo.saveLocationToRemote(locationResult.data).onErrorResumeWith(locationRepo.saveLocationToLocal(locationResult)))
                     .subscribe(workManager::scheduleSyncTask, throwable -> {
                         cache.addItem(Result.error((Exception) throwable));
                     })

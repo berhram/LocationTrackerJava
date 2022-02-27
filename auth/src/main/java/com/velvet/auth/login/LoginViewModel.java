@@ -12,7 +12,6 @@ import com.velvet.auth.login.state.LoginViewState;
 import com.velvet.core.Values;
 import com.velvet.core.models.auth.AuthMessage;
 import com.velvet.core.models.auth.AuthNetwork;
-import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.libs.mvi.MviViewModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -22,15 +21,12 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
-    private final LocationNetwork locationRepository;
-
     private final PublishSubject<Long> checkSubject = PublishSubject.create();
     private final PublishSubject<Long> registerSubject = PublishSubject.create();
     private final BehaviorSubject<AuthMessage> authSubject = BehaviorSubject.create();
 
-    public LoginViewModel(AuthNetwork authRepository, LocationNetwork locationRepository) {
+    public LoginViewModel(AuthNetwork authRepository) {
         this.authRepository = authRepository;
-        this.locationRepository = locationRepository;
     }
 
     @Override
@@ -71,14 +67,6 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                             }, e -> {
                                 e.printStackTrace();
                                 setInfoText(R.string.something_went_wrong);
-                            }),
-                    registerSubject
-                            .flatMapCompletable(t -> locationRepository.createLocationStorage())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(() -> setInfoText(R.string.success_registration), e -> {
-                                setInfoText(R.string.something_went_wrong);
-                                e.printStackTrace();
                             })
             );
         }

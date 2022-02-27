@@ -17,9 +17,6 @@ public class LoginViewModelFactory implements ViewModelProvider.Factory {
     @Inject
     FirebaseAuthNetwork authRepository;
 
-    @Inject
-    LocationNetwork locationRepository;
-
     public LoginViewModelFactory(Context ctx) {
         DaggerAuthComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx)).build().inject(this);
     }
@@ -28,7 +25,7 @@ public class LoginViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == LoginViewModel.class) {
-            return (T) new LoginViewModel(authRepository, locationRepository);
+            return (T) new LoginViewModel(authRepository);
         } else {
             throw new RuntimeException("Unknown class " + modelClass);
         }

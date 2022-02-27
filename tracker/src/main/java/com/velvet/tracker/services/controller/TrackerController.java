@@ -39,7 +39,9 @@ public class TrackerController implements ServiceController {
                             return true;
                         }
                     })
-                    .flatMapCompletable(locationResult -> locationRepo.saveLocationToRemote(locationResult.data)
+                    .flatMapCompletable(locationResult -> locationRepo.checkIfLocationStorageExists()
+                            .onErrorResumeWith(locationRepo.createLocationStorage())
+                            .andThen(locationRepo.saveLocationToRemote(locationResult.data))
                             .onErrorResumeWith(locationRepo.saveLocationToLocal(locationResult)))
                     .subscribe(
                             workManager::scheduleSyncTask,

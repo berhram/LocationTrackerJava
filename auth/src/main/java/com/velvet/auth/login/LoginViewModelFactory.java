@@ -9,12 +9,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.auth.di.DaggerAuthComponent;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
+import com.velvet.core.models.database.remote.LocationNetwork;
 
 import javax.inject.Inject;
 
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
     @Inject
-    FirebaseAuthNetwork repository;
+    FirebaseAuthNetwork authRepository;
+
+    @Inject
+    LocationNetwork locationRepository;
 
     public LoginViewModelFactory(Context ctx) {
         DaggerAuthComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx)).build().inject(this);
@@ -24,7 +28,7 @@ public class LoginViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == LoginViewModel.class) {
-            return (T) new LoginViewModel(repository);
+            return (T) new LoginViewModel(authRepository, locationRepository);
         } else {
             throw new RuntimeException("Unknown class " + modelClass);
         }

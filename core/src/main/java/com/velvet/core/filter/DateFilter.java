@@ -11,11 +11,7 @@ public class DateFilter {
         this.endDate = endDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public Date getStartDate() {
-        return startDate;
+    public boolean check(long time) {
+        return startDate.getTime() <= time && endDate.getTime() >= time;
     }
 }

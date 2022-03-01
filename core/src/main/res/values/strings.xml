@@ -4,4 +4,6 @@
     <string name="app_name_tracker"/>
 
     <string name="please_give_access">Please give location access!</string>
+
+    <string name="something_went_wrong">Something went wrong…</string>
 </resources>

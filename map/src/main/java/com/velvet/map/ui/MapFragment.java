@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,11 +14,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.velvet.core.filter.DateFilter;
+import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
 import com.velvet.libs.mvi.HostedFragment;
+
+import java.util.List;
 
 public class MapFragment extends HostedFragment<MapViewState,
         MapContract.ViewModel,
@@ -37,7 +42,7 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     @Override
     protected MapContract.ViewModel createModel() {
-        return new ViewModelProvider(this, new MapViewModelFactory()).get(MapViewModel.class);
+        return new ViewModelProvider(this, new MapViewModelFactory(requireActivity())).get(MapViewModel.class);
     }
 
     @Nullable
@@ -60,13 +65,14 @@ public class MapFragment extends HostedFragment<MapViewState,
     }
 
     @Override
-    public void createFilter() {
-
+    public void postErrorMessage() {
+        Toast.makeText(getActivity(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
-
+        //if ()
+        //TODO make date picker
     }
 
     @Override

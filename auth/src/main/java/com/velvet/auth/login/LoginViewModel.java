@@ -22,7 +22,6 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewState, LoginViewEffect> implements LoginContract.ViewModel {
     private final AuthNetwork authRepository;
     private final PublishSubject<Long> checkSubject = PublishSubject.create();
-    private final PublishSubject<Long> registerSubject = PublishSubject.create();
     private final BehaviorSubject<AuthMessage> authSubject = BehaviorSubject.create();
 
     public LoginViewModel(AuthNetwork authRepository) {
@@ -59,7 +58,7 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                                         setInfoText(R.string.success_login);
                                         checkSubject.onNext(System.currentTimeMillis());
                                     } else if (Values.REGISTER.equals(result.data)) {
-                                        registerSubject.onNext(System.currentTimeMillis());
+                                        setInfoText(R.string.success_registration);
                                     } else {
                                         setInfoText(R.string.something_went_wrong);
                                     }

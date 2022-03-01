@@ -14,15 +14,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.velvet.core.filter.DateFilter;
-import com.velvet.core.models.database.local.SimpleLocation;
+import com.velvet.core.Values;
 import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
 import com.velvet.libs.mvi.HostedFragment;
-
-import java.util.List;
 
 public class MapFragment extends HostedFragment<MapViewState,
         MapContract.ViewModel,
@@ -78,7 +75,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void proceedToLoginScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToLoginScreen("Map");
+            getFragmentHost().proceedToLoginScreen(Values.MAP_NAV);
         }
     }
 

@@ -68,23 +68,25 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
 
     @Override
     public void proceedToNextScreen(String id) {
-        if (id.equals("Login")) {
+        if (Values.LOGIN_NAV.equals(id)) {
             navController.navigate(LoginFragmentDirections.loginToTracker());
         }
     }
 
     @Override
     public void proceedToLoginScreen(String id) {
-        if (id.equals("Password recovery")) {
+        if (Values.RECOVERY_NAV.equals(id)) {
             navController.navigate(PasswordRecoveryFragmentDirections.recoveryToLogin());
-        } else if (id.equals("Tracker")) {
+        } else if (Values.TRACKER_NAV.equals(id)) {
             navController.navigate(TrackerFragmentDirections.trackerToLogin());
         }
     }
 
     @Override
-    public void proceedToPasswordRecovery() {
-        navController.navigate(LoginFragmentDirections.loginToRecovery());
+    public void proceedToPasswordRecovery(String id) {
+        if (Values.LOGIN_NAV.equals(id)) {
+            navController.navigate(LoginFragmentDirections.loginToRecovery());
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -92,7 +94,7 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel channel = new NotificationChannel(Values.CHANNEL_ID, Values.CHANNEL_ID,
                 NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("Channel for location tracker");
+        channel.setDescription(getString(R.string.channel_desc));
         channel.enableLights(true);
         channel.enableVibration(false);
         notificationManager.createNotificationChannel(channel);

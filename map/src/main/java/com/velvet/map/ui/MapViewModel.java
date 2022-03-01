@@ -1,7 +1,5 @@
 package com.velvet.map.ui;
 
-import android.location.Location;
-
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -74,6 +72,6 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
 
     @Override
     protected MapViewState getDefaultState() {
-        return MapViewState.createSetMarkersState(new ArrayList<>());
+        return MapViewState.createSetDefaultState();
     }
 }

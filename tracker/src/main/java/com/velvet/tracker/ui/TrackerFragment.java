@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.core.Values;
 import com.velvet.libs.mvi.HostedFragment;
 import com.velvet.tracker.R;
 import com.velvet.tracker.databinding.FragmentTrackerBinding;
@@ -45,7 +46,7 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     @Override
     public void proceedToLoginScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToLoginScreen("Tracker");
+            getFragmentHost().proceedToLoginScreen(Values.TRACKER_NAV);
         }
     }
 
@@ -83,6 +84,7 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
             stopService();
         } else if (binding.logoutButton == v) {
             getModel().signOut();
+            proceedToLoginScreen();
         }
     }
 

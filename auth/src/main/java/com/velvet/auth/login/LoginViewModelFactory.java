@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.auth.di.DaggerAuthComponent;
 import com.velvet.core.di.CoreInjectHelper;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
-import com.velvet.core.models.database.remote.LocationNetwork;
 
 import javax.inject.Inject;
 

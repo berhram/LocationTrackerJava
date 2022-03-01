@@ -33,7 +33,7 @@ public class LoginContract {
     }
 
     public interface Host extends FragmentContract.Host {
-        void proceedToPasswordRecovery();
+        void proceedToPasswordRecovery(String id);
 
         void proceedToNextScreen(String id);
     }

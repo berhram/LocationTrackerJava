@@ -11,6 +11,7 @@ import com.velvet.auth.login.LoginContract;
 import com.velvet.auth.login.LoginFragmentDirections;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryContract;
 import com.velvet.auth.passwordrecovery.PasswordRecoveryFragmentDirections;
+import com.velvet.core.Values;
 import com.velvet.map.ui.MapContract;
 
 import app.databinding.ActivityMainBinding;
@@ -35,23 +36,25 @@ public class AppActivity extends FragmentActivity implements LoginContract.Host,
 
     @Override
     public void proceedToNextScreen(String id) {
-        if (id.equals("Login")) {
+        if (Values.LOGIN_NAV.equals(id)) {
             navController.navigate(LoginFragmentDirections.loginToMap());
         }
     }
 
     @Override
     public void proceedToLoginScreen(String id) {
-        if (id.equals("Password recovery")) {
+        if (Values.RECOVERY_NAV.equals(id)) {
             navController.navigate(PasswordRecoveryFragmentDirections.recoveryToLogin());
-        } else if (id.equals("Map")) {
+        } else if (Values.MAP_NAV.equals(id)) {
             navController.navigate(MapFragmentDirections.mapToLogin());
         }
     }
 
     @Override
-    public void proceedToPasswordRecovery() {
-        navController.navigate(LoginFragmentDirections.loginToRecovery());
+    public void proceedToPasswordRecovery(String id) {
+        if (Values.LOGIN_NAV.equals(id)) {
+            navController.navigate(LoginFragmentDirections.loginToRecovery());
+        }
     }
 
     @Override

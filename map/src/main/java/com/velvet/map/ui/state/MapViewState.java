@@ -6,9 +6,14 @@ import com.velvet.libs.mvi.MviViewState;
 
 public class MapViewState implements MviViewState<MapContract.View> {
     private static final int ACTION_SET_LOCATIONS = 1;
+    private static final int ACTION_DEFAULT = 1;
 
     private final int action;
-    private final MarkerOptions marker;
+    private MarkerOptions marker;
+
+    public MapViewState(int action) {
+        this.action = action;
+    }
 
     public MapViewState(int action, MarkerOptions marker) {
         this.action = action;
@@ -17,6 +22,10 @@ public class MapViewState implements MviViewState<MapContract.View> {
 
     static public MapViewState createSetMarkerState(MarkerOptions marker) {
         return new MapViewState(ACTION_SET_LOCATIONS, marker);
+    }
+
+    static public MapViewState createSetDefaultState() {
+        return new MapViewState(ACTION_DEFAULT);
     }
 
     @Override

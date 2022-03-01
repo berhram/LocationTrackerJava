@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.auth.databinding.FragmentPasswordRecoveryBinding;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewEffect;
 import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
+import com.velvet.core.Values;
 import com.velvet.libs.mvi.HostedFragment;
 
 public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
@@ -39,7 +40,7 @@ public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryVie
     @Override
     public void proceedToLoginScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToLoginScreen("Password recovery");
+            getFragmentHost().proceedToLoginScreen(Values.RECOVERY_NAV);
         }
     }
 

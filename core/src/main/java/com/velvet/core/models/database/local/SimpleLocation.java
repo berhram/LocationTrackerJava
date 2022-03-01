@@ -12,7 +12,6 @@ public class SimpleLocation {
         this.longitude = longitude;
     }
 
-    @NonNull
     @PrimaryKey
     public long time;
 

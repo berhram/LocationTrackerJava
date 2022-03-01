@@ -35,9 +35,7 @@ public class TrackerViewState implements MviViewState<TrackerContract.View> {
 
     @Override
     public void visit(TrackerContract.View screen) {
-        if (action == ACTION_INITIAL) {
-
-        } else if (action == ACTION_SET_LOCATION) {
+        if (action == ACTION_SET_LOCATION) {
             screen.setLastLocation(text);
         } else if (action == ACTION_SET_ERROR) {
             screen.setError(text);

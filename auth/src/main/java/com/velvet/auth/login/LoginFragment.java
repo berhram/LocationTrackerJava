@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.velvet.auth.databinding.FragmentLoginBinding;
 import com.velvet.auth.login.state.LoginViewEffect;
 import com.velvet.auth.login.state.LoginViewState;
+import com.velvet.core.Values;
 import com.velvet.libs.mvi.HostedFragment;
 
 public class LoginFragment extends HostedFragment<LoginViewState,
@@ -46,14 +47,14 @@ public class LoginFragment extends HostedFragment<LoginViewState,
     @Override
     public void proceedToPasswordRecovery() {
         if (hasHost()) {
-            getFragmentHost().proceedToPasswordRecovery();
+            getFragmentHost().proceedToPasswordRecovery(Values.LOGIN_NAV);
         }
     }
 
     @Override
     public void proceedToNextScreen() {
         if (hasHost()) {
-            getFragmentHost().proceedToNextScreen("Login");
+            getFragmentHost().proceedToNextScreen(Values.LOGIN_NAV);
         }
     }
 

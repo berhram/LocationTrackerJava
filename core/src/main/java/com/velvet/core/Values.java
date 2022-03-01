@@ -14,4 +14,9 @@ public class Values {
     public static final String DATE_PATTERN = "yyyy.MM.dd HH:mm:ss";
 
     public static final String CHANNEL_ID = "Tracker channel";
+
+    public static final String TRACKER_NAV = "Tracker";
+    public static final String LOGIN_NAV = "Login";
+    public static final String MAP_NAV = "Map";
+    public static final String RECOVERY_NAV = "Recovery";
 }

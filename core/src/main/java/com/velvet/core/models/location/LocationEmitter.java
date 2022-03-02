@@ -4,6 +4,7 @@ import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.core.result.Result;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public interface LocationEmitter {
     void start();

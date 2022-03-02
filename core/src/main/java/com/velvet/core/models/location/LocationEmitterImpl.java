@@ -17,6 +17,7 @@ import com.velvet.core.result.Result;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
     private final FusedLocationProviderClient fusedLocationClient;
@@ -42,7 +43,7 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
 
     @Override
     public Observable<Result<SimpleLocation>> getLocation() {
-        return lastLocation;
+        return lastLocation.hide();
     }
 
     @Override

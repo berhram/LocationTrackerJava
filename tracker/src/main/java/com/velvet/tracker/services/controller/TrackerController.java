@@ -4,11 +4,13 @@ import android.util.Log;
 
 import com.velvet.core.Converters;
 import com.velvet.core.models.cache.Cache;
+import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.core.models.location.LocationEmitter;
 import com.velvet.core.result.Result;
 import com.velvet.tracker.model.work.SyncWorkManager;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -32,23 +34,24 @@ public class TrackerController implements ServiceController {
         disposables.add(
             emitter.getLocation()
                     .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
                     .filter(locationResult -> {
                         if (locationResult.isError()) {
                             cache.addItem(Result.error((Exception) locationResult.error));
-                            Log.d("LOC", locationResult.error.toString() + " sent in controller");
+                            Log.d("LOC", locationResult.error.toString() + " failure filter");
                             return false;
                         } else {
                             cache.addItem(Result.success(Converters.timeToString(locationResult.data.time)));
-                            Log.d("LOC", Converters.timeToString(locationResult.data.time) + " sent in controller");
+                            Log.d("LOC", Converters.timeToString(locationResult.data.time) + " success filter");
                             return true;
                         }
                     })
-                    .flatMapCompletable(locationResult -> locationRepo.checkIfLocationStorageExists()
-                            .onErrorResumeWith(locationRepo.createLocationStorage())
-                            .andThen(locationRepo.saveLocationToRemote(locationResult.data))
-                            .onErrorResumeWith(locationRepo.saveLocationToLocal(locationResult)))
-                    .subscribe(
-                            workManager::scheduleSyncTask,
+                    .flatMapCompletable(locationResult -> locationRepo.saveLocationToRemote(locationResult.data)
+                        .onErrorResumeWith(locationRepo.saveLocationToLocal(locationResult)))
+                    .subscribe(() -> {
+                                Log.d("LOC", " work scheduled");
+                                workManager.scheduleSyncTask();
+                            },
                             Throwable::printStackTrace)
         );
     }

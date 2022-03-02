@@ -1,14 +1,20 @@
 package com.velvet.core.models.database.remote;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.velvet.core.Converters;
 import com.velvet.core.models.database.local.LocalDatabase;
 import com.velvet.core.models.database.local.LocationDao;
 import com.velvet.core.models.database.local.SimpleLocation;
@@ -31,48 +37,18 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable checkIfLocationStorageExists() {
-        return Completable.fromCallable(() -> {
-            Task<DataSnapshot> task = remoteDatabase.get();
-            if (task.isSuccessful()) {
-                if (task.getResult() == null) {
-                    return Completable.error(new Exception("Storage exist"));
-                } else {
-                    return Completable.complete();
-                }
-            } else {
-                return Completable.error(task.getException());
-            }
-        });
-    }
-
-    @Override
-    public Completable createLocationStorage() {
-        return Completable.fromCallable(() -> {
-            Task<Void> task = remoteDatabase.setValue(new ArrayList<SimpleLocation>());
-            if (task.isSuccessful()) {
-                return Completable.complete();
-            } else {
-                return Completable.error(task.getException());
-            }
-        });
-    }
-
-    @Override
     public Completable saveLocationToRemote(SimpleLocation location) {
-        Task getTask = remoteDatabase.child("locations").get();
-        if (getTask.isSuccessful()) {
-            List<SimpleLocation> list = (List<SimpleLocation>) getTask.getResult();
-            list.add(location);
-            Task setTask = remoteDatabase.child("locations").setValue(list);
-            if (setTask.isSuccessful()) {
+        return Completable.fromCallable(() -> {
+            final Task<Void> task = remoteDatabase.push().setValue(location);
+            Tasks.await(task);
+            if (task.isSuccessful()) {
+                Log.d("LOC", "save loc to remote SUCCESS");
                 return Completable.complete();
             } else {
-                return Completable.error(setTask.getException());
+                Log.d("LOC", "save loc to remote FAILURE on set with: " + task.getException());
+                return Completable.error(task.getException());
             }
-        } else {
-            return Completable.error(getTask.getException());
-        }
+        });
     }
 
     @Override
@@ -89,11 +65,16 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     public Single<Result<List<SimpleLocation>>> getLocationsFromRemote() {
         return Single.fromCallable(() -> {
             Task<DataSnapshot> task = remoteDatabase.get();
+            Tasks.await(task);
+            List<SimpleLocation> output = new ArrayList<>();
             if (task.isSuccessful()) {
-                return Result.success((List) task.getResult().getValue());
+                for(DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                    output.add(dataSnapshot.getValue(SimpleLocation.class));
+                }
             } else {
                 return Result.error(task.getException());
             }
+            return Result.success(output);
         });
     }
 

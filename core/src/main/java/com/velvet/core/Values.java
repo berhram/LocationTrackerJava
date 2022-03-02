@@ -6,7 +6,7 @@ public class Values {
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
 
-    public static final long LOCATION_CHECK_FREQUENTLY_SEC  = 5;
+    public static final long LOCATION_CHECK_FREQUENTLY_SEC  = 30;
     public static final long LOCATION_CHECK_FREQUENTLY_MILLIS  = LOCATION_CHECK_FREQUENTLY_SEC * 1000;
 
     public static final long MAP_CHECK_FREQUENTLY_SEC  = 30;

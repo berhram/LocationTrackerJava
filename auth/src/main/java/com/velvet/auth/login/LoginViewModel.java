@@ -48,7 +48,7 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                     authSubject
                             .flatMap(p -> authRepository.authRequest(p).toObservable())
                             .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
+                            .observeOn(Schedulers.io())
                             .subscribe(result -> {
                                 if (result.isError()) {
                                     result.error.printStackTrace();

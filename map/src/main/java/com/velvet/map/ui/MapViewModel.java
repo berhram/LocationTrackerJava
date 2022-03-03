@@ -1,5 +1,7 @@
 package com.velvet.map.ui;
 
+import android.util.Log;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -14,17 +16,20 @@ import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, MapViewEffect> implements MapContract.ViewModel {
+    private final PublishSubject<DateFilter> filterSubject = PublishSubject.create();
+    private final PublishSubject<Long> markerSubject = PublishSubject.create();
     private final LocationNetwork locationRepo;
-    private DateFilter filter = new DateFilter(new Date(Long.MIN_VALUE), new Date(Long.MAX_VALUE));
-    private final PublishSubject<Long> locationSubject = PublishSubject.create();
+    private final DateFilter filter = DateFilter.createFullDateFilter(new Date(Long.MIN_VALUE), new Date(Long.MAX_VALUE));
+    private boolean mapIsReady = false;
 
     public MapViewModel(LocationNetwork locationRepo) {
         this.locationRepo = locationRepo;
@@ -35,18 +40,38 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
         super.onAny(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
-                    locationSubject.flatMap(t -> locationRepo.getLocationsFromRemote().toObservable())
+                    markerSubject
+                            .subscribeOn(Schedulers.io())
+                            .filter(t -> mapIsReady)
+                            .flatMap(t -> locationRepo.getLocationsFromRemote().toObservable())
                             .flatMap(listResult -> Observable.fromIterable(listResult.data))
                             .filter(this::checkIfLocationMatchFilter)
                             .flatMap(location -> Observable.just(convertLocationToMarker(location)))
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(this::setMarker, e -> {
                                 e.printStackTrace();
                                 postErrorMessage();
                             }),
+                    filterSubject.subscribeOn(Schedulers.io()).subscribe(inputFilter -> {
+                        filter.updateFilter(inputFilter);
+                        markerSubject.onNext(System.currentTimeMillis());
+                    }),
                     Observable.interval(Values.MAP_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
-                            .subscribe()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .subscribe(markerSubject::onNext)
             );
         }
+    }
+
+    @Override
+    public void mapReadyCallback() {
+        mapIsReady = true;
+    }
+
+    @Override
+    public void updateFilter(DateFilter filter) {
+        filterSubject.onNext(filter);
     }
 
     private MarkerOptions convertLocationToMarker(SimpleLocation location) {
@@ -63,11 +88,8 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     }
 
     private boolean checkIfLocationMatchFilter(SimpleLocation location) {
+        Log.d("LOC", Converters.timeToString(location.time) + "filtered");
         return filter.check(location.time);
-    }
-
-    public void setFilter(DateFilter filter) {
-        this.filter = filter;
     }
 
     @Override

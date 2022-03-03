@@ -1,6 +1,5 @@
 package com.velvet.core.models.database.local;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,6 +10,8 @@ public class SimpleLocation {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public SimpleLocation() { }
 
     @PrimaryKey
     public long time;

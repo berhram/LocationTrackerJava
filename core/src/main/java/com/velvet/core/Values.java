@@ -19,4 +19,7 @@ public class Values {
     public static final String LOGIN_NAV = "Login";
     public static final String MAP_NAV = "Map";
     public static final String RECOVERY_NAV = "Recovery";
+
+    public static final String START_TAG = "Start date";
+    public static final String END_TAG = "End date";
 }

@@ -29,9 +29,11 @@ public class DateFilter {
         return startDate.getTime() <= time && endDate.getTime() >= time;
     }
 
+    /*
     public boolean isComplete() {
         return startDate != null && endDate != null;
     }
+     */
 
     public void updateFilter(DateFilter newFilter) {
         if (newFilter.startDate != null) {
@@ -40,5 +42,13 @@ public class DateFilter {
         if (newFilter.endDate != null) {
             endDate = newFilter.endDate;
         }
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 }

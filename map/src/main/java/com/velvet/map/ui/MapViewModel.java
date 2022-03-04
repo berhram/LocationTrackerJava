@@ -55,23 +55,34 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                     filterSubject.subscribeOn(Schedulers.io()).subscribe(inputFilter -> {
                         filter.updateFilter(inputFilter);
                         markerSubject.onNext(System.currentTimeMillis());
-                    }),
+                        setFilter();
+                    }, Throwable::printStackTrace),
                     Observable.interval(Values.MAP_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
-                            .subscribe(markerSubject::onNext)
+                            .subscribe(markerSubject::onNext, Throwable::printStackTrace)
             );
         }
     }
 
     @Override
+    protected MapViewState getDefaultState() {
+        return MapViewState.createSetDefaultState();
+    }
+
+    @Override
     public void mapReadyCallback() {
         mapIsReady = true;
+        //setFilter();
     }
 
     @Override
     public void updateFilter(DateFilter filter) {
         filterSubject.onNext(filter);
+    }
+
+    private void setFilter() {
+        setState(MapViewState.createSetFilterState(Converters.dateToString(filter.getStartDate()), Converters.dateToString(filter.getEndDate())));
     }
 
     private MarkerOptions convertLocationToMarker(SimpleLocation location) {
@@ -90,10 +101,5 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     private boolean checkIfLocationMatchFilter(SimpleLocation location) {
         Log.d("LOC", Converters.timeToString(location.time) + "filtered");
         return filter.check(location.time);
-    }
-
-    @Override
-    protected MapViewState getDefaultState() {
-        return MapViewState.createSetDefaultState();
     }
 }

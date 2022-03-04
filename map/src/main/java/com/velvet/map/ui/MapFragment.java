@@ -1,7 +1,7 @@
 package com.velvet.map.ui;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +20,8 @@ import com.velvet.core.Values;
 import com.velvet.core.filter.DateFilter;
 import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
+import com.velvet.map.ui.datepicker.DateListener;
+import com.velvet.map.ui.datepicker.DatePickerFragment;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
 import com.velvet.libs.mvi.HostedFragment;
@@ -31,16 +34,27 @@ public class MapFragment extends HostedFragment<MapViewState,
         MapViewEffect,
         MapContract.View> implements MapContract.View,
         View.OnClickListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback,
+        DateListener {
 
     private FragmentMapBinding binding;
     private GoogleMap map;
-    DatePickerDialog startDatePickerDialog = new DatePickerDialog(requireActivity());
-    DatePickerDialog endDatePickerDialog = new DatePickerDialog(requireActivity());
+    private final DialogFragment startDatePicker = new DatePickerFragment(this, Values.START_TAG);
+    private final DialogFragment endDatePicker = new DatePickerFragment(this, Values.END_TAG);
 
     @Override
     protected MapContract.ViewModel createModel() {
         return new ViewModelProvider(this, new MapViewModelFactory(requireActivity())).get(MapViewModel.class);
+    }
+
+    @Override
+    public void onDateSet(int year, int month, int dayOfMonth, String tag) {
+        if (Values.START_TAG.equals(tag)) {
+            getModel().updateFilter(DateFilter.createStartDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
+            endDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker");
+        } else if (Values.END_TAG.equals(tag)) {
+            getModel().updateFilter(DateFilter.createEndDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
+        }
     }
 
     @Nullable
@@ -55,11 +69,7 @@ public class MapFragment extends HostedFragment<MapViewState,
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
-        startDatePickerDialog.setOnDateSetListener((view12, year, month, dayOfMonth) -> {
-            getModel().updateFilter(DateFilter.createStartDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
-            endDatePickerDialog.show();
-        });
-        endDatePickerDialog.setOnDateSetListener((view1, year, month, dayOfMonth) -> getModel().updateFilter(DateFilter.createEndDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime())));
+        binding.filterButton.setOnClickListener(this);
     }
 
     @Override
@@ -73,9 +83,16 @@ public class MapFragment extends HostedFragment<MapViewState,
     }
 
     @Override
+    public void setFilter(String startDate, String endDate) {
+        binding.startDate.setText(getString(R.string.start_date, startDate));
+        binding.endDate.setText(getString(R.string.end_date, endDate));
+    }
+
+    @Override
     public void onClick(View v) {
         if (binding.filterButton == v) {
-            startDatePickerDialog.show();
+            Log.d("LOC", "filter button clicked");
+            startDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker");
         }
     }
 

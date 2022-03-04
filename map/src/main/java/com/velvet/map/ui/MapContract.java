@@ -19,6 +19,8 @@ public class MapContract {
         void postErrorMessage();
 
         void setMarker(MarkerOptions marker);
+
+        void setFilter(String startDate, String endDate);
     }
 
     public interface Host extends FragmentContract.Host {

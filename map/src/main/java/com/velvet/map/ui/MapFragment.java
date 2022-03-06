@@ -51,7 +51,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     public void onDateSet(int year, int month, int dayOfMonth, String tag) {
         if (Values.START_TAG.equals(tag)) {
             getModel().updateFilter(DateFilter.createStartDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
-            endDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker");
+            endDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker2");
         } else if (Values.END_TAG.equals(tag)) {
             getModel().updateFilter(DateFilter.createEndDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
         }
@@ -74,7 +74,9 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     @Override
     public void setMarker(MarkerOptions marker) {
-        map.addMarker(marker);
+        if (marker != null) {
+            map.addMarker(marker);
+        }
     }
 
     @Override
@@ -84,15 +86,16 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     @Override
     public void setFilter(String startDate, String endDate) {
+        Log.d("LOC", startDate + " startDate " + endDate + " endDate in FRAGMENT");
         binding.startDate.setText(getString(R.string.start_date, startDate));
         binding.endDate.setText(getString(R.string.end_date, endDate));
+        map.clear();
     }
 
     @Override
     public void onClick(View v) {
         if (binding.filterButton == v) {
-            Log.d("LOC", "filter button clicked");
-            startDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker");
+            startDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker1");
         }
     }
 

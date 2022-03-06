@@ -28,7 +28,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     private final PublishSubject<DateFilter> filterSubject = PublishSubject.create();
     private final PublishSubject<Long> markerSubject = PublishSubject.create();
     private final LocationNetwork locationRepo;
-    private final DateFilter filter = DateFilter.createFullDateFilter(new Date(Long.MIN_VALUE), new Date(Long.MAX_VALUE));
+    private final DateFilter filter = DateFilter.createFullDateFilter(new Date(0), new Date(System.currentTimeMillis()));
     private boolean mapIsReady = false;
 
     public MapViewModel(LocationNetwork locationRepo) {
@@ -48,20 +48,27 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                             .filter(this::checkIfLocationMatchFilter)
                             .flatMap(location -> Observable.just(convertLocationToMarker(location)))
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(this::setMarker, e -> {
+                            .subscribe(markerOptions -> {
+                                if (markerOptions != null) {
+                                    setMarker(markerOptions);
+                                }
+                            }, e -> {
                                 e.printStackTrace();
-                                postErrorMessage();
+                                setErrorMessage();
                             }),
-                    filterSubject.subscribeOn(Schedulers.io()).subscribe(inputFilter -> {
-                        filter.updateFilter(inputFilter);
-                        markerSubject.onNext(System.currentTimeMillis());
-                        setFilter();
-                    }, Throwable::printStackTrace),
+                    filterSubject.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(inputFilter -> {
+                                filter.updateFilter(inputFilter);
+                                setFilter();
+                            }, Throwable::printStackTrace),
                     Observable.interval(Values.MAP_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
                             .subscribe(markerSubject::onNext, Throwable::printStackTrace)
             );
+            markerSubject.onNext(System.currentTimeMillis());
+            filterSubject.onNext(filter);
         }
     }
 
@@ -73,15 +80,15 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     @Override
     public void mapReadyCallback() {
         mapIsReady = true;
-        //setFilter();
     }
 
     @Override
-    public void updateFilter(DateFilter filter) {
-        filterSubject.onNext(filter);
+    public void updateFilter(DateFilter newFilter) {
+        filterSubject.onNext(newFilter);
     }
 
     private void setFilter() {
+        Log.d("LOC", "filtered set in viewmodel");
         setState(MapViewState.createSetFilterState(Converters.dateToString(filter.getStartDate()), Converters.dateToString(filter.getEndDate())));
     }
 
@@ -90,16 +97,17 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                 .title(Converters.timeToString(location.time));
     }
 
-    private void postErrorMessage() {
+    private void setErrorMessage() {
         setAction(MapViewEffect.postErrorMessage());
     }
 
     private void setMarker(MarkerOptions marker) {
+        Log.d("LOC", "marker set in viewmodel");
         setState(MapViewState.createSetMarkerState(marker));
     }
 
     private boolean checkIfLocationMatchFilter(SimpleLocation location) {
-        Log.d("LOC", Converters.timeToString(location.time) + "filtered");
+        Log.d("LOC", "loc on filter");
         return filter.check(location.time);
     }
 }

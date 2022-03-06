@@ -38,14 +38,14 @@ public class MapViewState implements MviViewState<MapContract.View> {
     }
 
     static public MapViewState createSetFilterState(String startDate, String endDate) {
-        return new MapViewState(ACTION_SET_LOCATIONS, startDate, endDate);
+        return new MapViewState(ACTION_SET_FILTER, startDate, endDate);
     }
 
     @Override
     public void visit(MapContract.View screen) {
         if (action == ACTION_SET_LOCATIONS) {
             screen.setMarker(marker);
-        } else if (action == ACTION_DEFAULT) {
+        } else if (action == ACTION_SET_FILTER) {
             screen.setFilter(startDate, endDate);
         }
     }

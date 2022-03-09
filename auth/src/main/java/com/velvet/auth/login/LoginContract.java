@@ -19,8 +19,6 @@ public class LoginContract {
 
         void setPasswordError(int text);
 
-        void proceedToPasswordRecovery();
-
         void proceedToNextScreen();
     }
 

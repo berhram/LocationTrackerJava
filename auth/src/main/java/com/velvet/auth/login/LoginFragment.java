@@ -44,8 +44,7 @@ public class LoginFragment extends HostedFragment<LoginViewState,
         binding.forgotPasswordButton.setOnClickListener(this);
     }
 
-    @Override
-    public void proceedToPasswordRecovery() {
+    private void proceedToPasswordRecovery() {
         if (hasHost()) {
             getFragmentHost().proceedToPasswordRecovery(Values.LOGIN_NAV);
         }

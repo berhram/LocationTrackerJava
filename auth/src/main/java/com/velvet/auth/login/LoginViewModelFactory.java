@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.auth.di.DaggerAuthComponent;
 import com.velvet.core.di.CoreInjectHelper;
-import com.velvet.core.models.auth.FirebaseAuthNetwork;
+import com.velvet.core.models.auth.AuthNetwork;
 
 import javax.inject.Inject;
 
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
+
     @Inject
-    FirebaseAuthNetwork authRepository;
+    AuthNetwork authRepository;
 
     public LoginViewModelFactory(Context ctx) {
         DaggerAuthComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx)).build().inject(this);

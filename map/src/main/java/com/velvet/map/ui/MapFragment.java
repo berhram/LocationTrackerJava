@@ -77,7 +77,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     }
 
     @Override
-    public void postErrorMessage() {
+    public void setErrorMessage() {
         Toast.makeText(getActivity(), R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
     }
 
@@ -93,6 +93,8 @@ public class MapFragment extends HostedFragment<MapViewState,
     public void onClick(View v) {
         if (binding.filterButton == v) {
             DatePickerFragment.newInstance(this, Values.START_TAG).show(requireActivity().getSupportFragmentManager(), "datePicker1");
+        } else if (binding.logoutButton == v) {
+            getModel().signOut();
         }
     }
 

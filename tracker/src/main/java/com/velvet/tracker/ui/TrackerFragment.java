@@ -62,15 +62,13 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
         binding.lastLocation.setText(text);
     }
 
-    @Override
-    public void startService() {
+    private void startService() {
         if (hasHost()) {
             getFragmentHost().startService();
         }
     }
 
-    @Override
-    public void stopService() {
+    private void stopService() {
         if (hasHost()) {
             getFragmentHost().stopService();
         }
@@ -84,7 +82,6 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
             stopService();
         } else if (binding.logoutButton == v) {
             getModel().signOut();
-            proceedToLoginScreen();
         }
     }
 

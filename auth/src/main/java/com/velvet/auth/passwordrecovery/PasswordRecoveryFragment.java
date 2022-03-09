@@ -59,7 +59,6 @@ public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryVie
     @Override
     public void setEmailError(int text) {
         binding.emailInput.setError(getString(text));
-
     }
 
     @Override

@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.core.models.cache.Cache;
 import com.velvet.core.di.CoreInjectHelper;
-import com.velvet.core.models.auth.FirebaseAuthNetwork;
 import com.velvet.tracker.di.DaggerTrackerComponent;
 import com.velvet.tracker.di.TrackerModule;
 
@@ -17,7 +17,7 @@ import javax.inject.Inject;
 public class TrackerViewModelFactory implements ViewModelProvider.Factory {
 
     @Inject
-    FirebaseAuthNetwork repository;
+    AuthNetwork repository;
 
     @Inject
     Cache locationCache;

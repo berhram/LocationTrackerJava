@@ -7,14 +7,19 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.velvet.core.di.CoreInjectHelper;
+import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.map.di.DaggerMapComponent;
 
 import javax.inject.Inject;
 
 public class MapViewModelFactory implements ViewModelProvider.Factory {
+
     @Inject
     LocationNetwork locationRepo;
+
+    @Inject
+    AuthNetwork authRepo;
 
     public MapViewModelFactory(Context ctx) {
         DaggerMapComponent.builder().coreComponent(CoreInjectHelper.provideCoreComponent(ctx)).build().inject(this);
@@ -24,7 +29,7 @@ public class MapViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == MapViewModel.class) {
-            return (T) new MapViewModel(locationRepo);
+            return (T) new MapViewModel(locationRepo, authRepo);
         } else {
             throw new RuntimeException("Unknown class " + modelClass);
         }

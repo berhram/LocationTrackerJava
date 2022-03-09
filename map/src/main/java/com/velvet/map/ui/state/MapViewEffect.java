@@ -5,7 +5,6 @@ import com.velvet.libs.mvi.AbstractEffect;
 
 public class MapViewEffect extends AbstractEffect<MapContract.View> {
     private static final int ACTION_LOG_OUT = 1;
-    private static final int ACTION_ERROR = 2;
 
     private final int action;
 
@@ -17,16 +16,10 @@ public class MapViewEffect extends AbstractEffect<MapContract.View> {
         return new MapViewEffect(ACTION_LOG_OUT);
     }
 
-    static public MapViewEffect postErrorMessage() {
-        return new MapViewEffect(ACTION_ERROR);
-    }
-
     @Override
     public void handle(MapContract.View screen) {
         if (action == ACTION_LOG_OUT) {
             screen.proceedToLoginScreen();
-        } else if (action == ACTION_ERROR) {
-            screen.postErrorMessage();
         }
     }
 }

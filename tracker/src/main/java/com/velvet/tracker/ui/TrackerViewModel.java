@@ -45,7 +45,7 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
                             }
                         }, Throwable::printStackTrace),
                     authSubject.flatMapCompletable(t -> authRepo.signOut())
-                            .subscribe(() -> {}, Throwable::printStackTrace)
+                            .subscribe(this::proceedToLoginScreen, Throwable::printStackTrace)
             );
         }
     }
@@ -66,5 +66,9 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
 
     private void setError(String location) {
         setState(TrackerViewState.createSetErrorState(location));
+    }
+
+    private void proceedToLoginScreen() {
+        setAction(TrackerViewEffect.proceedToLoginScreen());
     }
 }

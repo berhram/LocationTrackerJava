@@ -11,12 +11,14 @@ public class MapContract {
         void mapReadyCallback();
 
         void updateFilter(DateFilter filter);
+
+        void signOut();
     }
 
     public interface View extends FragmentContract.View {
         void proceedToLoginScreen();
 
-        void postErrorMessage();
+        void setErrorMessage();
 
         void setMarker(MarkerOptions marker);
 

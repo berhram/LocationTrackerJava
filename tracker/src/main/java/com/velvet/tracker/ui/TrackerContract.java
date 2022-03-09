@@ -11,8 +11,6 @@ public class TrackerContract {
 
     public interface View extends FragmentContract.View {
         void proceedToLoginScreen();
-        void startService();
-        void stopService();
         void setLastLocation(String text);
         void setError(String text);
     }

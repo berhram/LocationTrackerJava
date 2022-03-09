@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.work.WorkManager;
 
+import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.core.models.cache.Cache;
 import com.velvet.core.models.cache.CacheImpl;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
@@ -40,7 +41,7 @@ public class CoreModule {
 
     @Provides
     @Singleton
-    FirebaseAuthNetwork provideAuthRepo() {
+    AuthNetwork provideAuthRepo() {
         return new FirebaseAuthNetwork();
     }
 

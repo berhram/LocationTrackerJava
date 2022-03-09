@@ -9,7 +9,6 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class SyncWorkManagerImpl implements SyncWorkManager {
     private final WorkManager workManager;
-    BehaviorSubject<Boolean> workResult = BehaviorSubject.create();
     private final Constraints constraints = new Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build();
@@ -22,6 +21,6 @@ public class SyncWorkManagerImpl implements SyncWorkManager {
     }
 
     public void scheduleSyncTask() {
-        workResult.onNext(workManager.enqueue(sync).getResult().isDone());
+        workManager.enqueue(sync).getResult().isDone();
     }
 }

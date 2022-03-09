@@ -5,14 +5,15 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.velvet.core.Values;
 import com.velvet.core.Converters;
-import com.velvet.core.models.database.local.SimpleLocation;
+import com.velvet.core.Values;
+import com.velvet.core.models.database.SimpleLocation;
 import com.velvet.core.result.Result;
 
 import io.reactivex.rxjava3.core.Observable;

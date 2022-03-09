@@ -29,8 +29,8 @@ public class FirebaseAuthNetwork implements AuthNetwork {
     @Override
     public Single<Result<String>> authRequest(AuthMessage message) {
         return Single.fromCallable(() -> {
-            if (Values.LOGIN.equals(message.getId())) {
-                final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(message.getFirstParam(), message.getSecondParam());
+            if (Values.LOGIN.equals(message.id)) {
+                final Task<AuthResult> task = firebaseAuth.signInWithEmailAndPassword(message.emailOrCode, message.pwd);
                 Tasks.await(task);
                 if (task.isSuccessful()) {
                     Log.d("AUTH", "taskValidator: Success");
@@ -39,8 +39,8 @@ public class FirebaseAuthNetwork implements AuthNetwork {
                     Log.d("AUTH", "taskValidator: Failure");
                     return new Result<>(Values.LOGIN, task.getException());
                 }
-            } else if (Values.REGISTER.equals(message.getId())) {
-                final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(message.getFirstParam(), message.getSecondParam());
+            } else if (Values.REGISTER.equals(message.id)) {
+                final Task<AuthResult> task = firebaseAuth.createUserWithEmailAndPassword(message.emailOrCode, message.pwd);
                 Tasks.await(task);
                 if (task.isSuccessful()) {
                     Log.d("AUTH", "taskValidator: Success");
@@ -49,8 +49,8 @@ public class FirebaseAuthNetwork implements AuthNetwork {
                     Log.d("AUTH", "taskValidator: Failure");
                     return new Result<>(Values.REGISTER, task.getException());
                 }
-            } else if (Values.REQUEST.equals(message.getId())) {
-                final Task<Void> task = firebaseAuth.sendPasswordResetEmail(message.getFirstParam());
+            } else if (Values.REQUEST.equals(message.id)) {
+                final Task<Void> task = firebaseAuth.sendPasswordResetEmail(message.emailOrCode);
                 Tasks.await(task);
                 if (task.isSuccessful()) {
                     Log.d("AUTH", "taskValidator: Success");
@@ -59,8 +59,8 @@ public class FirebaseAuthNetwork implements AuthNetwork {
                     Log.d("AUTH", "taskValidator: Failure");
                     return new Result<>(Values.REQUEST, task.getException());
                 }
-            } else if (Values.CHECK.equals(message.getId())) {
-                final Task<Void> task = firebaseAuth.confirmPasswordReset(message.getFirstParam(), message.getSecondParam());
+            } else if (Values.CHECK.equals(message.id)) {
+                final Task<Void> task = firebaseAuth.confirmPasswordReset(message.emailOrCode, message.pwd);
                 Tasks.await(task);
                 if (task.isSuccessful()) {
                     Log.d("AUTH", "taskValidator: Success");

@@ -5,16 +5,18 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.velvet.core.models.database.SimpleLocation;
+
 import java.util.List;
 
 @Dao
 public interface LocationDao {
-        @Query("SELECT * FROM SimpleLocation")
-        List<SimpleLocation> getAll();
+    @Query("SELECT * FROM SimpleLocation")
+    List<SimpleLocation> getAll();
 
-        @Insert
-        void insert(SimpleLocation locations);
+    @Insert
+    void insert(SimpleLocation locations);
 
-        @Delete
-        void delete(SimpleLocation location);
+    @Delete
+    void delete(SimpleLocation location);
 }

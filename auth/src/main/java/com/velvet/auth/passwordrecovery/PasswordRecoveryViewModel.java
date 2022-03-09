@@ -3,6 +3,7 @@ package com.velvet.auth.passwordrecovery;
 import static com.velvet.auth.utils.Validator.validateEmail;
 import static com.velvet.auth.utils.Validator.validatePasswordLength;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -29,7 +30,7 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
     }
 
     @Override
-    public void onStateChanged(LifecycleOwner owner, Lifecycle.Event event) {
+    public void onStateChanged(@NonNull LifecycleOwner owner, @NonNull Lifecycle.Event event) {
         super.onStateChanged(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
@@ -78,7 +79,7 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
     @Override
     public void checkCode(String code, String newPassword) {
         if (validatePasswordLength(newPassword)) {
-            recoverySubject.onNext(AuthMessage.createCheckCodeAndSetNewPassowordMessage(code, newPassword));
+            recoverySubject.onNext(AuthMessage.createCheckCodeAndSetNewPasswordMessage(code, newPassword));
         } else {
             setPasswordError();
         }

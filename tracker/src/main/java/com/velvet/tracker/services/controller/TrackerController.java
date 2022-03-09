@@ -44,8 +44,8 @@ public class TrackerController implements ServiceController {
                             return true;
                         }
                     })
-                    .flatMapCompletable(locationResult -> locationRepo.saveSingleLocationToRemote(locationResult.data)
-                        .onErrorResumeWith(locationRepo.saveSingleLocationToLocal(locationResult.data)))
+                    .flatMapCompletable(locationResult -> locationRepo.uploadLocation(locationResult.data)
+                            .onErrorResumeWith(locationRepo.saveLocation(locationResult.data)))
                     .subscribe(() -> {
                                 Log.d("LOC", " work scheduled");
                                 workManager.scheduleSyncTask();

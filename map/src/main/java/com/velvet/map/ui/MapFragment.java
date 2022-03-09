@@ -17,13 +17,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.velvet.core.Values;
 import com.velvet.core.filter.DateFilter;
+import com.velvet.libs.mvi.HostedFragment;
 import com.velvet.map.R;
 import com.velvet.map.databinding.FragmentMapBinding;
 import com.velvet.map.ui.datepicker.DateListener;
 import com.velvet.map.ui.datepicker.DatePickerFragment;
 import com.velvet.map.ui.state.MapViewEffect;
 import com.velvet.map.ui.state.MapViewState;
-import com.velvet.libs.mvi.HostedFragment;
 
 import java.util.GregorianCalendar;
 
@@ -31,10 +31,7 @@ public class MapFragment extends HostedFragment<MapViewState,
         MapContract.ViewModel,
         MapContract.Host,
         MapViewEffect,
-        MapContract.View> implements MapContract.View,
-        View.OnClickListener,
-        OnMapReadyCallback,
-        DateListener {
+        MapContract.View> implements MapContract.View, View.OnClickListener, OnMapReadyCallback, DateListener {
 
     private FragmentMapBinding binding;
     private GoogleMap map;

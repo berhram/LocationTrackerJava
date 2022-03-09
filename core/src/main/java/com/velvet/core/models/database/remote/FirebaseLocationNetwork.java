@@ -10,9 +10,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.velvet.core.models.database.SimpleLocation;
 import com.velvet.core.models.database.local.LocalDatabase;
 import com.velvet.core.models.database.local.LocationDao;
-import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.core.result.Result;
 
 import java.util.ArrayList;
@@ -22,7 +22,8 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class FirebaseLocationNetwork implements LocationNetwork {
-    private final DatabaseReference remoteDatabase = FirebaseDatabase.getInstance().getReference("users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+    private final DatabaseReference remoteDatabase = FirebaseDatabase.getInstance()
+            .getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     private final LocalDatabase localDatabase;
     private final LocationDao dao;
 
@@ -32,7 +33,7 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable saveLocationToRemote(List<SimpleLocation> locationList) {
+    public Completable uploadLocations(List<SimpleLocation> locationList) {
         return Completable.fromCallable(() -> {
             for (SimpleLocation location : locationList) {
                 Task<Void> task = remoteDatabase.push().setValue(location);
@@ -46,7 +47,7 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable saveSingleLocationToRemote(SimpleLocation location) {
+    public Completable uploadLocation(SimpleLocation location) {
         return Completable.fromCallable(() -> {
             Task<Void> task = remoteDatabase.push().setValue(location);
             Tasks.await(task);
@@ -61,18 +62,15 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     @Override
     public Completable saveLocationToLocal(List<SimpleLocation> locationList) {
         return Completable.fromRunnable(() -> {
-            for (SimpleLocation location:
-                 locationList) {
+            for (SimpleLocation location : locationList) {
                 dao.insert(location);
             }
         });
     }
 
     @Override
-    public Completable saveSingleLocationToLocal(SimpleLocation location) {
-        return Completable.fromRunnable(() -> {
-            dao.insert(location);
-        });
+    public Completable saveLocation(SimpleLocation location) {
+        return Completable.fromRunnable(() -> dao.insert(location));
     }
 
     @Override
@@ -98,10 +96,9 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable deleteLocationFromLocal(List<SimpleLocation> locationList) {
+    public Completable deleteLocations(List<SimpleLocation> locationList) {
         return Completable.fromCallable(() -> {
-            for (SimpleLocation location:
-                    locationList) {
+            for (SimpleLocation location : locationList) {
                 dao.delete(location);
             }
             return Completable.complete();

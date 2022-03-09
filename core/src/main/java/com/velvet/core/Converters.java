@@ -2,8 +2,7 @@ package com.velvet.core;
 
 import android.location.Location;
 
-import com.velvet.core.Values;
-import com.velvet.core.models.database.local.SimpleLocation;
+import com.velvet.core.models.database.SimpleLocation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

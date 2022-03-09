@@ -56,7 +56,7 @@ public abstract class HostedFragment<STATE extends MviViewState<VIEW>,
     @Override
     public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
         if (getModel() != null) {
-            getModel().onAny(source, event);
+            getModel().onStateChanged(source, event);
         }
         if (getLifecycle().getCurrentState().ordinal() <= Lifecycle.State.DESTROYED.ordinal()) {
             getLifecycle().removeObserver(this);

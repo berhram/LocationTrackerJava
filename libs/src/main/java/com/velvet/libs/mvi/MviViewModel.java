@@ -13,11 +13,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public abstract class MviViewModel<V extends FragmentContract.View,
-        S extends MviViewState,
-        E extends MviViewEffect>
+        S extends MviViewState<V>,
+        E extends MviViewEffect<V>>
         extends ViewModel
-        implements FragmentContract.ViewModel<S, E>,
-        LifecycleEventObserver {
+        implements FragmentContract.ViewModel<S, E>, LifecycleEventObserver {
+
     private final CompositeDisposable onStopDisposables = new CompositeDisposable();
     private final CompositeDisposable onDestroyDisposables = new CompositeDisposable();
     private final MutableLiveData<S> stateHolder = new MutableLiveData<>();

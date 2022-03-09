@@ -34,13 +34,12 @@ public class SyncWorker extends Worker {
     public Result doWork() {
         final Result[] flag = {Result.success()};
         disposables.add(
-                locationRepo.getLocationsFromLocal()
-                    .toObservable()
-                    .flatMapCompletable(locations -> locationRepo.saveLocationToRemote(locations.data)
-                            .andThen(locationRepo.deleteLocationFromLocal(locations.data)))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> flag[0] = Result.success(), e -> flag[0] = Result.failure())
+                locationRepo.getLocationsFromLocal().toObservable()
+                        .flatMapCompletable(locations -> locationRepo.uploadLocations(locations.data)
+                                .andThen(locationRepo.deleteLocations(locations.data)))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> flag[0] = Result.success(), e -> flag[0] = Result.failure())
         );
         return flag[0];
     }

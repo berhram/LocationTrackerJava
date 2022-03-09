@@ -22,6 +22,7 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
         TrackerViewEffect,
         TrackerContract.View> implements TrackerContract.View,
         View.OnClickListener {
+
     private FragmentTrackerBinding binding;
 
     @Nullable

@@ -2,6 +2,7 @@ package com.velvet.map.ui;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -11,7 +12,7 @@ import com.velvet.core.Converters;
 import com.velvet.core.Values;
 import com.velvet.core.filter.DateFilter;
 import com.velvet.core.models.auth.AuthNetwork;
-import com.velvet.core.models.database.local.SimpleLocation;
+import com.velvet.core.models.database.SimpleLocation;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.map.ui.state.MapViewEffect;
@@ -40,7 +41,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     }
 
     @Override
-    public void onStateChanged(LifecycleOwner owner, Lifecycle.Event event) {
+    public void onStateChanged(@NonNull LifecycleOwner owner, @NonNull Lifecycle.Event event) {
         super.onStateChanged(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(

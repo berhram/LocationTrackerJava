@@ -3,6 +3,7 @@ package com.velvet.auth.login;
 import static com.velvet.auth.utils.Validator.validateEmail;
 import static com.velvet.auth.utils.Validator.validatePasswordLength;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -29,7 +30,7 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
     }
 
     @Override
-    public void onStateChanged(LifecycleOwner owner, Lifecycle.Event event) {
+    public void onStateChanged(@NonNull LifecycleOwner owner, @NonNull Lifecycle.Event event) {
         super.onStateChanged(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(

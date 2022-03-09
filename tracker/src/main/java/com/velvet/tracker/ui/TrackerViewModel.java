@@ -2,11 +2,12 @@ package com.velvet.tracker.ui;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.velvet.core.models.cache.Cache;
 import com.velvet.core.models.auth.AuthNetwork;
+import com.velvet.core.models.cache.Cache;
 import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.tracker.ui.state.TrackerViewEffect;
 import com.velvet.tracker.ui.state.TrackerViewState;
@@ -27,23 +28,24 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
     }
 
     @Override
-    public void onStateChanged(LifecycleOwner owner, Lifecycle.Event event) {
+    public void onStateChanged(@NonNull LifecycleOwner owner, @NonNull Lifecycle.Event event) {
         super.onStateChanged(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
                     locationCache.getItem()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(s -> {
-                            Log.d("LOC", s.data + " and e: " + s.error + " was receive from cache");
-                            if (s.isError()) {
-                                Log.d("LOC", s.error.toString() + " was receive from cache");
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(s -> {
+                                Log.d("LOC", s.data + " and e: " + s.error + " was receive from cache");
+                                if (s.isError()) {
+                                    Log.d("LOC", s.error.toString() + " was receive from cache");
                                 setError(s.error.toString());
                             } else {
                                 Log.d("LOC", s.data + " was receive from cache");
                                 setLastLocation(s.data);
                             }
                         }, Throwable::printStackTrace),
+
                     authSubject.flatMapCompletable(t -> authRepo.signOut())
                             .subscribe(this::proceedToLoginScreen, Throwable::printStackTrace)
             );

@@ -3,14 +3,14 @@ package com.velvet.core.models.auth;
 import com.velvet.core.Values;
 
 public class AuthMessage {
-    private final String id;
-    private final String firstParam;
-    private final String secondParam;
+    public final String id;
+    public final String emailOrCode;
+    public final String pwd;
 
-    public AuthMessage(String id, String firstParam, String secondParam) {
+    public AuthMessage(String id, String emailOrCode, String pwd) {
         this.id = id;
-        this.firstParam = firstParam;
-        this.secondParam = secondParam;
+        this.emailOrCode = emailOrCode;
+        this.pwd = pwd;
     }
 
     public static AuthMessage createLoginMessage(String email, String password) {
@@ -25,19 +25,7 @@ public class AuthMessage {
         return new AuthMessage(Values.REQUEST, email, "");
     }
 
-    public static AuthMessage createCheckCodeAndSetNewPassowordMessage(String code, String newPassword) {
+    public static AuthMessage createCheckCodeAndSetNewPasswordMessage(String code, String newPassword) {
         return new AuthMessage(Values.CHECK, code, newPassword);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getFirstParam() {
-        return firstParam;
-    }
-
-    public String getSecondParam() {
-        return secondParam;
     }
 }

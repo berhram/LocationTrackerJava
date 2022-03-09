@@ -15,7 +15,11 @@ import com.velvet.auth.passwordrecovery.state.PasswordRecoveryViewState;
 import com.velvet.core.Values;
 import com.velvet.libs.mvi.HostedFragment;
 
-public class PasswordRecoveryFragment extends HostedFragment<PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel, PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View> implements PasswordRecoveryContract.View, View.OnClickListener {
+public class PasswordRecoveryFragment extends HostedFragment<
+        PasswordRecoveryViewState, PasswordRecoveryContract.ViewModel,
+        PasswordRecoveryContract.Host, PasswordRecoveryViewEffect, PasswordRecoveryContract.View>
+        implements PasswordRecoveryContract.View, View.OnClickListener {
+
     private FragmentPasswordRecoveryBinding binding;
 
     @Override

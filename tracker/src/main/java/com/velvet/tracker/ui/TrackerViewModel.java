@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.velvet.core.models.cache.Cache;
-import com.velvet.core.models.cache.CacheImpl;
 import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.libs.mvi.MviViewModel;
 import com.velvet.tracker.ui.state.TrackerViewEffect;

@@ -1,20 +1,15 @@
 package com.velvet.core.models.database.remote;
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.velvet.core.Converters;
 import com.velvet.core.models.database.local.LocalDatabase;
 import com.velvet.core.models.database.local.LocationDao;
 import com.velvet.core.models.database.local.SimpleLocation;
@@ -74,6 +69,13 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
+    public Completable saveSingleLocationToLocal(SimpleLocation location) {
+        return Completable.fromRunnable(() -> {
+            dao.insert(location);
+        });
+    }
+
+    @Override
     public Single<Result<List<SimpleLocation>>> getLocationsFromLocal() {
         return Single.fromCallable(() -> Result.success(dao.getAll()));
     }
@@ -96,9 +98,12 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable deleteLocationFromLocal(SimpleLocation location) {
+    public Completable deleteLocationFromLocal(List<SimpleLocation> locationList) {
         return Completable.fromCallable(() -> {
-            dao.delete(location);
+            for (SimpleLocation location:
+                    locationList) {
+                dao.delete(location);
+            }
             return Completable.complete();
         });
     }

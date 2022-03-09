@@ -9,8 +9,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.velvet.core.Values;
 import com.velvet.core.result.Result;
 
-import java.util.concurrent.Callable;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 

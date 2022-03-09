@@ -4,15 +4,11 @@ import android.util.Log;
 
 import com.velvet.core.Converters;
 import com.velvet.core.models.cache.Cache;
-import com.velvet.core.models.database.local.SimpleLocation;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.core.models.location.LocationEmitter;
 import com.velvet.core.result.Result;
 import com.velvet.tracker.model.work.SyncWorkManager;
 
-import java.util.ArrayList;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 

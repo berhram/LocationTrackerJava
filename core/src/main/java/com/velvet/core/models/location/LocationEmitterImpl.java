@@ -17,7 +17,6 @@ import com.velvet.core.result.Result;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
-import io.reactivex.rxjava3.subjects.Subject;
 
 public class LocationEmitterImpl extends LocationCallback implements LocationEmitter {
     private final FusedLocationProviderClient fusedLocationClient;

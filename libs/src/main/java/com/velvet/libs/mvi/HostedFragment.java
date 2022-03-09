@@ -6,10 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.OnLifecycleEvent;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.lang.reflect.ParameterizedType;
@@ -20,7 +19,9 @@ public abstract class HostedFragment<STATE extends MviViewState<VIEW>,
         EFFECT extends MviViewEffect<VIEW>,
         VIEW extends FragmentContract.View>
         extends NavHostFragment
-        implements FragmentContract.View, Observer<STATE>, LifecycleObserver {
+        implements FragmentContract.View,
+        Observer<STATE>,
+        LifecycleEventObserver {
 
     private VIEW_MODEL model;
     private HOST fragmentHost;
@@ -52,10 +53,10 @@ public abstract class HostedFragment<STATE extends MviViewState<VIEW>,
 
     protected abstract VIEW_MODEL createModel();
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-    protected void onAny(LifecycleOwner owner, Lifecycle.Event event) {
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
         if (getModel() != null) {
-            getModel().onAny(owner, event);
+            getModel().onAny(source, event);
         }
         if (getLifecycle().getCurrentState().ordinal() <= Lifecycle.State.DESTROYED.ordinal()) {
             getLifecycle().removeObserver(this);

@@ -29,8 +29,8 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
     }
 
     @Override
-    public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
-        super.onAny(owner, event);
+    public void onStateChanged(LifecycleOwner owner, Lifecycle.Event event) {
+        super.onStateChanged(owner, event);
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
                     recoverySubject

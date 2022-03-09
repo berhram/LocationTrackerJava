@@ -1,11 +1,12 @@
 package com.velvet.libs.mvi;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -15,7 +16,8 @@ public abstract class MviViewModel<V extends FragmentContract.View,
         S extends MviViewState,
         E extends MviViewEffect>
         extends ViewModel
-        implements FragmentContract.ViewModel<S, E> {
+        implements FragmentContract.ViewModel<S, E>,
+        LifecycleEventObserver {
     private final CompositeDisposable onStopDisposables = new CompositeDisposable();
     private final CompositeDisposable onDestroyDisposables = new CompositeDisposable();
     private final MutableLiveData<S> stateHolder = new MutableLiveData<>();
@@ -32,8 +34,8 @@ public abstract class MviViewModel<V extends FragmentContract.View,
     }
 
     @CallSuper
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-    public void onAny(LifecycleOwner owner, Lifecycle.Event event) {
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
         if (event == Lifecycle.Event.ON_STOP) {
             onStopDisposables.clear();
         }

@@ -10,6 +10,8 @@ import com.velvet.core.models.location.LocationEmitter;
 import com.velvet.core.result.Result;
 import com.velvet.tracker.model.work.SyncWorkManager;
 
+import java.util.ArrayList;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -46,8 +48,8 @@ public class TrackerController implements ServiceController {
                             return true;
                         }
                     })
-                    .flatMapCompletable(locationResult -> locationRepo.saveLocationToRemote(locationResult.data)
-                        .onErrorResumeWith(locationRepo.saveLocationToLocal(locationResult)))
+                    .flatMapCompletable(locationResult -> locationRepo.saveSingleLocationToRemote(locationResult.data)
+                        .onErrorResumeWith(locationRepo.saveSingleLocationToLocal(locationResult.data)))
                     .subscribe(() -> {
                                 Log.d("LOC", " work scheduled");
                                 workManager.scheduleSyncTask();

@@ -37,9 +37,8 @@ public class SyncWorker extends Worker {
         disposables.add(
                 locationRepo.getLocationsFromLocal()
                     .toObservable()
-                    .flatMap(listResult -> Observable.fromIterable(listResult.data))
-                    .flatMapCompletable(location -> locationRepo.saveLocationToRemote(location)
-                            .andThen(locationRepo.deleteLocationFromLocal(location)))
+                    .flatMapCompletable(locations -> locationRepo.saveLocationToRemote(locations.data)
+                            .andThen(locationRepo.deleteLocationFromLocal(locations.data)))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> flag[0] = Result.success(), e -> flag[0] = Result.failure())

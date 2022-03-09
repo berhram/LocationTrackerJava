@@ -9,12 +9,6 @@ public class PasswordRecoveryContract {
         void requestCode(String email);
 
         void checkCode(String code, String newPassword);
-
-        void setInfoText(int infoText);
-
-        void setEmailError();
-
-        void setPasswordError();
     }
 
     public interface View extends FragmentContract.View {

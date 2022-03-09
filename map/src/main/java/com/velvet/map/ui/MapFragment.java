@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -39,8 +38,6 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     private FragmentMapBinding binding;
     private GoogleMap map;
-    private final DialogFragment startDatePicker = new DatePickerFragment(this, Values.START_TAG);
-    private final DialogFragment endDatePicker = new DatePickerFragment(this, Values.END_TAG);
 
     @Override
     protected MapContract.ViewModel createModel() {
@@ -51,7 +48,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     public void onDateSet(int year, int month, int dayOfMonth, String tag) {
         if (Values.START_TAG.equals(tag)) {
             getModel().updateFilter(DateFilter.createStartDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
-            endDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker2");
+            DatePickerFragment.newInstance(this, Values.END_TAG).show(requireActivity().getSupportFragmentManager(), "datePicker2");
         } else if (Values.END_TAG.equals(tag)) {
             getModel().updateFilter(DateFilter.createEndDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
         }
@@ -95,7 +92,7 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onClick(View v) {
         if (binding.filterButton == v) {
-            startDatePicker.show(requireActivity().getSupportFragmentManager(), "datePicker1");
+            DatePickerFragment.newInstance(this, Values.START_TAG).show(requireActivity().getSupportFragmentManager(), "datePicker1");
         }
     }
 

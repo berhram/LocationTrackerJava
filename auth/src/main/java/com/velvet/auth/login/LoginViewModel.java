@@ -97,23 +97,19 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
         }
     }
 
-    @Override
-    public void success() {
+    private void success() {
         setAction(LoginViewEffect.proceedToNextScreen());
     }
 
-    @Override
-    public void setInfoText(int infoText) {
+    private void setInfoText(int infoText) {
         setState(LoginViewState.createSetTextState(infoText));
     }
 
-    @Override
-    public void setEmailError() {
+    private void setEmailError() {
         setState(LoginViewState.createSetEmailErrorState(R.string.email_error));
     }
 
-    @Override
-    public void setPasswordError() {
+    private void setPasswordError() {
         setState(LoginViewState.createSetPasswordErrorState(R.string.password_error));
     }
 }

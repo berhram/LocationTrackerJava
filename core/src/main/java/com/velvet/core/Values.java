@@ -22,4 +22,6 @@ public class Values {
 
     public static final String START_TAG = "Start date";
     public static final String END_TAG = "End date";
+
+    public static final String DATE_PICKER_TAG = "Date picker tag";
 }

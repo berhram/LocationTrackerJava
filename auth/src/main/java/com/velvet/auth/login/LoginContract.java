@@ -10,14 +10,6 @@ public class LoginContract {
         void signIn(String email, String password);
 
         void signUp(String email, String password);
-
-        void setInfoText(int infoText);
-
-        void success();
-
-        void setEmailError();
-
-        void setPasswordError();
     }
 
     public interface View extends FragmentContract.View {

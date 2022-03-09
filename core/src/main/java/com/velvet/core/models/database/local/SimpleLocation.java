@@ -11,14 +11,10 @@ public class SimpleLocation {
         this.longitude = longitude;
     }
 
-    public SimpleLocation() { }
-
     @PrimaryKey
     public long time;
 
     public double latitude;
 
     public double longitude;
-
-
 }

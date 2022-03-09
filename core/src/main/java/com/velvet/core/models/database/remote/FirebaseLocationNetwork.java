@@ -37,23 +37,40 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     }
 
     @Override
-    public Completable saveLocationToRemote(SimpleLocation location) {
+    public Completable saveLocationToRemote(List<SimpleLocation> locationList) {
         return Completable.fromCallable(() -> {
-            final Task<Void> task = remoteDatabase.push().setValue(location);
+            for (SimpleLocation location : locationList) {
+                Task<Void> task = remoteDatabase.push().setValue(location);
+                Tasks.await(task);
+                if (!task.isSuccessful()) {
+                    return Completable.error(task.getException());
+                }
+            }
+            return Completable.complete();
+        });
+    }
+
+    @Override
+    public Completable saveSingleLocationToRemote(SimpleLocation location) {
+        return Completable.fromCallable(() -> {
+            Task<Void> task = remoteDatabase.push().setValue(location);
             Tasks.await(task);
             if (task.isSuccessful()) {
-                Log.d("LOC", "save loc to remote SUCCESS");
                 return Completable.complete();
             } else {
-                Log.d("LOC", "save loc to remote FAILURE on set with: " + task.getException());
                 return Completable.error(task.getException());
             }
         });
     }
 
     @Override
-    public Completable saveLocationToLocal(Result<SimpleLocation> locationResult) {
-        return Completable.fromRunnable(() -> dao.insert(locationResult.data));
+    public Completable saveLocationToLocal(List<SimpleLocation> locationList) {
+        return Completable.fromRunnable(() -> {
+            for (SimpleLocation location:
+                 locationList) {
+                dao.insert(location);
+            }
+        });
     }
 
     @Override

@@ -61,13 +61,11 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
         authSubject.onNext(System.currentTimeMillis());
     }
 
-    @Override
-    public void setLastLocation(String location) {
+    private void setLastLocation(String location) {
         setState(TrackerViewState.createSetLocationState(location));
     }
 
-    @Override
-    public void setError(String location) {
+    private void setError(String location) {
         setState(TrackerViewState.createSetErrorState(location));
     }
 }

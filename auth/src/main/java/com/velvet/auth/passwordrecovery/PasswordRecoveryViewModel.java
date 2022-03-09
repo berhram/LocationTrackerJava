@@ -67,11 +67,6 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
     }
 
     @Override
-    public void setInfoText(int infoText) {
-        setState(PasswordRecoveryViewState.createSetTextState(infoText));
-    }
-
-    @Override
     public void requestCode(String email) {
         if (validateEmail(email)) {
             requestSubject.onNext(AuthMessage.createRequestCodeMessage(email));
@@ -89,13 +84,15 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
         }
     }
 
-    @Override
-    public void setEmailError() {
+    private void setInfoText(int infoText) {
+        setState(PasswordRecoveryViewState.createSetTextState(infoText));
+    }
+
+    private void setEmailError() {
         setState(PasswordRecoveryViewState.createSetEmailErrorState(R.string.email_error));
     }
 
-    @Override
-    public void setPasswordError() {
+    private void setPasswordError() {
         setState(PasswordRecoveryViewState.createSetPasswordErrorState(R.string.password_error));
     }
 }

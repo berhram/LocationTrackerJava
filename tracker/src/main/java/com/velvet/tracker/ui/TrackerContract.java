@@ -6,8 +6,6 @@ import com.velvet.tracker.ui.state.TrackerViewState;
 
 public class TrackerContract {
     public interface ViewModel extends FragmentContract.ViewModel<TrackerViewState, TrackerViewEffect> {
-        void setLastLocation(String text);
-        void setError(String text);
         void signOut();
     }
 

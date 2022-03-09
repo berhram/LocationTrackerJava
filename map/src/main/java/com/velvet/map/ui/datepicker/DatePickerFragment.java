@@ -9,20 +9,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.velvet.core.Values;
+
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    private final String tag;
-    private final DateListener listener;
+    private String tag;
+    private DateListener listener;
 
-    public DatePickerFragment(DateListener listener, String tag) {
-        this.tag = tag;
+    public static DatePickerFragment newInstance(DateListener listener, String tag) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        Bundle bundle = new Bundle(1);
+        bundle.putString(Values.DATE_PICKER_TAG, tag);
+        newFragment.setArguments(bundle);
+        newFragment.setListener(listener);
+        return newFragment;
+    }
+
+    public void setListener(DateListener listener) {
         this.listener = listener;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Bundle bundle = getArguments();
+        tag = bundle.getString(Values.DATE_PICKER_TAG);
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);

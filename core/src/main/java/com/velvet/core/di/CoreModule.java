@@ -8,6 +8,8 @@ import com.velvet.core.models.auth.AuthNetwork;
 import com.velvet.core.models.cache.Cache;
 import com.velvet.core.models.cache.CacheImpl;
 import com.velvet.core.models.auth.FirebaseAuthNetwork;
+import com.velvet.core.models.database.local.LocalRepository;
+import com.velvet.core.models.database.local.LocalRepositoryImpl;
 import com.velvet.core.models.database.remote.FirebaseLocationNetwork;
 import com.velvet.core.models.database.remote.LocationNetwork;
 import com.velvet.core.models.location.LocationEmitter;
@@ -29,7 +31,7 @@ public class CoreModule {
 
     @Provides
     @Singleton
-    Cache provideMessageCache() {
+    Cache provideCache() {
         return new CacheImpl();
     }
 
@@ -52,8 +54,14 @@ public class CoreModule {
 
     @Provides
     @Singleton
-    LocationNetwork provideLocationRepo() {
-        return new FirebaseLocationNetwork(appCtx);
+    LocationNetwork provideRemoteRepo() {
+        return new FirebaseLocationNetwork();
+    }
+
+    @Provides
+    @Singleton
+    LocalRepository provideLocalRepo() {
+        return new LocalRepositoryImpl(appCtx);
     }
 
     @Provides

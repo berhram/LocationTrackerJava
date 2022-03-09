@@ -17,6 +17,12 @@ public interface LocationDao {
     @Insert
     void insert(SimpleLocation locations);
 
+    @Insert
+    void insertAll(List<SimpleLocation> locations);
+
     @Delete
     void delete(SimpleLocation location);
+
+    @Delete
+    void deleteAll(List<SimpleLocation> location);
 }

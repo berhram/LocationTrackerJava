@@ -30,13 +30,13 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     private final PublishSubject<DateFilter> filterSubject = PublishSubject.create();
     private final PublishSubject<Long> markerSubject = PublishSubject.create();
     private final PublishSubject<Long> authSubject = PublishSubject.create();
-    private final LocationNetwork locationRepo;
+    private final LocationNetwork locationNetwork;
     private final AuthNetwork authRepo;
     private final DateFilter filter = DateFilter.createFullDateFilter(new Date(0), new Date(System.currentTimeMillis()));
     private boolean mapIsReady = false;
 
-    public MapViewModel(LocationNetwork locationRepo, AuthNetwork authRepo) {
-        this.locationRepo = locationRepo;
+    public MapViewModel(LocationNetwork locationNetwork, AuthNetwork authRepo) {
+        this.locationNetwork = locationNetwork;
         this.authRepo = authRepo;
     }
 
@@ -48,7 +48,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                     markerSubject
                             .subscribeOn(Schedulers.io())
                             .filter(t -> mapIsReady)
-                            .flatMap(t -> locationRepo.getLocationsFromRemote().toObservable())
+                            .flatMap(t -> locationNetwork.downloadLocations().toObservable())
                             .flatMap(listResult -> Observable.fromIterable(listResult.data))
                             .filter(this::checkIfLocationMatchFilter)
                             .flatMap(location -> Observable.just(convertLocationToMarker(location)))

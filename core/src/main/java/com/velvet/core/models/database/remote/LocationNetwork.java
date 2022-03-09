@@ -13,13 +13,5 @@ public interface LocationNetwork {
 
     Completable uploadLocation(SimpleLocation location);
 
-    Completable saveLocationToLocal(List<SimpleLocation> locationList);
-
-    Completable saveLocation(SimpleLocation location);
-
-    Single<Result<List<SimpleLocation>>> getLocationsFromLocal();
-
-    Single<Result<List<SimpleLocation>>> getLocationsFromRemote();
-
-    Completable deleteLocations(List<SimpleLocation> locationList);
+    Single<Result<List<SimpleLocation>>> downloadLocations();
 }

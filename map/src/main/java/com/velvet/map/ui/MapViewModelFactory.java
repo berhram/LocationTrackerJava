@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class MapViewModelFactory implements ViewModelProvider.Factory {
 
     @Inject
-    LocationNetwork locationRepo;
+    LocationNetwork locationNetwork;
 
     @Inject
     AuthNetwork authRepo;
@@ -29,7 +29,7 @@ public class MapViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == MapViewModel.class) {
-            return (T) new MapViewModel(locationRepo, authRepo);
+            return (T) new MapViewModel(locationNetwork, authRepo);
         } else {
             throw new RuntimeException("Unknown class " + modelClass);
         }

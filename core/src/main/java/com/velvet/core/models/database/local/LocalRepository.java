@@ -9,7 +9,6 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface LocalRepository {
-    Completable saveLocations(List<SimpleLocation> locationList);
 
     Completable saveLocation(SimpleLocation location);
 

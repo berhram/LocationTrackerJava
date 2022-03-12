@@ -9,4 +9,6 @@
     <string name="last_location">Last location:</string>
     <string name="error">Error:</string>
     <string name="channel_desc">Channel for location tracker</string>
+
+    <string name="stop_tracking">Stop tracking</string>
 </resources>

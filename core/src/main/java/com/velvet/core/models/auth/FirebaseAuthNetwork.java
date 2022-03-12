@@ -51,7 +51,10 @@ public class FirebaseAuthNetwork implements AuthNetwork {
 
     @Override
     public Completable signOut() {
-        return Completable.fromRunnable(firebaseAuth::signOut);
+        return Completable.fromCallable(() -> {
+            firebaseAuth.signOut();
+            return Completable.complete();
+        });
     }
 
     private Result<String> completeTask(Task task, String key) throws ExecutionException, InterruptedException {

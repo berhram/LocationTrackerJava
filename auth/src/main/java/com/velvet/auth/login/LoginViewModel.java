@@ -3,6 +3,8 @@ package com.velvet.auth.login;
 import static com.velvet.auth.utils.Validator.validateEmail;
 import static com.velvet.auth.utils.Validator.validatePasswordLength;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -47,9 +49,13 @@ public class LoginViewModel extends MviViewModel<LoginContract.View, LoginViewSt
                                 e.printStackTrace();
                             }),
                     authSubject
-                            .flatMap(p -> authRepository.authRequest(p).toObservable())
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
+                            .flatMap(p -> {
+                                Log.d("LOC", Thread.currentThread().getName() + " thread in call");
+                                return authRepository.authRequest(p).toObservable();
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
                                 if (result.isError()) {
                                     result.error.printStackTrace();

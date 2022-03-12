@@ -47,6 +47,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
             observeTillDestroy(
                     markerSubject
                             .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
                             .filter(t -> mapIsReady)
                             .flatMap(t -> locationNetwork.downloadLocations().toObservable())
                             .flatMap(listResult -> Observable.fromIterable(listResult.data))
@@ -71,7 +72,10 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
                             .subscribe(markerSubject::onNext, Throwable::printStackTrace),
-                    authSubject.flatMapCompletable(t -> authRepo.signOut())
+                    authSubject.subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .flatMapCompletable(t -> authRepo.signOut())
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(this::proceedToLoginScreen, Throwable::printStackTrace)
             );
             markerSubject.onNext(System.currentTimeMillis());
@@ -104,7 +108,6 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     }
 
     private void setFilter() {
-        Log.d("LOC", "filtered set in viewmodel");
         setState(MapViewState.createSetFilterState(Converters.dateToString(filter.getStartDate()), Converters.dateToString(filter.getEndDate())));
     }
 
@@ -118,12 +121,10 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     }
 
     private void setMarker(MarkerOptions marker) {
-        Log.d("LOC", "marker set in viewmodel");
         setState(MapViewState.createSetMarkerState(marker));
     }
 
     private boolean checkIfLocationMatchFilter(SimpleLocation location) {
-        Log.d("LOC", "loc on filter");
         return filter.check(location.time);
     }
 }

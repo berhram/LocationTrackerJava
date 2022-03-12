@@ -10,6 +10,7 @@ import com.velvet.core.models.location.LocationEmitter;
 import com.velvet.core.result.Result;
 import com.velvet.tracker.model.work.SyncWorkManager;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -47,14 +48,19 @@ public class TrackerController implements ServiceController {
                             return true;
                         }
                     })
-                    .flatMapCompletable(locationResult -> remoteRepo.uploadLocation(locationResult.data)
-                            .onErrorResumeWith(localRepo.saveLocation(locationResult.data)))
-                    .subscribe(() -> {
-                                Log.d("LOC", " work scheduled");
-                                workManager.scheduleSyncTask();
-                            },
-                            Throwable::printStackTrace)
+                    .flatMapCompletable(locationResult -> remoteRepo.uploadLocation(locationResult.data).doOnComplete(() -> {
+                        Log.d("LOC", " do on complete");
+                    }).onErrorResumeWith(localRepo.saveLocation(locationResult.data).andThen(scheduleSync())))
+                    .subscribe()
         );
+    }
+
+    private Completable scheduleSync() {
+        return Completable.fromCallable(() -> {
+            Log.d("LOC", " work scheduled");
+            workManager.scheduleSyncTask();
+            return Completable.complete();
+        });
     }
 
     @Override

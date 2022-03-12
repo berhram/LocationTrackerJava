@@ -35,8 +35,9 @@ public class PasswordRecoveryViewModel extends MviViewModel<PasswordRecoveryCont
         if (event == Lifecycle.Event.ON_CREATE && !hasOnDestroyDisposables()) {
             observeTillDestroy(
                     recoverySubject
-                            .flatMap(p -> authRepository.authRequest(p).toObservable())
                             .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .flatMap(p -> authRepository.authRequest(p).toObservable())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
                                 if (Values.REQUEST.equals(result.data)) {

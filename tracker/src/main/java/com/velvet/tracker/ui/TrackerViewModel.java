@@ -14,10 +14,10 @@ import com.velvet.tracker.ui.state.TrackerViewState;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class TrackerViewModel extends MviViewModel<TrackerContract.View, TrackerViewState, TrackerViewEffect> implements TrackerContract.ViewModel {
-    private final PublishSubject<Long> authSubject = PublishSubject.create();
+    private final BehaviorSubject<Long> authSubject = BehaviorSubject.create();
     private final Cache locationCache;
     private final AuthNetwork authRepo;
 
@@ -45,8 +45,10 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
                                 setLastLocation(s.data);
                             }
                         }, Throwable::printStackTrace),
-
-                    authSubject.flatMapCompletable(t -> authRepo.signOut())
+                    authSubject.subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .flatMapCompletable(t -> authRepo.signOut())
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(this::proceedToLoginScreen, Throwable::printStackTrace)
             );
         }

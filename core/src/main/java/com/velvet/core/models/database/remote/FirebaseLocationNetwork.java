@@ -1,5 +1,7 @@
 package com.velvet.core.models.database.remote;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +12,9 @@ import com.velvet.core.models.database.SimpleLocation;
 import com.velvet.core.result.Result;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
@@ -22,9 +27,11 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     public Completable uploadLocations(List<SimpleLocation> locationList) {
         return Completable.fromCallable(() -> {
             for (SimpleLocation location : locationList) {
+                Log.d("LOC", "uploadLocations START");
                 Task<Void> task = remoteDatabase.push().setValue(location);
                 Tasks.await(task);
                 if (!task.isSuccessful()) {
+                    Log.d("LOC", "uploadLocations FAILURE");
                     return Completable.error(task.getException());
                 }
             }
@@ -36,17 +43,26 @@ public class FirebaseLocationNetwork implements LocationNetwork {
     public Completable uploadLocation(SimpleLocation location) {
         return Completable.fromCallable(() -> {
             Task<Void> task = remoteDatabase.push().setValue(location);
-            Tasks.await(task);
+            Log.d("LOC", "uploadLocation START");
+            try {
+                Tasks.await(task, 3, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                Log.d("LOC", "uploadLocations CATCH");
+                throw e;
+            }
             if (task.isSuccessful()) {
+                Log.d("LOC", "uploadLocations SUCCESS");
                 return Completable.complete();
             } else {
-                return Completable.error(task.getException());
+                Log.d("LOC", "uploadLocations FAILURE");
+                throw task.getException();
             }
         });
     }
 
     @Override
     public Single<Result<List<SimpleLocation>>> downloadLocations() {
+        Log.d("LOC", "downloadLocations");
         return Single.fromCallable(() -> {
             Task<DataSnapshot> task = remoteDatabase.get();
             Tasks.await(task);
@@ -56,5 +72,21 @@ public class FirebaseLocationNetwork implements LocationNetwork {
                 return Result.error(task.getException());
             }
         });
+    }
+
+    private Completable completeTask(Task task) throws Exception {
+        try {
+            Tasks.await(task, 3, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            Log.d("LOC", "task CATCH");
+            throw e;
+        }
+        if (task.isSuccessful()) {
+            Log.d("LOC", "task SUCCESS");
+            return Completable.complete();
+        } else {
+            Log.d("LOC", "task FAILURE");
+            throw task.getException();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.velvet.core.models.database.local;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -22,13 +23,12 @@ public class LocalRepositoryImpl implements LocalRepository {
     }
 
     @Override
-    public Completable saveLocations(List<SimpleLocation> locationList) {
-        return Completable.fromRunnable(() -> dao.insertAll(locationList));
-    }
-
-    @Override
     public Completable saveLocation(SimpleLocation location) {
-        return Completable.fromRunnable(() -> dao.insert(location));
+        return Completable.fromCallable(() -> {
+            dao.insert(location);
+            Log.d("LOC", " saveLocation");
+            return Completable.complete();
+        });
     }
 
     @Override
@@ -38,6 +38,10 @@ public class LocalRepositoryImpl implements LocalRepository {
 
     @Override
     public Completable deleteLocations(List<SimpleLocation> locationList) {
-        return Completable.fromRunnable(() -> dao.deleteAll(locationList));
+        return Completable.fromCallable(() -> {
+            Log.d("LOC", "deleteLocations");
+            dao.deleteAll(locationList);
+            return Completable.complete();
+        });
     }
 }

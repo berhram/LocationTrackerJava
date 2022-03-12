@@ -15,7 +15,7 @@ buildscript {
     ext.maps = "18.0.2"
     ext.location = "19.0.1"
     ext.google_services = "4.3.10"
-    ext.gradle_version = "7.1.1"
+    ext.gradle_version = '7.1.2'
     ext.gradle_secrets_plugin = "2.0.0"
     ext.fragment = "1.4.1"
     ext.work = "2.7.1"

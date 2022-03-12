@@ -1,5 +1,7 @@
 package com.velvet.map.ui;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -49,12 +51,16 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                             .filter(t -> mapIsReady)
                             .flatMap(t -> locationNetwork.downloadLocations().toObservable())
                             .flatMap(listResult -> Observable.fromIterable(listResult.data))
-                            .filter(this::checkIfLocationMatchFilter)
+                            .filter(simpleLocation -> {
+                                Log.d("LOC", " marker on filter");
+                                return checkIfLocationMatchFilter(simpleLocation);
+                            })
                             .flatMap(location -> Observable.just(convertLocationToMarker(location)))
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(markerOptions -> {
                                 if (markerOptions != null) {
                                     setMarker(markerOptions);
+                                    Log.d("LOC", " marker set in viewmodel's method");
                                 }
                             }, e -> {
                                 e.printStackTrace();
@@ -64,6 +70,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(inputFilter -> {
                                 filter.updateFilter(inputFilter);
+                                Log.d("LOC", " filter set in viewmodel's method");
                                 setFilter();
                             }, Throwable::printStackTrace),
                     Observable.interval(Values.MAP_CHECK_FREQUENTLY_SEC, TimeUnit.SECONDS)
@@ -89,6 +96,11 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     @Override
     public void mapReadyCallback() {
         mapIsReady = true;
+    }
+
+    @Override
+    public boolean getMapCallback() {
+        return mapIsReady;
     }
 
     @Override
@@ -123,6 +135,7 @@ public class MapViewModel extends MviViewModel<MapContract.View, MapViewState, M
     }
 
     private boolean checkIfLocationMatchFilter(SimpleLocation location) {
+        Log.d("LOC", " filter: " + filter.check(location.time) );
         return filter.check(location.time);
     }
 }

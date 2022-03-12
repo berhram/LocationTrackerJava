@@ -1,5 +1,9 @@
 package com.velvet.core.filter;
 
+import android.util.Log;
+
+import com.velvet.core.Converters;
+
 import java.util.Date;
 
 public class DateFilter {
@@ -26,14 +30,10 @@ public class DateFilter {
     }
 
     public boolean check(long time) {
-        return startDate.getTime() <= time && endDate.getTime() >= time;
+        Log.d("LOC", Converters.dateToString(new Date(time)) + " more than " + Converters.dateToString(new Date(startDate.getTime())) + " start: " + (startDate.getTime() <= time));
+        Log.d("LOC", Converters.dateToString(new Date(time)) + " less than " + Converters.dateToString(new Date(endDate.getTime())) + " end: " + (endDate.getTime() >= time));
+        return (startDate.getTime() <= time) && (endDate.getTime() >= time);
     }
-
-    /*
-    public boolean isComplete() {
-        return startDate != null && endDate != null;
-    }
-     */
 
     public void updateFilter(DateFilter newFilter) {
         if (newFilter.startDate != null) {

@@ -13,6 +13,8 @@ public class MapContract {
         void updateFilter(DateFilter filter);
 
         void signOut();
+
+        boolean getMapCallback();
     }
 
     public interface View extends FragmentContract.View {

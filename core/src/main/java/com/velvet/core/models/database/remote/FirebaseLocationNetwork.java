@@ -1,6 +1,5 @@
 package com.velvet.core.models.database.remote;
 
-
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +9,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.velvet.core.models.database.SimpleLocation;
 import com.velvet.core.result.Result;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -58,7 +59,13 @@ public class FirebaseLocationNetwork implements LocationNetwork {
             Task<DataSnapshot> task = remoteDatabase.get();
             Tasks.await(task);
             if (task.isSuccessful()) {
-                return Result.success((List<SimpleLocation>) task.getResult().getValue(List.class));
+                List<SimpleLocation> output = new ArrayList<>();
+                for (DataSnapshot d : task.getResult().getChildren()) {
+                    HashMap<String, Object> map = (HashMap<String, Object>) d.getValue();
+                    SimpleLocation location = new SimpleLocation((Long) map.get("time"), (Double) map.get("latitude"), (Double) map.get("longitude"));
+                    output.add(location);
+                }
+                return Result.success(output);
             } else {
                 return Result.error(task.getException());
             }

@@ -43,10 +43,10 @@ public class MapFragment extends HostedFragment<MapViewState,
     @Override
     public void onDateSet(int year, int month, int dayOfMonth, String tag) {
         if (Values.START_TAG.equals(tag)) {
-            getModel().updateFilter(DateFilter.createStartDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
+            getModel().updateFilter(DateFilter.createStartDateFilter(new GregorianCalendar(year, month, dayOfMonth).getTime()));
             DatePickerFragment.newInstance(this, Values.END_TAG).show(requireActivity().getSupportFragmentManager(), "datePicker2");
         } else if (Values.END_TAG.equals(tag)) {
-            getModel().updateFilter(DateFilter.createEndDateFilter(new GregorianCalendar(year, month - 1, dayOfMonth).getTime()));
+            getModel().updateFilter(DateFilter.createEndDateFilter(new GregorianCalendar(year, month, dayOfMonth).getTime()));
         }
     }
 
@@ -81,7 +81,9 @@ public class MapFragment extends HostedFragment<MapViewState,
     public void setFilter(String startDate, String endDate) {
         binding.startDate.setText(getString(R.string.start_date, startDate));
         binding.endDate.setText(getString(R.string.end_date, endDate));
-        map.clear();
+        if (getModel().getMapCallback()) {
+            map.clear();
+        }
     }
 
     @Override

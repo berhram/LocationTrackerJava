@@ -1,0 +1,14 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Tracker for sleepwalkers"
+include ":libs"
+include ":core"
+include ":tracker"
+include ":map"
+include ":auth"
+include ":app"

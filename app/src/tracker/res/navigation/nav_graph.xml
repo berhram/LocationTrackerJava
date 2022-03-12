@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login_fragment">
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.velvet.auth.login.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/login_to_tracker"
+            app:destination="@id/tracker_fragment" />
+
+        <action
+            android:id="@+id/login_to_recovery"
+            app:destination="@id/recovery_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tracker_fragment"
+        android:name="com.velvet.tracker.ui.TrackerFragment">
+        <action
+            android:id="@+id/tracker_to_login"
+            app:destination="@id/login_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recovery_fragment"
+        android:name="com.velvet.auth.passwordrecovery.PasswordRecoveryFragment">
+        <action
+            android:id="@+id/recovery_to_login"
+            app:destination="@id/login_fragment" />
+    </fragment>
+</navigation>

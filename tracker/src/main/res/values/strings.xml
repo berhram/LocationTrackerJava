@@ -1,0 +1,14 @@
+<resources>
+    <!--Tracker screen-->
+    <!--Tracker buttons text-->
+    <string name="start_button">Start</string>
+    <string name="stop_button">Stop</string>
+
+    <string name="notification_title">Location tracker</string>
+    <string name="notification_message">Location tracker is running</string>
+    <string name="last_location">Last location:</string>
+    <string name="error">Error:</string>
+    <string name="channel_desc">Channel for location tracker</string>
+
+    <string name="stop_tracking">Stop tracking</string>
+</resources>

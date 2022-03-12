@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Tracker Parent</string>
+
+    <!--Map screen-->
+    <string name="please_give_access">Please grant location permission!</string>
+
+    <string name="start_date" formatted="false">From: %s</string>
+
+    <string name="end_date" formatted="false">To: %s</string>
+</resources>

@@ -1,0 +1,92 @@
+plugins {
+    id "com.android.application"
+    id "androidx.navigation.safeargs"
+    id "com.google.gms.google-services"
+}
+
+android {
+    compileSdk project.compile
+
+    defaultConfig {
+        applicationId "com.velvet.trackerforsleepwalkers"
+        minSdk project.min
+        targetSdk project.target
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+
+        debug {
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    flavorDimensions "application"
+    productFlavors {
+        map {
+            dimension "application"
+            applicationIdSuffix ".map"
+            versionNameSuffix "-map"
+            resValue "string", "app_name", "Map"
+        }
+        tracker {
+            dimension "application"
+            applicationIdSuffix ".tracker"
+            versionNameSuffix "-tracker"
+            resValue "string", "app_name", "Tracker"
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':libs')
+    implementation project(path: ":auth")
+    implementation project(path: ":tracker")
+    implementation project(path: ":map")
+    implementation project(path: ':core')
+
+    implementation "androidx.appcompat:appcompat:$appcompat"
+    implementation "com.google.android.material:material:$material"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$viewmodel"
+
+    implementation "androidx.navigation:navigation-fragment:$navigation"
+    implementation "androidx.fragment:fragment:$fragment"
+    implementation "androidx.navigation:navigation-ui:$navigation"
+
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
+    implementation "com.google.firebase:firebase-analytics"
+    implementation "com.google.firebase:firebase-auth"
+    implementation "com.google.firebase:firebase-firestore"
+
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid"
+
+    implementation "com.google.dagger:dagger:$dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+
+    implementation "com.google.android.gms:play-services-maps:$maps"
+    implementation "com.google.android.gms:play-services-location:$location"
+
+
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test.ext:junit:$junit_android"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+}

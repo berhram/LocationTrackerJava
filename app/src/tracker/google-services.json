@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "341647139475",
+    "firebase_url": "https://location-tracker-c5bf3-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "location-tracker-c5bf3",
+    "storage_bucket": "location-tracker-c5bf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341647139475:android:ae47007343f49d13716366",
+        "android_client_info": {
+          "package_name": "com.velvet.trackerforsleepwalkers.tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341647139475-a2vb6aehu6o3asn7ceps3u6aon0d2o03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw5G7vDXySKpZzZyMwSWywBqt89h4JGRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341647139475-a2vb6aehu6o3asn7ceps3u6aon0d2o03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341647139475:android:7126723bda3809a6716366",
+        "android_client_info": {
+          "package_name": "com.velvet.trackerforsleepwalkers.tracker.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341647139475-a2vb6aehu6o3asn7ceps3u6aon0d2o03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw5G7vDXySKpZzZyMwSWywBqt89h4JGRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341647139475-a2vb6aehu6o3asn7ceps3u6aon0d2o03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

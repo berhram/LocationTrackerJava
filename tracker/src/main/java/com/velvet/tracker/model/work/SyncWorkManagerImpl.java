@@ -5,8 +5,6 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import io.reactivex.rxjava3.subjects.BehaviorSubject;
-
 public class SyncWorkManagerImpl implements SyncWorkManager {
     private final WorkManager workManager;
     private final Constraints constraints = new Constraints.Builder()

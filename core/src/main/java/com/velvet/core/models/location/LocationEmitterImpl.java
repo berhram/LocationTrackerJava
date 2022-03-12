@@ -2,7 +2,6 @@ package com.velvet.core.models.location;
 
 import android.content.Context;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -51,7 +50,6 @@ public class LocationEmitterImpl extends LocationCallback implements LocationEmi
         if (locationResult == null) {
             return;
         }
-        Log.d("LOC", "onLocationResult: success");
         lastLocation.onNext(Result.success(Converters.locationToSimpleLocation(locationResult.getLastLocation())));
     }
 

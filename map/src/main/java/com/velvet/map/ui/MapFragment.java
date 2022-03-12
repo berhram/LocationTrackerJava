@@ -1,7 +1,6 @@
 package com.velvet.map.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +79,6 @@ public class MapFragment extends HostedFragment<MapViewState,
 
     @Override
     public void setFilter(String startDate, String endDate) {
-        Log.d("LOC", startDate + " startDate " + endDate + " endDate in FRAGMENT");
         binding.startDate.setText(getString(R.string.start_date, startDate));
         binding.endDate.setText(getString(R.string.end_date, endDate));
         map.clear();

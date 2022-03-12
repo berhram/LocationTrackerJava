@@ -1,7 +1,5 @@
 package com.velvet.tracker.ui;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -36,12 +34,9 @@ public class TrackerViewModel extends MviViewModel<TrackerContract.View, Tracker
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(s -> {
-                                Log.d("LOC", s.data + " and e: " + s.error + " was receive from cache");
                                 if (s.isError()) {
-                                    Log.d("LOC", s.error.toString() + " was receive from cache");
                                 setError(s.error.toString());
                             } else {
-                                Log.d("LOC", s.data + " was receive from cache");
                                 setLastLocation(s.data);
                             }
                         }, Throwable::printStackTrace),

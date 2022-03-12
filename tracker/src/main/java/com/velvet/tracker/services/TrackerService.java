@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.velvet.core.Values;
 import com.velvet.tracker.R;
@@ -43,6 +42,5 @@ public class TrackerService extends Service {
     @Override
     public void onDestroy() {
         controller.stop();
-        Log.d("Service", " service stopped");
     }
 }

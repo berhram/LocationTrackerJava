@@ -1,7 +1,6 @@
 package com.velvet.tracker.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,6 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
     public void proceedToLoginScreen() {
         if (hasHost()) {
             getFragmentHost().proceedToLoginScreen(Values.TRACKER_NAV);
-            Log.d("LOC", "logout frag");
         }
     }
 
@@ -80,13 +78,11 @@ public class TrackerFragment extends HostedFragment<TrackerViewState,
 
     @Override
     public void onClick(View v) {
-        Log.d("LOC", "some button clicked");
         if (binding.startButton == v) {
             startService();
         } else if (binding.stopButton == v) {
             stopService();
         } else if (binding.logoutButton == v) {
-            Log.d("LOC", "button clicked");
             getModel().signOut();
         }
     }
